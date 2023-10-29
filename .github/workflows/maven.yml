@@ -17,17 +17,19 @@ jobs:
         with:
           java-version: 21
           distribution: 'temurin'
-      - name: Create settings.xml
-        uses: s4u/maven-settings-action@v2
-        with:
-          servers: '[{"id": "ossrh", "username": "mihxil", "password": "${{secrets.OSSRH_PASSWORD}}"}]'
-      - uses: crazy-max/ghaction-import-gpg@v3
-        with:
+          cache: 'maven'
+          server-id: ossrh
+          server-username: SONATYPE_USERNAME
+          server-password: SONATYPE_PASSWORD
           gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
-          passphrase: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
+          gpg-passphrase: GPG_SECRET_KEY_PASSPHRASE
       - name: Build with Maven
         run: mvn -B deploy
-      - uses: codecov/codecov-action@v2
-      - name: Publish Test Report
-        uses: scacap/action-surefire-report@v1
-        if: always() && ${{ github.event_name == 'push' }}
+        env:
+          SONATYPE_USERNAME: mihxil
+          SONATYPE_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
+      - uses: codecov/codecov-action@v3.1.4
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2.10.0
+
