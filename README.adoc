@@ -1,0 +1,19 @@
+= JAVA ISO-639-3 support
+
+Languages of the World, are convered by the ISO-639-3 standard.
+
+These provide a 3-letter code for each language.
+
+There are too many such coded to be contained in a java-enum.
+
+This package has the tab seperated files provided by https://iso639-3.sil.org/, and java classes to read this, and provided it as java objects.
+
+== Usage
+
+[code, java]
+----
+import org.meeuw.i18n.languages.LanguageCode;
+
+LanguageCode languageCode = LanguageCode.getByCode("nld");
+
+----
