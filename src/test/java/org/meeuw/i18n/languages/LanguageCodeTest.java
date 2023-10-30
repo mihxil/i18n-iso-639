@@ -2,7 +2,7 @@ package org.meeuw.i18n.languages;
 
 import org.junit.jupiter.api.Test;
 
-class ISO_639_3Test {
+class LanguageCodeTest {
     
     @Test
     public void stream() {
