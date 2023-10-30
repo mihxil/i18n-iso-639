@@ -40,6 +40,10 @@
     <codemodel.version>4.0.4</codemodel.version>
     <java.version>8</java.version>
     <assertj.version>3.24.2</assertj.version>
+    
+    <!-- just avoid some warnings -->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
   <scm>
     <connection>scm:git:git://github.com/mihxil/i18n-iso-639-3.git</connection>
