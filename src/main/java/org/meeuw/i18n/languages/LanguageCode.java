@@ -24,8 +24,8 @@ public class LanguageCode {
                 String[] split = line.split("\t");
                 LanguageCode found = new LanguageCode(
                     split[0],
-                    split[1],
-                    split[2],
+                    split[1].length() > 0 ? split[1] : null,
+                    split[2].length() > 0 ? split[2] : null,
                     split[3].length() > 0 ? split[3] : null,
                     Scope.valueOf(split[4]),
                     Type.valueOf(split[5]),
@@ -140,15 +140,22 @@ public class LanguageCode {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", LanguageCode.class.getSimpleName() + "[", "]")
-            .add("id='" + id + "'")
-            .add("part2B='" + part2B + "'")
-            .add("part2T='" + part2T + "'")
-            .add("part1='" + part1 + "'")
-            .add("scope='" + scope + "'")
+        StringJoiner joiner =  new StringJoiner(", ", LanguageCode.class.getSimpleName() + "[", "]").add("id='" + id + "'");
+        if (part2B != null) {
+            joiner.add("part2B='" + part2B + "'");
+        }
+        if (part2T != null) {
+            joiner.add("part2T='" + part2T + "'");
+        }
+        if (part1 != null) {
+            joiner.add("part1='" + part1 + "'");
+        }
+        joiner.add("scope='" + scope + "'")
             .add("languageType='" + languageType + "'")
-            .add("refName='" + refName + "'")
-            .add("comment='" + comment + "'")
-            .toString();
+            .add("refName='" + refName + "'");
+        if (comment != null) {
+            joiner.add("comment='" + comment + "'");
+        }
+        return joiner.toString();
     }
 }
