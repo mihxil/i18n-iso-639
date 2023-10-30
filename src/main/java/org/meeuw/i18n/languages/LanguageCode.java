@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Stream;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 
@@ -41,13 +42,17 @@ public class LanguageCode {
     }
 
     @Size(min = 3, max = 3)
+    @NotNull
     private final String id;
+    
     private final String part2B;
     private final String part2T;
     @Size(min = 2, max = 2)
+    @NotNull
     private final String part1;
     private final Scope scope;
     private final Type languageType;
+    @NotNull
     private final String refName;
     private final String comment;
 
