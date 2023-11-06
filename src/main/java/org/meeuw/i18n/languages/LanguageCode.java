@@ -98,7 +98,8 @@ public class LanguageCode {
     }
 
     /**
-     * Returns a stream of all known language codes.
+     * A stream with all known {@link LanguageCode}
+     * @return a stream of all known language codes.
      */
     public static Stream<LanguageCode> stream() {
         return KNOWN.values().stream();
@@ -108,7 +109,9 @@ public class LanguageCode {
      * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()}, or by its two letter identifier {@link #getPart1()}.
      * 
      * @since 0.2
-     * @see #getCode() 
+     * @see #getCode()
+     * @param code A 2 or 3 letter language code 
+     * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> get(String code) {
         if (code.length() == 2) {
@@ -122,6 +125,8 @@ public class LanguageCode {
     
     /**
      * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()}
+     * @param code A 3 letter language code 
+     * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> getByCode(String code) {
         return Optional.ofNullable(KNOWN.get(code));
@@ -129,14 +134,18 @@ public class LanguageCode {
     
       
     /**
-     * Retrieves a {@link LanguageCode} by its Part1 code {@link #getPart1()} 
+     * Retrieves a {@link LanguageCode} by its Part1 code {@link #getPart1()}
+     * @param code A 2 letter language code 
+     * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> getByPart1(String code) {
         return KNOWN.values().stream().filter(i -> code.equals(i.getPart1())).findFirst();
     }
 
     /**
-     * Retrieves a {@link LanguageCode} by its Part2B  code {@link #getPart2B()}  
+     * Retrieves a {@link LanguageCode} by its Part2B  ('bibliographic') code {@link #getPart2B()}
+     * @param code A 3 letter language code 
+     * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> getByPart2B(String code) {
         return KNOWN.values().stream().filter(i -> code.equals(i.getPart2B())).findFirst();
@@ -144,7 +153,9 @@ public class LanguageCode {
     
     
     /**
-     * Retrieves a {@link LanguageCode} by its Part2T code {@link #getPart2T()}  
+     * Retrieves a {@link LanguageCode} by its Part2T ('terminology') code {@link #getPart2T()}
+     * @param code A 3 letter language code 
+     * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> getByPart2T(String code) {
         return KNOWN.values().stream().filter(i -> code.equals(i.getPart2T())).findFirst();
@@ -152,7 +163,8 @@ public class LanguageCode {
 
 
     /**
-     * Returns the ISO-639-1-code if available, otherwise the ISO-639-3 code.
+     * @return the ISO-639-1-code if available, otherwise the ISO-639-3 code.
+     * @return A 2 or 3 letter language code 
      * @since 0.2
      */
     public String getCode() {

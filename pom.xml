@@ -249,7 +249,6 @@
               <show>public</show>
               <sourcepath>
                 ${project.build.directory}/delombok
-                ${project.build.directory}/generated-sources/apt
               </sourcepath>
             </configuration>
             <executions>
