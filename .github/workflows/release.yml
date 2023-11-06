@@ -23,9 +23,6 @@ jobs:
           cache: maven
       - uses: oleksiyrudenko/gha-git-credentials@v2.1.1
         with:
-          global: true
-          name: 'github'
-          email: 'github@meeuw.org'
           token: '${{ secrets.GITHUB_TOKEN  }}'
       - name: Release
         run: mvn -Pdeploy --batch-mode  -Darguments=-DskipTests  release:prepare release:perform
