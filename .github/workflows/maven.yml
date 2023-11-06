@@ -37,5 +37,5 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v2.11.0
         with:
           check_name: Tests results
-          junit_files: "**/target/surefire-reports/*.xml"
+          files: "target/surefire-reports/*.xml"
 
