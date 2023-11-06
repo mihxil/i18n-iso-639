@@ -13,7 +13,7 @@ Languages of the World, are covered by the ISO-639-3 standard.
 
 These provide a 3-letter code for each language.
 
-There are too many such coded to be contained in a java-enum.
+There are too many such codes to be contained in a java-enum (e.g. https://github.com/TakahikoKawasaki/nv-i18n/blob/master/src/main/java/com/neovisionaries/i18n/LanguageAlpha3Code.java is just not complete)
 
 This package has the tab seperated files provided by https://iso639-3.sil.org/, and java classes to read this, and provided it as java objects.
 
@@ -25,4 +25,11 @@ import org.meeuw.i18n.languages.LanguageCode;
 
 LanguageCode languageCode = LanguageCode.getByCode("nld");
 
+LanguageCode languageCode = LanguageCode.get("nl");
+
+LanguageCode.stream()
+
 ----
+
+==
+
