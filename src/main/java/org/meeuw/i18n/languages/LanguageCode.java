@@ -9,7 +9,8 @@ import javax.validation.constraints.Size;
 import lombok.Getter;
 
 /**
- * A ISO 639-3 language code.
+ * A Language with a ISO 639-3 language code.
+ * 
  */
 @Getter
 public class LanguageCode {
@@ -105,6 +106,9 @@ public class LanguageCode {
     
     /**
      * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()}, or by its two letter identifier {@link #getPart1()}.
+     * 
+     * @since 0.2
+     * @see #getCode() 
      */
     public static Optional<LanguageCode> get(String code) {
         if (code.length() == 2) {
@@ -146,6 +150,14 @@ public class LanguageCode {
         return KNOWN.values().stream().filter(i -> code.equals(i.getPart2T())).findFirst();
     }
 
+
+    /**
+     * Returns the ISO-639-1-code if available, otherwise the ISO-639-3 code.
+     * @since 0.2
+     */
+    public String getCode() {
+        return part1 != null ? part1 : id;
+    }
     
 
     @Override
