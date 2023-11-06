@@ -4,11 +4,14 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Stream;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import lombok.Getter;
 
-
+/**
+ * A ISO 639-3 language code.
+ */
+@Getter
 public class LanguageCode {
 
     static final Map<String, LanguageCode> KNOWN;
@@ -41,12 +44,29 @@ public class LanguageCode {
 
     }
 
+    /**
+     * The three-letter 639-3 identifier
+     */
     @Size(min = 3, max = 3)
     @NotNull
     private final String id;
     
+    /**
+     *  Equivalent 639-2 identifier of the bibliographic applications
+     *  code set, if there is one
+     */
     private final String part2B;
+    
+    /**
+     * Equivalent 639-2 identifier of the terminology applications code
+     * set, if there is one
+     */
     private final String part2T;
+    
+    
+    /**
+     * Equivalent 639-1 identifier, if there is one
+     */
     @Size(min = 2, max = 2)
     @NotNull
     private final String part1;
@@ -76,67 +96,45 @@ public class LanguageCode {
         this.comment = comment;
     }
 
+    /**
+     * Returns a stream of all known language codes.
+     */
     public static Stream<LanguageCode> stream() {
         return KNOWN.values().stream();
     }
 
+    
+    /**
+     * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()}
+     */
     public static Optional<LanguageCode> getByCode(String code) {
         return Optional.ofNullable(KNOWN.get(code));
     }
-
+    
+      
+    /**
+     * Retrieves a {@link LanguageCode} by its Part1 code {@link #getPart1()} 
+     */
     public static Optional<LanguageCode> getByPart1(String code) {
         return KNOWN.values().stream().filter(i -> code.equals(i.getPart1())).findFirst();
     }
 
+    /**
+     * Retrieves a {@link LanguageCode} by its Part2B  code {@link #getPart2B()}  
+     */
     public static Optional<LanguageCode> getByPart2B(String code) {
         return KNOWN.values().stream().filter(i -> code.equals(i.getPart2B())).findFirst();
     }
-
+    
+    
+    /**
+     * Retrieves a {@link LanguageCode} by its Part2T code {@link #getPart2T()}  
+     */
     public static Optional<LanguageCode> getByPart2T(String code) {
         return KNOWN.values().stream().filter(i -> code.equals(i.getPart2T())).findFirst();
     }
 
-    /**
-     * The three-letter 639-3 identifier
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     *  Equivalent 639-2 identifier of the bibliographic applications
-     *  code set, if there is one
-     */
-    public String getPart2B() {
-        return part2B;
-    }
-
-    /**
-     * Equivalent 639-2 identifier of the terminology applications code
-     * set, if there is one
-     */
-    public String getPart2T() {
-        return part2T;
-    }
-
-    /**
-     * Equivalent 639-1 identifier, if there is one
-     */
-    public String getPart1() {
-        return part1;
-    }
-
-    public Type getLanguageType() {
-        return languageType;
-    }
-
-    public String getRefName() {
-        return refName;
-    }
-
-    public String getComment() {
-        return comment;
-    }
+    
 
     @Override
     public String toString() {

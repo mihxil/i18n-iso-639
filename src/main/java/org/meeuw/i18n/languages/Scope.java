@@ -1,5 +1,8 @@
 package org.meeuw.i18n.languages;
 
+/**
+ * The 'scope' of the language as defined in ISO-639-3
+ */
 public enum Scope {
 
     /**
