@@ -102,6 +102,18 @@ public class LanguageCode {
     public static Stream<LanguageCode> stream() {
         return KNOWN.values().stream();
     }
+    
+    /**
+     * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()}, or by its two letter identifier {@link #getPart1()}.
+     */
+    public static Optional<LanguageCode> get(String code) {
+        if (code.length() == 2) {
+            return getByPart1(code);
+        } else {
+            return getByCode(code);
+        }
+    }
+    
 
     
     /**

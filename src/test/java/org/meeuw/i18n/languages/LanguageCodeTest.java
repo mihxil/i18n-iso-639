@@ -12,8 +12,14 @@ class LanguageCodeTest {
     }
     
     @Test
-    public void get() {
+    public void getByCode() {
         assertThat(LanguageCode.getByCode("nld").get().getRefName()).isEqualTo("Dutch");
+    }
+    
+    @Test
+    public void get2() {
+        assertThat(LanguageCode.get("nl").get().getRefName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.get("nld").get().getRefName()).isEqualTo("Dutch");
     }
     
     @Test
