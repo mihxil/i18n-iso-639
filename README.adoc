@@ -1,5 +1,4 @@
 = JAVA ISO-639-3 support
-
 :toc:
 
 image:https://www.javadoc.io/badge/org.meeuw.i18n/i18n-iso-639-3.svg?color=blue[javadoc,link=https://www.javadoc.io/doc/org.meeuw.i18n/i18n-iso-639-3/latest]
@@ -19,7 +18,7 @@ This package has the tab seperated files provided by https://iso639-3.sil.org/, 
 
 == Usage
 
-[code, java]
+[source, java]
 ----
 import org.meeuw.i18n.languages.LanguageCode;
 
@@ -31,5 +30,9 @@ LanguageCode.stream()
 
 ----
 
-==
+
+[source, java]
+----
+include::src/test/java/org/meeuw/i18n/languages/LanguageCodeTest.java[]
+----
 
