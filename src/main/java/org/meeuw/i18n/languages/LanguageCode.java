@@ -35,7 +35,7 @@ public class LanguageCode {
                     Type.valueOf(split[5]),
                     split[6],
                     split.length == 8 ? split[7] : null);
-                temp.put(found.getId(), found);
+                temp.put(found.getId().toLowerCase(), found);
                 line = inputStreamReader.readLine();
             }
         } catch (IOException e) {
@@ -129,7 +129,10 @@ public class LanguageCode {
      * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> getByCode(String code) {
-        return Optional.ofNullable(KNOWN.get(code));
+        if (code == null) {
+            return Optional.empty();
+        }
+        return Optional.ofNullable(KNOWN.get(code.toLowerCase()));
     }
     
       
@@ -139,7 +142,11 @@ public class LanguageCode {
      * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> getByPart1(String code) {
-        return KNOWN.values().stream().filter(i -> code.equals(i.getPart1())).findFirst();
+        if (code == null) {
+            return Optional.empty();
+        }
+        final String lowerCode = code.toLowerCase();
+        return KNOWN.values().stream().filter(i -> lowerCode.equals(i.getPart1())).findFirst();
     }
 
     /**
@@ -148,7 +155,11 @@ public class LanguageCode {
      * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> getByPart2B(String code) {
-        return KNOWN.values().stream().filter(i -> code.equals(i.getPart2B())).findFirst();
+        if (code == null) {
+            return Optional.empty();
+        }
+        final String lowerCode = code.toLowerCase();
+        return KNOWN.values().stream().filter(i -> lowerCode.equals(i.getPart2B())).findFirst();
     }
     
     
@@ -158,12 +169,16 @@ public class LanguageCode {
      * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> getByPart2T(String code) {
-        return KNOWN.values().stream().filter(i -> code.equals(i.getPart2T())).findFirst();
+        if (code == null) {
+            return Optional.empty();
+        }
+        final String lowerCode = code.toLowerCase();
+        return KNOWN.values().stream().filter(i -> lowerCode.equals(i.getPart2T())).findFirst();
     }
-
+    
 
     /**
-     * @return the ISO-639-1-code if available, otherwise the ISO-639-3 code.
+     * the ISO-639-1-code if available, otherwise the ISO-639-3 code.
      * @return A 2 or 3 letter language code 
      * @since 0.2
      */
