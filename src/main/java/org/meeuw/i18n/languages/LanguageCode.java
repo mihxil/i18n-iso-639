@@ -6,14 +6,11 @@ import java.util.*;
 import java.util.stream.Stream;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import lombok.Getter;
-
 /**
  * A Language with a ISO 639-3 language code.
  * 
  */
-@Getter
-public class LanguageCode {
+public class LanguageCode  {
 
     static final Map<String, LanguageCode> KNOWN;
 
@@ -45,29 +42,15 @@ public class LanguageCode {
 
     }
 
-    /**
-     * The three-letter 639-3 identifier
-     */
     @Size(min = 3, max = 3)
     @NotNull
     private final String id;
-    
-    /**
-     *  Equivalent 639-2 identifier of the bibliographic applications
-     *  code set, if there is one
-     */
+
     private final String part2B;
-    
-    /**
-     * Equivalent 639-2 identifier of the terminology applications code
-     * set, if there is one
-     */
+
     private final String part2T;
-    
-    
-    /**
-     * Equivalent 639-1 identifier, if there is one
-     */
+
+
     @Size(min = 2, max = 2)
     @NotNull
     private final String part1;
@@ -99,19 +82,20 @@ public class LanguageCode {
 
     /**
      * A stream with all known {@link LanguageCode}
+     *
      * @return a stream of all known language codes.
      */
     public static Stream<LanguageCode> stream() {
         return KNOWN.values().stream();
     }
-    
+
     /**
      * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()}, or by its two letter identifier {@link #getPart1()}.
-     * 
-     * @since 0.2
-     * @see #getCode()
-     * @param code A 2 or 3 letter language code 
+     *
+     * @param code A 2 or 3 letter language code
      * @return An optional containing the {@link LanguageCode} if found.
+     * @see #getCode()
+     * @since 0.2
      */
     public static Optional<LanguageCode> get(String code) {
         if (code.length() == 2) {
@@ -120,12 +104,12 @@ public class LanguageCode {
             return getByCode(code);
         }
     }
-    
 
-    
+
     /**
      * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()}
-     * @param code A 3 letter language code 
+     *
+     * @param code A 3 letter language code
      * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> getByCode(String code) {
@@ -134,11 +118,12 @@ public class LanguageCode {
         }
         return Optional.ofNullable(KNOWN.get(code.toLowerCase()));
     }
-    
-      
+
+
     /**
      * Retrieves a {@link LanguageCode} by its Part1 code {@link #getPart1()}
-     * @param code A 2 letter language code 
+     *
+     * @param code A 2 letter language code
      * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> getByPart1(String code) {
@@ -151,7 +136,8 @@ public class LanguageCode {
 
     /**
      * Retrieves a {@link LanguageCode} by its Part2B  ('bibliographic') code {@link #getPart2B()}
-     * @param code A 3 letter language code 
+     *
+     * @param code A 3 letter language code
      * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> getByPart2B(String code) {
@@ -161,11 +147,12 @@ public class LanguageCode {
         final String lowerCode = code.toLowerCase();
         return KNOWN.values().stream().filter(i -> lowerCode.equals(i.getPart2B())).findFirst();
     }
-    
-    
+
+
     /**
      * Retrieves a {@link LanguageCode} by its Part2T ('terminology') code {@link #getPart2T()}
-     * @param code A 3 letter language code 
+     *
+     * @param code A 3 letter language code
      * @return An optional containing the {@link LanguageCode} if found.
      */
     public static Optional<LanguageCode> getByPart2T(String code) {
@@ -175,21 +162,22 @@ public class LanguageCode {
         final String lowerCode = code.toLowerCase();
         return KNOWN.values().stream().filter(i -> lowerCode.equals(i.getPart2T())).findFirst();
     }
-    
+
 
     /**
      * the ISO-639-1-code if available, otherwise the ISO-639-3 code.
-     * @return A 2 or 3 letter language code 
+     *
+     * @return A 2 or 3 letter language code
      * @since 0.2
      */
     public String getCode() {
         return part1 != null ? part1 : id;
     }
-    
+
 
     @Override
     public String toString() {
-        StringJoiner joiner =  new StringJoiner(", ", LanguageCode.class.getSimpleName() + "[", "]").add("id='" + id + "'");
+        StringJoiner joiner = new StringJoiner(", ", LanguageCode.class.getSimpleName() + "[", "]").add("id='" + id + "'");
         if (part2B != null) {
             joiner.add("part2B='" + part2B + "'");
         }
@@ -207,4 +195,53 @@ public class LanguageCode {
         }
         return joiner.toString();
     }
+
+
+    /**
+     * The three-letter 639-3 identifier
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Equivalent 639-2 identifier of the bibliographic applications
+     * code set, if there is one
+     */
+    public String getPart2B() {
+        return part2B;
+    }
+
+    /**
+     * Equivalent 639-2 identifier of the terminology applications code
+     * set, if there is one
+     */
+    public String getPart2T() {
+        return part2T;
+    }
+
+    /**
+     * Equivalent 639-1 identifier, if there is one
+     */
+    public String getPart1() {
+        return part1;
+    }
+
+    public Scope getScope() {
+        return scope;
+    }
+
+    public Type getLanguageType() {
+        return languageType;
+    }
+
+    public String getRefName() {
+        return refName;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+ 
 }
