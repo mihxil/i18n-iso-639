@@ -3,7 +3,7 @@
  */
 module org.meeuw.i18n.languages {
     requires java.validation;
-    requires lombok;
+    requires static lombok;
     
     exports org.meeuw.i18n.languages;
 }
