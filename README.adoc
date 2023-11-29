@@ -14,7 +14,7 @@ This standard provides a 3-letter code for each language.
 
 There are too many such codes to be contained in a java-enum (e.g. https://github.com/TakahikoKawasaki/nv-i18n/blob/master/src/main/java/com/neovisionaries/i18n/LanguageAlpha3Code.java is just not complete)
 
-This package has the tab seperated files provided by https://iso639-3.sil.org/, and java classes to read this, and provided it as java objects.
+This package has the tab seperated files provided by https://iso639-3.sil.org/, and java classes to read this, and provide all language codes as java objects, with getters.
 
 == Usage
 

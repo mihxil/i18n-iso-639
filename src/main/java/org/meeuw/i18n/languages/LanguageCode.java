@@ -45,7 +45,7 @@ public class LanguageCode  {
     @Size(min = 3, max = 3)
     @NotNull
     private final String id;
-
+    
     private final String part2B;
 
     private final String part2T;

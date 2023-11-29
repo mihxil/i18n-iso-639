@@ -12,6 +12,8 @@ class LanguageCodeTest {
             System.out.println(lc);
             assertThat(lc.getCode()).isNotNull();
             assertThat(lc.getLanguageType()).isNotNull();
+            assertThat(lc.getScope()).isNotNull();
+
 
             if (lc.getComment() != null) {
                 System.out.println("Comment: " + lc.getComment());
