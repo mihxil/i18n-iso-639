@@ -1,7 +1,8 @@
-package org.meeuw.i18n.languages;
+package org.meeuw.test.i18n.languages;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
+import org.meeuw.i18n.languages.LanguageCode;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 class LanguageCodeTest {

@@ -6,11 +6,15 @@ import java.util.*;
 import java.util.stream.Stream;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import org.meeuw.i18n.languages.binding.LanguageCodeAdapter;
+
 /**
  * A Language with a ISO 639-3 language code.
  * 
  */
-public class LanguageCode  {
+@XmlJavaTypeAdapter(LanguageCodeAdapter.class)
+public class LanguageCode  implements Serializable {
 
     static final Map<String, LanguageCode> KNOWN;
 
@@ -46,19 +50,19 @@ public class LanguageCode  {
     @NotNull
     private final String id;
     
-    private final String part2B;
+    private transient final String part2B;
 
-    private final String part2T;
+    private transient final String part2T;
 
 
     @Size(min = 2, max = 2)
     @NotNull
-    private final String part1;
-    private final Scope scope;
-    private final Type languageType;
+    private transient final String part1;
+    private transient final Scope scope;
+    private transient final Type languageType;
     @NotNull
-    private final String refName;
-    private final String comment;
+    private transient final String refName;
+    private transient final String comment;
 
 
     private LanguageCode(
@@ -170,6 +174,7 @@ public class LanguageCode  {
      * @return A 2 or 3 letter language code
      * @since 0.2
      */
+    @javax.xml.bind.annotation.XmlValue
     public String getCode() {
         return part1 != null ? part1 : id;
     }
@@ -245,6 +250,10 @@ public class LanguageCode  {
 
     public String getComment() {
         return comment;
+    }
+    
+    private Object readResolve() {
+        return get(id).orElseThrow(() -> new IllegalArgumentException("Unknown language code " + id));
     }
 
  

@@ -43,6 +43,9 @@
     <!-- just avoid some warnings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    
+    <EXTRA_TEST_OPTS>--add-opens java.base/java.lang=ALL-UNNAMED</EXTRA_TEST_OPTS>
+
   </properties>
   <scm>
     <connection>scm:git:git://github.com/mihxil/i18n-iso-639-3.git</connection>
@@ -71,6 +74,19 @@
       <version>2.0.2</version>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <version>2.3.3</version>
+      <optional>true</optional>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>2.3.9</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -88,6 +104,19 @@
             </configuration>
           </execution>
           <execution>
+            <id>default-test-compile</id>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+            <configuration>
+              <compilerArguments>
+                <source>11</source>
+                <target>11</target>
+                <release>11</release>
+              </compilerArguments>
+            </configuration>
+          </execution>
+          <execution>
             <id>base-compile</id>
             <goals>
               <goal>compile</goal>
@@ -99,13 +128,10 @@
               </excludes>
             </configuration>
           </execution>
+        
         </executions>
         <!-- defaults for compile and testCompile -->
         <configuration>
-          <!-- Only required when JAVA_HOME isn't at least Java 9 and when haven't configured the maven-toolchains-plugin -->
-          <jdkToolchain>
-            <version>9</version>
-          </jdkToolchain>
           <target>${java.version}</target>
           <release>${java.version}</release>
           <encoding>UTF-8</encoding>
@@ -133,6 +159,9 @@
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.2</version>
+        <configuration>
+          <argLine>${EXTRA_TEST_OPTS}</argLine>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
