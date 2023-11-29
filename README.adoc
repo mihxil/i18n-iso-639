@@ -8,9 +8,9 @@ image:https://img.shields.io/nexus/s/https/oss.sonatype.org/org.meeuw.i18n/i18n-
 image:https://codecov.io/gh/mihxil/i18n-iso-639-3/branch/main/graph/badge.svg[codecov,link=https://codecov.io/gh/mihxil/i18n-iso-639-3]
 
 
-Languages of the World, are covered by the ISO-639-3 standard.
+Codes for Languages of the World are covered by the https://en.wikipedia.org/wiki/ISO_639-3[ISO-639-3 standard]
 
-These provide a 3-letter code for each language.
+This standard provides a 3-letter code for each language.
 
 There are too many such codes to be contained in a java-enum (e.g. https://github.com/TakahikoKawasaki/nv-i18n/blob/master/src/main/java/com/neovisionaries/i18n/LanguageAlpha3Code.java is just not complete)
 
