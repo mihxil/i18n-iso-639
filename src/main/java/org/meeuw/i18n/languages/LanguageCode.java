@@ -199,6 +199,7 @@ public class LanguageCode  {
 
     /**
      * The three-letter 639-3 identifier
+     * @return The three-letter 639-3 identifier
      */
     public String getId() {
         return id;
@@ -207,6 +208,7 @@ public class LanguageCode  {
     /**
      * Equivalent 639-2 identifier of the bibliographic applications
      * code set, if there is one
+     * @return bibliographic id or {@code null}
      */
     public String getPart2B() {
         return part2B;
@@ -215,6 +217,7 @@ public class LanguageCode  {
     /**
      * Equivalent 639-2 identifier of the terminology applications code
      * set, if there is one
+     * @return terminology id or {@code null}
      */
     public String getPart2T() {
         return part2T;
@@ -222,6 +225,7 @@ public class LanguageCode  {
 
     /**
      * Equivalent 639-1 identifier, if there is one
+     * @return 2 letter id or {@code null}
      */
     public String getPart1() {
         return part1;
