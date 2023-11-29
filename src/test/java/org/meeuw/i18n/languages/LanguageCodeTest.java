@@ -8,12 +8,21 @@ class LanguageCodeTest {
     
     @Test
     public void stream() {
-        LanguageCode.stream().forEach(System.out::println);
+        LanguageCode.stream().forEach(lc -> {
+            System.out.println(lc);
+            assertThat(lc.getCode()).isNotNull();
+            assertThat(lc.getLanguageType()).isNotNull();
+
+            if (lc.getComment() != null) {
+                System.out.println("Comment: " + lc.getComment());
+            }
+        });
     }
     
     @Test
     public void getByCode() {
         assertThat(LanguageCode.getByCode("nld").get().getRefName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.getByCode(null)).isEmpty();
     }
     
     @Test
@@ -25,16 +34,22 @@ class LanguageCodeTest {
     @Test
     public void getByPart1() {
         assertThat(LanguageCode.getByPart1("nl").get().getRefName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.getByPart1(null)).isEmpty();
+
     }
     
     @Test
     public void getByPart2T() {
         assertThat(LanguageCode.getByPart2T("nld").get().getRefName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.getByPart2T(null)).isEmpty();
+
     }
     
     @Test
     public void getByPart2B() {
         assertThat(LanguageCode.getByPart2B("dut").get().getRefName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.getByPart2B(null)).isEmpty();
+
     }
     
     @Test
@@ -42,6 +57,12 @@ class LanguageCodeTest {
         assertThat(LanguageCode.getByCode("doesntexist")).isEmpty();
     }
     
+    
+    @Test
+    public void getCode() {
+        assertThat(LanguageCode.getByCode("nld").get().getCode()).isEqualTo("nl");
+        assertThat(LanguageCode.getByCode("act").get().getCode()).isEqualTo("act");
+    }
     
 
 }
