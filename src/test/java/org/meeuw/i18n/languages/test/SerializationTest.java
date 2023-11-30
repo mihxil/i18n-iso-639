@@ -1,4 +1,4 @@
-package org.meeuw.test.i18n.languages;
+package org.meeuw.i18n.languages.test;
 
 import java.io.*;
 import javax.xml.bind.JAXB;

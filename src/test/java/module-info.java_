@@ -1,5 +1,5 @@
 module org.meeuw.i18n.languages.test {
-    exports org.meeuw.test.i18n.languages;
+    exports org.meeuw.i18n.languages.test;
     requires org.meeuw.i18n.languages;
 
     requires transitive org.junit.jupiter.engine;

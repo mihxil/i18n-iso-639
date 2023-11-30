@@ -22,17 +22,21 @@ This package has the tab seperated files provided by https://iso639-3.sil.org/, 
 ----
 import org.meeuw.i18n.languages.LanguageCode;
 
-LanguageCode languageCode = LanguageCode.getByCode("nld");
+Optional<LanguageCode> languageCode = LanguageCode.getByCode("nld");
 
-LanguageCode languageCode = LanguageCode.get("nl");
+LanguageCode languageCode = LanguageCode.languageCode("nl");
+
+languageCode.getInvertedName();
+
 
 LanguageCode.stream()
+   .sorted();
 
 ----
 
-
+See also the https://github.com/mihxil/i18n-iso-639-3/blob/main/src/test/java/org/meeuw/test/i18n/languages/LanguageCodeTest.java[test cases]
 [source, java]
 ----
-include::src/test/java/org/meeuw/i18n/languages/LanguageCodeTest.java[]
+include::src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[]
 ----
 
