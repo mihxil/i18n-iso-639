@@ -109,6 +109,16 @@ public class LanguageCode  implements Serializable {
         }
     }
 
+    /**
+     * As {@link #get(String)}, but throws an {@link IllegalArgumentException} if not found. 
+     * 
+     * @return The {@link LanguageCode} if found
+     * @throws IllegalArgumentException if not found
+     */
+    public static LanguageCode languageCode(String code) {
+        return get(code).orElseThrow(() -> new IllegalArgumentException("Unknown language code " + code));
+    }
+
 
     /**
      * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()}
