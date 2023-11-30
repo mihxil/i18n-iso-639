@@ -21,6 +21,7 @@ class LanguageCodeTest {
             }
         });
     }
+    
     @Test
     public void sort() {
         LanguageCode.stream().sorted().forEach(lc -> {
@@ -47,26 +48,22 @@ class LanguageCodeTest {
         assertThat(LanguageCode.getByPart1(null)).isEmpty();
 
     }
-    
     @Test
     public void getByPart2T() {
         assertThat(LanguageCode.getByPart2T("nld").get().getRefName()).isEqualTo("Dutch");
         assertThat(LanguageCode.getByPart2T(null)).isEmpty();
-
     }
     
     @Test
     public void getByPart2B() {
         assertThat(LanguageCode.getByPart2B("dut").get().getRefName()).isEqualTo("Dutch");
         assertThat(LanguageCode.getByPart2B(null)).isEmpty();
-
     }
     
     @Test
     public void getUnknown() {
         assertThat(LanguageCode.getByCode("doesntexist")).isEmpty();
     }
-    
     
     @Test
     public void getCode() {
