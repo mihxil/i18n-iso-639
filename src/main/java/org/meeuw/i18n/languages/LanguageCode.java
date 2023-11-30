@@ -14,11 +14,25 @@ import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
  * 
  */
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
-public class LanguageCode  implements Serializable {
+public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
 
     static final Map<String, LanguageCode> KNOWN;
 
     static {
+        Map<String, String[]> names = new HashMap<>();
+        try (InputStream inputStream = LanguageCode.class.getResourceAsStream("/iso-639-3_Code_Tables_20230123/iso-639-3_Name_Index_20230123.tab");
+             BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+        ) {
+            String line = inputStreamReader.readLine();
+            while (line != null) {
+                String[] split = line.split("\t");
+                names.put(split[0], new String[] {split[1], split[2]});
+                line = inputStreamReader.readLine();
+            }
+        } catch (IOException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+
         Map<String, LanguageCode> temp = new HashMap<>();
         try (InputStream inputStream = LanguageCode.class.getResourceAsStream("/iso-639-3_Code_Tables_20230123/iso-639-3_20230123.tab");
              BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
@@ -27,6 +41,7 @@ public class LanguageCode  implements Serializable {
             String line = inputStreamReader.readLine();
             while (line != null) {
                 String[] split = line.split("\t");
+                String[] name = names.get(split[0]);
                 LanguageCode found = new LanguageCode(
                     split[0],
                     split[1].length() > 0 ? split[1] : null,
@@ -35,7 +50,10 @@ public class LanguageCode  implements Serializable {
                     Scope.valueOf(split[4]),
                     Type.valueOf(split[5]),
                     split[6],
-                    split.length == 8 ? split[7] : null);
+                    split.length == 8 ? split[7] : null,
+                    name[0],
+                    name[1]
+                );
                 temp.put(found.getId().toLowerCase(), found);
                 line = inputStreamReader.readLine();
             }
@@ -63,7 +81,9 @@ public class LanguageCode  implements Serializable {
     @NotNull
     private transient final String refName;
     private transient final String comment;
-
+    
+    private transient  final String name;
+    private transient  final String invertedName;
 
     private LanguageCode(
         String id,
@@ -73,7 +93,10 @@ public class LanguageCode  implements Serializable {
         Scope scope,
         Type languageType,
         String refName,
-        String comment) {
+        String comment,
+        String name,
+        String invertedName
+    ) {
         this.id = id;
         this.part2B = part2B;
         this.part2T = part2T;
@@ -82,6 +105,8 @@ public class LanguageCode  implements Serializable {
         this.languageType = languageType;
         this.refName = refName;
         this.comment = comment;
+        this.name  = name;
+        this.invertedName = invertedName;
     }
 
     /**
@@ -261,7 +286,26 @@ public class LanguageCode  implements Serializable {
     public String getComment() {
         return comment;
     }
-    
+
+    /**
+     * The name (in english) of the language.
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Sometimes the name of the language starts with something like 'eastern' or so. This returns the name with these prefixes postfixed, so this is the natural name to <em>sort</em> languages on.
+     */
+    public String getInvertedName() {
+        return invertedName;
+    }
+
+    @Override
+    public int compareTo(LanguageCode o) {
+        return invertedName.compareTo(o.invertedName);
+    }
+
     private Object readResolve() {
         return get(id).orElse(this);
     }

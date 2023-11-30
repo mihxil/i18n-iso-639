@@ -21,6 +21,12 @@ class LanguageCodeTest {
             }
         });
     }
+    @Test
+    public void sort() {
+        LanguageCode.stream().sorted().forEach(lc -> {
+            System.out.println(lc.getCode() + "\t" + lc.getName() + (lc.getName().equals(lc.getInvertedName()) ? "" : (" (" + lc.getInvertedName() + ")")));
+        });
+    }
     
     @Test
     public void getByCode() {
