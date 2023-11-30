@@ -34,7 +34,7 @@ LanguageCode.stream()
 
 ----
 
-See also the https://github.com/mihxil/i18n-iso-639-3/blob/main/src/test/java/org/meeuw/test/i18n/languages/LanguageCodeTest.java[test cases]
+See also the https://github.com/mihxil/i18n-iso-639-3/blob/main/src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[test cases]
 [source, java]
 ----
 include::src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[]
