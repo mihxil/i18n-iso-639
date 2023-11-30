@@ -1,4 +1,4 @@
-package org.meeuw.i18n.languages.binding;
+package org.meeuw.i18n.languages.jaxb;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import org.meeuw.i18n.languages.LanguageCode;
