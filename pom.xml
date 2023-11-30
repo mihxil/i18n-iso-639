@@ -43,8 +43,6 @@
     <!-- just avoid some warnings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    
-    <EXTRA_TEST_OPTS>--add-opens java.base/java.lang=ALL-UNNAMED</EXTRA_TEST_OPTS>
 
   </properties>
   <scm>
@@ -79,7 +77,6 @@
       <artifactId>jakarta.xml.bind-api</artifactId>
       <version>2.3.3</version>
       <optional>true</optional>
-      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
@@ -95,25 +92,17 @@
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.11.0</version>
+        <configuration>
+          <target>11</target>
+          <source>11</source>
+          <encoding>UTF-8</encoding>
+        </configuration>
         <executions>
           <execution>
             <id>default-compile</id>
             <configuration>
               <!-- compile everything to ensure module-info contains right entries -->
               <release>11</release>
-            </configuration>
-          </execution>
-          <execution>
-            <id>default-test-compile</id>
-            <goals>
-              <goal>testCompile</goal>
-            </goals>
-            <configuration>
-              <compilerArguments>
-                <source>11</source>
-                <target>11</target>
-                <release>11</release>
-              </compilerArguments>
             </configuration>
           </execution>
           <execution>
@@ -126,16 +115,11 @@
               <excludes>
                 <exclude>module-info.java</exclude>
               </excludes>
+              <source>${java.version}</source>
+              <target>${java.version}</target>
             </configuration>
           </execution>
-        
         </executions>
-        <!-- defaults for compile and testCompile -->
-        <configuration>
-          <target>${java.version}</target>
-          <release>${java.version}</release>
-          <encoding>UTF-8</encoding>
-        </configuration>
       </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
@@ -160,7 +144,7 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.2</version>
         <configuration>
-          <argLine>${EXTRA_TEST_OPTS}</argLine>
+          <useModulePath>false</useModulePath>
         </configuration>
       </plugin>
       <plugin>

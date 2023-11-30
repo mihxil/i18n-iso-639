@@ -4,7 +4,7 @@
 module org.meeuw.i18n.languages {
     
     exports org.meeuw.i18n.languages;
-    exports org.meeuw.i18n.languages.binding;
+    exports org.meeuw.i18n.languages.jaxb;
     
     requires static java.validation;
     requires static java.xml.bind;
