@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import org.meeuw.i18n.languages.binding.LanguageCodeAdapter;
+import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 /**
  * A Language with a ISO 639-3 language code.
@@ -253,7 +253,7 @@ public class LanguageCode  implements Serializable {
     }
     
     private Object readResolve() {
-        return get(id).orElseThrow(() -> new IllegalArgumentException("Unknown language code " + id));
+        return get(id).orElse(this);
     }
 
  
