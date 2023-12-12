@@ -43,6 +43,11 @@ class LanguageCodeTest {
     }
     
     @Test
+    public void getTokiPona() {
+        assertThat(LanguageCode.get("tok").get().getRefName()).isEqualTo("Toki Pona");
+    }
+    
+    @Test
     public void getByPart1() {
         assertThat(LanguageCode.getByPart1("nl").get().getRefName()).isEqualTo("Dutch");
         assertThat(LanguageCode.getByPart1(null)).isEmpty();
