@@ -36,7 +36,7 @@
 
   <properties>
     <junit.version>5.10.1</junit.version>
-    <groovy.version>4.0.15</groovy.version>
+    <groovy.version>4.0.16</groovy.version>
     <codemodel.version>4.0.4</codemodel.version>
     <java.version>8</java.version>
     <assertj.version>3.24.2</assertj.version>
