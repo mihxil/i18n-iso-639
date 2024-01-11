@@ -43,7 +43,7 @@ include::src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[]
 == Support
 
 === JAXB
-The language code is annoted with a JAXB annotation. It will serialize and deserialize to and from the code. The dependency on the annotation is optional.
+The language code is annotated with a JAXB annotation. It will serialize and deserialize to and from the code. The dependency on the annotation is optional.
 
 === Serializable
 The `LanguageCode` is serializable, and ensures that on deserialization the same object for every language is returned. (And only the _code_ is non transient).
