@@ -46,9 +46,9 @@
 
   </properties>
   <scm>
-    <connection>scm:git:git://github.com/mihxil/i18n-iso-639-3.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com/mihxil/i18n-iso-639-3.git</developerConnection>
-    <url>https://github.com/mihxil/i18n-i18n-iso-639-3</url>
+    <connection>scm:git:${project.scm.url}.git</connection>
+    <developerConnection>scm:git:${project.scm.url}.git</developerConnection>
+    <url>https://github.com/mihxil/i18n-iso-639-3</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -65,7 +65,7 @@
       <version>${assertj.version}</version>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>jakarta.validation</groupId>
       <artifactId>jakarta.validation-api</artifactId>
