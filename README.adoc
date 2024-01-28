@@ -56,7 +56,7 @@ The default sort order of a `LanguageCode` is on 'Inverted Name'.
 
 [cols="1,1,1"]
 |===
-|<1 
+|<1
 |developing/testing
 |2023
 
@@ -71,7 +71,7 @@ The default sort order of a `LanguageCode` is on 'Inverted Name'.
 
 |2.x
 |java 11, jakarta.xml
-|2024?
+|2024-01-28
 |===
 
 

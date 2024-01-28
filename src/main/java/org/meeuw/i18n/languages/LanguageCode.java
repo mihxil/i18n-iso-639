@@ -1,12 +1,13 @@
 package org.meeuw.i18n.languages;
 
+import jakarta.xml.bind.annotation.XmlValue;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Stream;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 /**
@@ -209,7 +210,7 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
      * @return A 2 or 3 letter language code
      * @since 0.2
      */
-    @javax.xml.bind.annotation.XmlValue
+    @XmlValue
     public String getCode() {
         return part1 != null ? part1 : id;
     }

@@ -1,7 +1,7 @@
 package org.meeuw.i18n.languages.test;
 
 import java.io.*;
-import javax.xml.bind.JAXB;
+import jakarta.xml.bind.JAXB;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.meeuw.i18n.languages.LanguageCode;
