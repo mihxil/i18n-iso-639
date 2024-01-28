@@ -20,7 +20,7 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
 
     static {
         Map<String, String[]> names = new HashMap<>();
-        try (InputStream inputStream = LanguageCode.class.getResourceAsStream("/iso-639-3_Code_Tables_20230123/iso-639-3_Name_Index_20230123.tab");
+        try (InputStream inputStream = LanguageCode.class.getResourceAsStream("/iso-639-3_Code_Tables_20240110/iso-639-3_Name_Index.tab");
              BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         ) {
             String line = inputStreamReader.readLine();
@@ -34,7 +34,7 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
         }
 
         Map<String, LanguageCode> temp = new HashMap<>();
-        try (InputStream inputStream = LanguageCode.class.getResourceAsStream("/iso-639-3_Code_Tables_20230123/iso-639-3_20230123.tab");
+        try (InputStream inputStream = LanguageCode.class.getResourceAsStream("/iso-639-3_Code_Tables_20240110/iso-639-3.tab");
              BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         ) {
             inputStreamReader.readLine(); // skipheader;
