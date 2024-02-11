@@ -6,7 +6,15 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class RetiredLanguageCode {
+/**
+ * This class represents a language code that has been retired.
+ *<p>
+ * @see <a href="https://iso639-3.sil.org/code_tables/deprecated_codes/data">https://iso639-3.sil.org/code_tables/deprecated_codes/data</a>
+ * <p>
+ * The main goal of this class is to be used in {@link LanguageCode#getByCode(String)}, which will return the unretired language code if possible.
+ *
+ */
+public class RetiredLanguageCode implements Serializable {
 
     static final Map<String, RetiredLanguageCode> KNOWN;
 
@@ -132,5 +140,10 @@ public class RetiredLanguageCode {
         public RetirementException(String message) {
             super(message);
         }
+    }
+
+
+    private Object readResolve() {
+        return getByCode(code).orElse(this);
     }
 }
