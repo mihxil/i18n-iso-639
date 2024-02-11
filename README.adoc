@@ -45,7 +45,7 @@ include::src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[]
 
 [source, java]
 ----
-// the 'krim' dialect (Sierra Leano) officially merged into 'bmf' (Bom-Kim) in 2017
+// the 'krim' dialect (Sierra Leone) officially merged into 'bmf' (Bom-Kim) in 2017
 
  assertThat(LanguageCode.getByCode("krm").get().getCode()).isEqualTo("bmf");
 ----
