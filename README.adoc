@@ -62,26 +62,36 @@ The `LanguageCode` is serializable, and ensures that on deserialization the same
 
 The default sort order of a `LanguageCode` is on 'Inverted Name'.
 
+
 === Versions
 
-[cols="1,1,1"]
+[cols="1,1,1,1"]
 |===
 |<1
 |developing/testing
 |2023
+|
 
 |1.x
 |compabible with java 8, javax.xml, module-info java 11
+|
 |
 
 | 1.0
 |
 | 2023-11-30
+|
 
 
 |2.x
 |java 11, jakarta.xml
 |2024-01-28
+|jakarta mostly applies to the optional jaxb support (and to some - also optional - validation annotations)
+
+|2.1
+|support for retired codes
+|2024-02-11
+|
 |===
 
 
