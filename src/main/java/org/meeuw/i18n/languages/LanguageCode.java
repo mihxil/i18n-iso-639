@@ -127,11 +127,14 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
     }
 
     /**
-     * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()}, or by its two letter identifier {@link #getPart1()}.
+     * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()} (using {@link #getByCode(String)}, or by its two letter identifier {@link #getPart1()}.
      *
      * @param code A 2 or 3 letter language code
      * @return An optional containing the {@link LanguageCode} if found.
      * @see #getCode()
+     * @see #getByPart1(String)
+     * @see #getByCode(String)
+     * @see #languageCode(String)
      * @since 0.2
      */
     public static Optional<LanguageCode> get(String code) {
@@ -160,6 +163,7 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
      *
      * @param code A 3 letter language code
      * @return An optional containing the {@link LanguageCode} if found.
+
      */
     public static Optional<LanguageCode> getByCode(String code) {
         if (code == null) {
