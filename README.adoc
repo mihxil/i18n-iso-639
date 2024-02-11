@@ -40,6 +40,16 @@ See also the https://github.com/mihxil/i18n-iso-639-3/blob/main/src/test/java/or
 include::src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[]
 ----
 
+=== Retired codes
+`LanguageCode#getByCode` will also support retired codes if possible. This means that the code of the returned object may be different:
+
+[source, java]
+----
+// the 'krim' dialect (Sierra Leano) officially merged into 'bmf' (Bom-Kim) in 2017
+
+ assertThat(LanguageCode.getByCode("krm").get().getCode()).isEqualTo("bmf");
+----
+
 == Support
 
 === JAXB

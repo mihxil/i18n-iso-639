@@ -79,8 +79,8 @@ class LanguageCodeTest {
 
     @Test
     public void krm() {
+        // the 'krim' dialect (Sierra Leano) officially merged into 'bmf' (Bom-Kim) in 2017
         assertThat(LanguageCode.getByCode("krm").get().getCode()).isEqualTo("bmf");
-
     }
 
 
