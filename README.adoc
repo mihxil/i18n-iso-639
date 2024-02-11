@@ -1,4 +1,4 @@
-= JAVA ISO-639-3 support
+de= JAVA ISO-639-3 support
 :toc:
 
 image:https://www.javadoc.io/badge/org.meeuw.i18n/i18n-iso-639-3.svg?color=blue[javadoc,link=https://www.javadoc.io/doc/org.meeuw.i18n/i18n-iso-639-3/latest]
@@ -63,7 +63,7 @@ The `LanguageCode` is serializable, and ensures that on deserialization the same
 The default sort order of a `LanguageCode` is on 'Inverted Name'.
 
 
-=== Versions
+== Versions
 
 [cols="1,1,1,1"]
 |===
