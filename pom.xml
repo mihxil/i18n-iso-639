@@ -35,11 +35,11 @@
 
 
   <properties>
-    <junit.version>5.10.1</junit.version>
+    <junit.version>5.10.2</junit.version>
     <groovy.version>4.0.16</groovy.version>
     <codemodel.version>4.0.4</codemodel.version>
     <java.version>8</java.version>
-    <assertj.version>3.24.2</assertj.version>
+    <assertj.version>3.25.3</assertj.version>
     <!-- just avoid some warnings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
