@@ -1,27 +1,34 @@
 package org.meeuw.i18n.languages;
 
-import jakarta.xml.bind.annotation.XmlValue;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
+
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.XmlValue;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 /**
  * A Language with a ISO 639-3 language code.
- * 
  */
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
 public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
 
+    private final static Logger LOGGER = Logger.getLogger(LanguageCode.class.getName());
+
+
     static final Map<String, LanguageCode> KNOWN;
 
+    static final String DIR = "/iso-639-3_Code_Tables_20240207/";
     static {
         Map<String, String[]> names = new HashMap<>();
-        try (InputStream inputStream = LanguageCode.class.getResourceAsStream("/iso-639-3_Code_Tables_20240110/iso-639-3_Name_Index.tab");
+        try (InputStream inputStream = LanguageCode.class.getResourceAsStream(DIR + "iso-639-3_Name_Index.tab");
              BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         ) {
             String line = inputStreamReader.readLine();
@@ -35,7 +42,7 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
         }
 
         Map<String, LanguageCode> temp = new HashMap<>();
-        try (InputStream inputStream = LanguageCode.class.getResourceAsStream("/iso-639-3_Code_Tables_20240110/iso-639-3.tab");
+        try (InputStream inputStream = LanguageCode.class.getResourceAsStream(DIR + "iso-639-3.tab");
              BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         ) {
             inputStreamReader.readLine(); // skipheader;
@@ -68,7 +75,7 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
     @Size(min = 3, max = 3)
     @NotNull
     private final String id;
-    
+
     private transient final String part2B;
 
     private transient final String part2T;
@@ -82,7 +89,7 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
     @NotNull
     private transient final String refName;
     private transient final String comment;
-    
+
     private transient  final String name;
     private transient  final String invertedName;
 
@@ -136,8 +143,8 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
     }
 
     /**
-     * As {@link #get(String)}, but throws an {@link IllegalArgumentException} if not found. 
-     * 
+     * As {@link #get(String)}, but throws an {@link IllegalArgumentException} if not found.
+     *
      * @return The {@link LanguageCode} if found
      * @throws IllegalArgumentException if not found
      */
@@ -149,6 +156,8 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
     /**
      * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()}
      *
+     * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
+     *
      * @param code A 3 letter language code
      * @return An optional containing the {@link LanguageCode} if found.
      */
@@ -156,7 +165,19 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
         if (code == null) {
             return Optional.empty();
         }
-        return Optional.ofNullable(KNOWN.get(code.toLowerCase()));
+        LanguageCode prop = KNOWN.get(code.toLowerCase());
+        if (prop == null){
+            Optional<RetiredLanguageCode> retiredLanguageCode = RetiredLanguageCode.getByCode(code);
+            if (retiredLanguageCode.isPresent() && retiredLanguageCode.get().getRetReason() != RetirementReason.N) {
+                try {
+                    prop = retiredLanguageCode.get().getChangeTo();
+                } catch (RetiredLanguageCode.RetirementException e) {
+                    LOGGER.log(Level.WARNING, "Could not find single replacement for " + code + " " + e.getMessage());
+                }
+            }
+        }
+
+        return Optional.ofNullable(prop);
     }
 
 
@@ -311,5 +332,5 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
         return get(id).orElse(this);
     }
 
- 
+
 }
