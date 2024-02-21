@@ -6,27 +6,27 @@ package org.meeuw.i18n.languages;
  */
 public enum Type {
     /**
-     * Ancient
+     * Ancient language
      */
     A,
     /**
-     * Constructed
+     * Constructed language
      */
     C,
     /**
-     * Extinct
+     * Extinct language
      */
     E,
     /**
-     * Historical
+     * Historical language
      */
     H,
     /**
-     * Living
+     * Living language
      */
     L,
     /**
-     * Special
+     * Special language
      */
     S
 }
