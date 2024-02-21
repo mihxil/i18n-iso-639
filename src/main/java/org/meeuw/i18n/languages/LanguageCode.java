@@ -1,24 +1,26 @@
 package org.meeuw.i18n.languages;
 
+import com.fasterxml.jackson.annotation.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
-
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-import jakarta.xml.bind.annotation.XmlValue;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 /**
- * A Language with a ISO 639-3 language code.
+ * A language with a ISO 639-3 language code.
+ *<p>
+ * Annotated with {@link XmlJavaTypeAdapter}, so it will automatically be marshalled and unmarshalled in XML's.  This can also be used in jackson when using {@code com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations}
+ *<p>
+ * This class is immutable and can be used as a key in maps.
  */
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
-public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
+public class LanguageCode implements Serializable, Comparable<LanguageCode> {
 
     private final static Logger LOGGER = Logger.getLogger(LanguageCode.class.getName());
 
@@ -137,12 +139,16 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
      * @see #languageCode(String)
      * @since 0.2
      */
-    public static Optional<LanguageCode> get(String code) {
+    public static Optional<LanguageCode> get(String code, boolean matchRetired) {
         if (code.length() == 2) {
             return getByPart1(code);
         } else {
-            return getByCode(code);
+            return getByCode(code, matchRetired);
         }
+    }
+    
+    public static Optional<LanguageCode> get(String code) {
+        return get(code, true);
     }
 
     /**
@@ -151,6 +157,7 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
      * @return The {@link LanguageCode} if found
      * @throws IllegalArgumentException if not found
      */
+    @JsonCreator
     public static LanguageCode languageCode(String code) {
         return get(code).orElseThrow(() -> new IllegalArgumentException("Unknown language code " + code));
     }
@@ -163,14 +170,14 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
      *
      * @param code A 3 letter language code
      * @return An optional containing the {@link LanguageCode} if found.
-
+     * @since 2.2
      */
-    public static Optional<LanguageCode> getByCode(String code) {
+    public static Optional<LanguageCode> getByCode(@Size(min = 3, max=3) String code, boolean matchRetired) {
         if (code == null) {
             return Optional.empty();
         }
         LanguageCode prop = KNOWN.get(code.toLowerCase());
-        if (prop == null){
+        if (prop == null && matchRetired){
             Optional<RetiredLanguageCode> retiredLanguageCode = RetiredLanguageCode.getByCode(code);
             if (retiredLanguageCode.isPresent() && retiredLanguageCode.get().getRetReason() != RetirementReason.N) {
                 try {
@@ -183,6 +190,15 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
 
         return Optional.ofNullable(prop);
     }
+
+
+    /**
+     * Defaulting version of {@link #getByCode(String, boolean)}, matching retired codes too.
+     */
+    public static Optional<LanguageCode> getByCode(@Size(min = 3, max=3) String code) {
+        return getByCode(code, true);
+    }
+
 
 
     /**
@@ -235,7 +251,7 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
      * @return A 2 or 3 letter language code
      * @since 0.2
      */
-    @XmlValue
+    @JsonValue
     public String getCode() {
         return part1 != null ? part1 : id;
     }
@@ -325,6 +341,10 @@ public class LanguageCode  implements Serializable, Comparable<LanguageCode> {
      */
     public String getInvertedName() {
         return invertedName;
+    }
+    
+    public Locale toLocale() {
+        return new Locale(getCode());
     }
 
     @Override
