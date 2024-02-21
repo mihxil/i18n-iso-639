@@ -12,7 +12,6 @@ module org.meeuw.i18n.languages {
     requires static jakarta.xml.bind;
     requires static java.logging;
     requires static org.checkerframework.checker.qual;
-    requires static org.meeuw.i18n.countries;
     
     requires static com.fasterxml.jackson.databind;
     opens org.meeuw.i18n.languages to com.fasterxml.jackson.databind;
