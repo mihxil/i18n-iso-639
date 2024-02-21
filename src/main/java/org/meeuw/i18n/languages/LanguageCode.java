@@ -13,9 +13,11 @@ import java.util.stream.Stream;
 import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 /**
- * A language with a ISO 639-3 language code.
+ * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if they exist.
  *<p>
- * Annotated with {@link XmlJavaTypeAdapter}, so it will automatically be marshalled and unmarshalled in XML's.  This can also be used in jackson when using {@code com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations}
+ * Annotated with {@link XmlJavaTypeAdapter}, so it will automatically be marshalled and unmarshalled in XML's. 
+ * <p>
+ * Also annotated with jackon annotation, to be marshalled and unmarshalled in JSON as the code.
  *<p>
  * This class is immutable and can be used as a key in maps.
  */
@@ -172,7 +174,7 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
      * @return An optional containing the {@link LanguageCode} if found.
      * @since 2.2
      */
-    public static Optional<LanguageCode> getByCode(@Size(min = 3, max=3) String code, boolean matchRetired) {
+    public static Optional<LanguageCode> getById(@Size(min = 3, max=3) String code, boolean matchRetired) {
         if (code == null) {
             return Optional.empty();
         }
@@ -193,11 +195,25 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
 
 
     /**
-     * Defaulting version of {@link #getByCode(String, boolean)}, matching retired codes too.
+     * Defaulting version of {@link #getById(String, boolean)}, matching retired codes too.
+     * @deprecated Confusing, since not matching like {@link #getCode()}
+     * @see #getById(String,) 
      */
+    @Deprecated
     public static Optional<LanguageCode> getByCode(@Size(min = 3, max=3) String code) {
-        return getByCode(code, true);
+        return getById(code);
     }
+    
+      /**
+     * Defaulting version of {@link #getById(String, boolean)}, matching retired codes too.
+     * @deprecated Confusing, since not matching like {@link #getCode()}
+     * @see #getById(String,) 
+     */
+    @Deprecated
+    public static Optional<LanguageCode> getById(@Size(min = 3, max=3) String code) {
+        return getById(code, true);
+    }
+
 
 
 
