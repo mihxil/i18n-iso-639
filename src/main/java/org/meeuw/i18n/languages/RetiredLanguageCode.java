@@ -104,7 +104,7 @@ public class RetiredLanguageCode implements Serializable {
         if (changeTo == null) {
             throw new RetirementException("Remedy for " + code + ": " + retRemedy);
         }
-        return LanguageCode.getByCode(changeTo).orElseThrow();
+        return LanguageCode.getById(changeTo).orElseThrow();
     }
 
     public String getRetRemedy() {

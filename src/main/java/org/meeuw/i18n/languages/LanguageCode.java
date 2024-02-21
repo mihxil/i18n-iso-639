@@ -145,7 +145,7 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
         if (code.length() == 2) {
             return getByPart1(code);
         } else {
-            return getByCode(code, matchRetired);
+            return getById(code, matchRetired);
         }
     }
     
@@ -204,12 +204,9 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
         return getById(code);
     }
     
-      /**
+    /**
      * Defaulting version of {@link #getById(String, boolean)}, matching retired codes too.
-     * @deprecated Confusing, since not matching like {@link #getCode()}
-     * @see #getById(String,) 
      */
-    @Deprecated
     public static Optional<LanguageCode> getById(@Size(min = 3, max=3) String code) {
         return getById(code, true);
     }
