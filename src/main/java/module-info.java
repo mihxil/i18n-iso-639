@@ -4,12 +4,13 @@
 module org.meeuw.i18n.languages {
     exports org.meeuw.i18n.languages;
     exports org.meeuw.i18n.languages.jaxb;
-    exports org.meeuw.i18n.languages.validation;
-    exports org.meeuw.i18n.languages.validation.impl;
     exports org.meeuw.i18n.languages.jackson;
-
-    requires static jakarta.validation;
-    requires static jakarta.xml.bind;
+    
+    //exports org.meeuw.i18n.languages.validation;
+    //exports org.meeuw.i18n.languages.validation.impl;
+    
+    //requires static jakarta.validation;
+    //requires static jakarta.xml.bind;
     requires static java.logging;
     requires static org.checkerframework.checker.qual;
     
