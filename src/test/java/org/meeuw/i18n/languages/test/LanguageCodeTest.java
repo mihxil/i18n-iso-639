@@ -32,8 +32,8 @@ class LanguageCodeTest {
 
     @Test
     public void getByCode() {
-        assertThat(LanguageCode.getById("nld").get().getRefName()).isEqualTo("Dutch");
-        assertThat(LanguageCode.getById(null)).isEmpty();
+        assertThat(LanguageCode.getByPart3("nld").get().getRefName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.getByPart3(null)).isEmpty();
     }
 
     @Test
@@ -68,30 +68,30 @@ class LanguageCodeTest {
 
     @Test
     public void getUnknown() {
-        assertThat(LanguageCode.getById("doesntexist")).isEmpty();
+        assertThat(LanguageCode.getByPart3("doesntexist")).isEmpty();
     }
 
     @Test
     public void getCode() {
-        assertThat(LanguageCode.getById("nld").get().getCode()).isEqualTo("nl");
-        assertThat(LanguageCode.getById("act").get().getCode()).isEqualTo("act");
+        assertThat(LanguageCode.getByPart3("nld").get().getCode()).isEqualTo("nl");
+        assertThat(LanguageCode.getByPart3("act").get().getCode()).isEqualTo("act");
     }
 
     @Test
     public void krm() {
         // the 'krim' dialect (Sierra Leano) officially merged into 'bmf' (Bom-Kim) in 2017
-        assertThat(LanguageCode.getById("krm").get().getCode()).isEqualTo("bmf");
+        assertThat(LanguageCode.getByPart3("krm").get().getCode()).isEqualTo("bmf");
     }
 
 
     @Test
     public void ppr() {
-        assertThat(LanguageCode.getById("ppr").get().getCode()).isEqualTo("lcq");
+        assertThat(LanguageCode.getByPart3("ppr").get().getCode()).isEqualTo("lcq");
     }
 
     @Test
     public void lcq() {
-        assertThat(LanguageCode.getById("lcq").get().getCode()).isEqualTo("lcq");
+        assertThat(LanguageCode.getByPart3("lcq").get().getCode()).isEqualTo("lcq");
     }
 
 

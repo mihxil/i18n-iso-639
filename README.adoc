@@ -18,11 +18,11 @@ This package has the tab seperated files provided by https://iso639-3.sil.org/, 
 
 == Usage
 
-[source, java]
+[source,java]
 ----
 import org.meeuw.i18n.languages.LanguageCode;
 
-Optional<LanguageCode> languageCode = LanguageCode.getByCode("nld");
+Optional<LanguageCode> languageCode = LanguageCode.getByPart3("nld");
 
 LanguageCode languageCode = LanguageCode.languageCode("nl");
 
@@ -92,6 +92,12 @@ The default sort order of a `LanguageCode` is on 'Inverted Name'.
 |support for retired codes
 |2024-02-11
 |
+
+|2.2
+|migrated support for language code validation from i18n-regions
+|2024-?
+|
+
 |===
 
 

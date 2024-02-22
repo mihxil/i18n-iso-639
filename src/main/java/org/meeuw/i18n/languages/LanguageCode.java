@@ -145,7 +145,7 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
         if (code.length() == 2) {
             return getByPart1(code);
         } else {
-            return getById(code, matchRetired);
+            return getByPart3(code, matchRetired);
         }
     }
     
@@ -174,7 +174,7 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
      * @return An optional containing the {@link LanguageCode} if found.
      * @since 2.2
      */
-    public static Optional<LanguageCode> getById(@Size(min = 3, max=3) String code, boolean matchRetired) {
+    public static Optional<LanguageCode> getByPart3(@Size(min = 3, max=3) String code, boolean matchRetired) {
         if (code == null) {
             return Optional.empty();
         }
@@ -195,25 +195,23 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
 
 
     /**
-     * Defaulting version of {@link #getById(String, boolean)}, matching retired codes too.
+     * Defaulting version of {@link #getByPart3(String, boolean)}, matching retired codes too.
      * @deprecated Confusing, since not matching like {@link #getCode()}
-     * @see #getById(String,) 
+     * @see #getByPart3(String,) 
      */
     @Deprecated
     public static Optional<LanguageCode> getByCode(@Size(min = 3, max=3) String code) {
-        return getById(code);
+        return getByPart3(code);
     }
     
     /**
-     * Defaulting version of {@link #getById(String, boolean)}, matching retired codes too.
+     * Defaulting version of {@link #getByPart3(String, boolean)}, matching retired codes too.
      */
-    public static Optional<LanguageCode> getById(@Size(min = 3, max=3) String code) {
-        return getById(code, true);
+    public static Optional<LanguageCode> getByPart3(@Size(min = 3, max=3) String code) {
+        return getByPart3(code, true);
     }
 
-
-
-
+    
     /**
      * Retrieves a {@link LanguageCode} by its Part1 code {@link #getPart1()}
      *
@@ -259,7 +257,7 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
 
 
     /**
-     * the ISO-639-1-code if available, otherwise the ISO-639-3 code.
+     * The {@link #getPart1() ISO-639-1-code} if available, otherwise the {@link #getPart3() ISO-639-3 code}.
      *
      * @return A 2 or 3 letter language code
      * @since 0.2
@@ -272,23 +270,7 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
 
     @Override
     public String toString() {
-        StringJoiner joiner = new StringJoiner(", ", LanguageCode.class.getSimpleName() + "[", "]").add("id='" + id + "'");
-        if (part2B != null) {
-            joiner.add("part2B='" + part2B + "'");
-        }
-        if (part2T != null) {
-            joiner.add("part2T='" + part2T + "'");
-        }
-        if (part1 != null) {
-            joiner.add("part1='" + part1 + "'");
-        }
-        joiner.add("scope='" + scope + "'")
-            .add("languageType='" + languageType + "'")
-            .add("refName='" + refName + "'");
-        if (comment != null) {
-            joiner.add("comment='" + comment + "'");
-        }
-        return joiner.toString();
+        return getCode() + ":" + refName;
     }
 
 
@@ -298,6 +280,14 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
      */
     public String getId() {
         return id;
+    }
+    
+    /**
+     * Synonym for {@link #getId()}.
+     * @return The three-letter 639-3 identifier
+     */
+    public String getPart3() {
+        return getId();
     }
 
     /**

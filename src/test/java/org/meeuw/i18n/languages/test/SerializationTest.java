@@ -17,7 +17,7 @@ public class SerializationTest {
     public void xml() {
         StringWriter writer = new StringWriter();
         JAXB.marshal(
-            new A(LanguageCode.getByCode("nld").orElse(null)), writer);
+            new A(LanguageCode.getByPart3("nld").orElse(null)), writer);
         System.out.println(writer.toString());
         A a = JAXB.unmarshal(new StringReader(writer.toString()), A.class);
         
@@ -35,14 +35,13 @@ public class SerializationTest {
         ObjectMapper objectMapper = new ObjectMapper();
         //objectMapper.registerModule(new org.meeuw.i18n.languages.jackson.LanguageModule(true));
         
-        String s = objectMapper.writeValueAsString(new A(LanguageCode.getByCode("nld").orElseThrow()));
+        String s = objectMapper.writeValueAsString(new A(LanguageCode.getByPart3("nld").orElseThrow()));
         System.out.println(s);
         
         assertThat(s).isEqualTo("{\"languageCode\":\"nl\"}");
         
         A rounded = objectMapper.readValue(s, A.class);
-        assertThat(rounded.languageCode.getCode()).isEqualTo("nl");
-         
+        assertThat(rounded.languageCode.getCode()).isEqualTo("nl");         
     }
     
     
@@ -52,7 +51,7 @@ public class SerializationTest {
      */
     @Test
     public void serialize() throws IOException, ClassNotFoundException {
-        A a = new A(LanguageCode.getByCode("nld").orElse(null));
+        A a = new A(LanguageCode.getByPart3("nld").orElse(null));
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream 
             = new ObjectOutputStream(byteArrayOutputStream);
