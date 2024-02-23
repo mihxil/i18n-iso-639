@@ -9,14 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.meeuw.i18n.languages.LanguageCode;
-import org.meeuw.i18n.languages.Type;
 import org.meeuw.i18n.languages.validation.Language;
 
 /**
  * @author Michiel Meeuwissen
- * @since 0.3
+ * @sinc e2.2
  */
-@Language(type = Type.A)
 public class LanguageValidatorTest {
     private static final Validator VALIDATOR;
 

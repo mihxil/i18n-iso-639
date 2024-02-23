@@ -21,6 +21,9 @@ module org.meeuw.i18n.languages {
     
     // but if used, these are needed too
     opens org.meeuw.i18n.languages to com.fasterxml.jackson.databind;
-    //requires static com.fasterxml.jackson.core;
+    
+    // open to validator implementation
+    opens org.meeuw.i18n.languages.validation.impl;
+
 
 }

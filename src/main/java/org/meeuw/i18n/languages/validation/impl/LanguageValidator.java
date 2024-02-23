@@ -17,7 +17,7 @@ import org.meeuw.i18n.languages.validation.LanguageValidationInfo;
  * @author Michiel Meeuwissen
  * @since 2.2
  */
-public class LanguageValidator implements ConstraintValidator<Language, CharSequence> {
+public class LanguageValidator implements ConstraintValidator<Language, Object> {
 
     private static final Logger logger = Logger.getLogger(LanguageValidator.class.getName());
 
@@ -47,12 +47,34 @@ public class LanguageValidator implements ConstraintValidator<Language, CharSequ
 
     @Override
     @RequiresNonNull("annotation")
-    public boolean isValid(@Nullable CharSequence value, @Nullable ConstraintValidatorContext context) {
+    public boolean isValid(@Nullable Object value, @Nullable ConstraintValidatorContext context) {
         return isValid(LanguageValidationInfo.of(annotation), value);
     }
 
     @RequiresNonNull("annotation")
+    public static boolean isValid(LanguageValidationInfo annotation, @Nullable Object language) {
+        if (language == null) {
+            return true;
+        }
+        if (language instanceof  Locale) {
+            return isValid(annotation, ((Locale) language).getLanguage());
+        }
+        
+        if (language instanceof  CharSequence) {
+            return isValid(annotation, ((CharSequence) language));
+        }
+        
+        if (language instanceof  Collection) {
+            boolean valid = true;
+            for (Object o : (Collection<?>) language) {
+                valid &= isValid(annotation, o);
+            }
+            return valid;
+        }
+        return false;
+    }
     public static boolean isValid(LanguageValidationInfo annotation, @Nullable CharSequence language) {
+
         if (language == null) {
             return true;
         }
