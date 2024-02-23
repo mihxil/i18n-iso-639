@@ -27,13 +27,19 @@ jobs:
           server-username: SONATYPE_USERNAME
           server-password: SONATYPE_PASSWORD
           gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
-          gpg-passphrase: GPG_SECRET_KEY_PASSPHRASE
+          gpg-passphrase: GPG_SECRET_KEY_PASSPHRASE  
       - name: Build with Maven
         run: mvn -B deploy
         env:
           SONATYPE_USERNAME: mihxil
           SONATYPE_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
+      - name: Run simple tests
+        run: -|
+          echo "Making sure it is usable without any further deps"
+          cd test/simple
+          mvn
+          mvn depedency:tree
       - uses: codecov/codecov-action@v3.1.5
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2.12.0
