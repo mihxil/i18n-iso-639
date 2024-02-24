@@ -13,7 +13,7 @@ module org.meeuw.i18n.languages {
     requires static jakarta.validation;
     
     requires static java.logging;
-    requires static org.checkerframework.cheangucker.qual;
+    requires static org.checkerframework.checker.qual;
 
     // xml binding (optional annotation)
     requires static jakarta.xml.bind;
