@@ -270,7 +270,7 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
 
     @Override
     public String toString() {
-        return getCode() + ":" + refName;
+        return getCode() + " (" + refName + ")";
     }
 
 
