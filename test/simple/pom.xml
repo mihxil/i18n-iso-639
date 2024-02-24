@@ -22,7 +22,7 @@
         <artifactId>exec-maven-plugin</artifactId>
         <version>3.2.0</version>
         <configuration>
-          <mainClass>org.meeuw.test.jackson.iso639</mainClass>
+          <mainClass>org.meeuw.test.iso639</mainClass>
         </configuration>
       </plugin>
     </plugins>

@@ -1,6 +1,5 @@
 package org.meeuw.test.jackson;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.meeuw.i18n.languages.LanguageCode;
 
