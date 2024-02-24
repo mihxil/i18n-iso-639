@@ -35,7 +35,7 @@ jobs:
           SONATYPE_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
           GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
       - name: Run simple tests
-        run: -|
+        run: |
           echo "Making sure it is usable without any further deps"
           (cd test/simple ; mvn ; mvn depedency:tree)
           (cd test/jackson; mvn ; mvn depedency:tree)
