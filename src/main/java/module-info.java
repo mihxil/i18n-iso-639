@@ -7,13 +7,13 @@ module org.meeuw.i18n.languages {
     
     exports org.meeuw.i18n.languages.validation;
     
-    // deprecated lanuage validator of regions depends on ours.
+    // deprecated language validator of regions depends on ours.
     exports org.meeuw.i18n.languages.validation.impl to org.meeuw.i18n.regions;
     
     requires static jakarta.validation;
     
     requires static java.logging;
-    requires static org.checkerframework.checker.qual;
+    requires static org.checkerframework.cheangucker.qual;
 
     // xml binding (optional annotation)
     requires static jakarta.xml.bind;
