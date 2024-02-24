@@ -6,7 +6,9 @@ module org.meeuw.i18n.languages {
     exports org.meeuw.i18n.languages.jaxb;
     
     exports org.meeuw.i18n.languages.validation;
-    //exports org.meeuw.i18n.languages.validation.impl;
+    
+    // deprecated lanuage validator of regions depends on ours.
+    exports org.meeuw.i18n.languages.validation.impl to org.meeuw.i18n.regions;
     
     requires static jakarta.validation;
     
