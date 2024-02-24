@@ -37,8 +37,8 @@ jobs:
       - name: Run simple tests
         run: |
           echo "Making sure it is usable without any further deps"
-          (cd test/simple ; mvn ; mvn depedency:tree)
-          (cd test/jackson; mvn ; mvn depedency:tree)
+          (cd test/simple ; mvn -B -q ; mvn -B dependency:tree)
+          (cd test/jackson; mvn -B -q ; mvn -B dependency:tree)
       - uses: codecov/codecov-action@v3.1.5
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2.12.0
