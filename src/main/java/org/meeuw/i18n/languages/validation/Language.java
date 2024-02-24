@@ -53,12 +53,26 @@ public @interface Language {
      */
     boolean iso639_2() default true;
 
+    
     boolean requireLowerCase() default true;
     
-    boolean forXml() default false;
+    /**
+     * xml:lang uses '-' between language and country. In XML language codes are case-insensitive, so
+     * you may want to set {@link #requireLowerCase()} to false too.
+     */
+    boolean forXml() default true;
     
-    boolean mayContainCountry() default false;
     
+     /**
+     * Whether the locale may contain a country.
+     * <p>
+     * the country itself is not validated. Use {@link @Country} for that.
+     */
+    boolean mayContainCountry() default true;
+    
+    /**
+     * Whether the locale may contain a variant
+     */
     boolean mayContainVariant() default false;
 
 }

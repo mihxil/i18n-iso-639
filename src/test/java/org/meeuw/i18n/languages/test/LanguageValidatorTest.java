@@ -13,7 +13,7 @@ import org.meeuw.i18n.languages.validation.Language;
 
 /**
  * @author Michiel Meeuwissen
- * @sinc e2.2
+ * @since 2.2
  */
 public class LanguageValidatorTest {
     private static final Validator VALIDATOR;
@@ -85,7 +85,7 @@ public class LanguageValidatorTest {
     @ParameterizedTest
     @ValueSource(strings = {
         "ZZ",
-        "nl"// case sensitive
+        "NL"// case sensitive
 
     })
     public void testValidateInvalidNotForXml(String language) {
@@ -113,10 +113,6 @@ public class LanguageValidatorTest {
             WithLanguageFields a = new WithLanguageFields();
             a.language = "nl-NL";
             testValidate(a, 0);
-        }
-        {
-            WithLanguageFields a = new WithLanguageFields();
-            testValidate(a, 1);
         }
         {
             WithLanguageFields a = new WithLanguageFields();
@@ -197,13 +193,13 @@ public class LanguageValidatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"nl", "nl-NL"})
+    @ValueSource(strings = {"nl", "nl-NL", "nl-A"})
     void validA(String lang) {
         assertThat(VALIDATOR.validate(new C(lang))).isEmpty();
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"NL", "bl", "bl-A", "nl-A"})
+    @ValueSource(strings = {"NL", "bl", "bl-A"})
     void invalidA(String lang) {
         assertThat(VALIDATOR.validate(new C(lang))).hasSize(1);
     }

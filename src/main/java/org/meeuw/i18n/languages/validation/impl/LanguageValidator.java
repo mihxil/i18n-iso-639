@@ -23,8 +23,7 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
 
     public static final String[] LEGACY = {"jw"}; // javanese?
 
-    // http://www-01.sil.org/iso639-3/documentation.asp?id=zxx
-    private static final Set<String> VALID_ISO_LANGUAGES;
+        private static final Set<String> VALID_ISO_LANGUAGES;
 
     private static final Set<String> EXTRA_RECOGNIZED = ConcurrentHashMap.newKeySet();;
 
@@ -56,7 +55,7 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
         if (language == null) {
             return true;
         }
-        if (language instanceof  Locale) {
+        if (language instanceof Locale) {
             return isValid(annotation, ((Locale) language).getLanguage());
         }
         
@@ -64,7 +63,7 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
             return isValid(annotation, ((CharSequence) language));
         }
         
-        if (language instanceof  Collection) {
+        if (language instanceof  Iterable) {
             boolean valid = true;
             for (Object o : (Collection<?>) language) {
                 valid &= isValid(annotation, o);
@@ -79,8 +78,33 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
             return true;
         }
         String value = language.toString();
+      
+        String splitter = annotation.forXml() ? "-" :"[_-]";
+        String[] components = value.split(splitter, 3);
+        
+        if (! annotation.mayContainCountry() && components.length > 1 && components[1].length() > 0) { 
+            return false;
+        } 
+        if (! annotation.mayContainVariant() && components.length > 2 && components[2].length() > 0) { 
+            return false;
+        }
+        
+    
+        
+        value = components[0];
+        
+        if (! annotation.requireLowerCase()) {
+            value = value.toLowerCase();
+        } else if ( ! value.equals(value.toLowerCase())) {
+            return false;
+        }
+        if (annotation.forXml()) {
+            value = Locale.forLanguageTag(value).getLanguage();
+        }
+        
         boolean recognized  = VALID_ISO_LANGUAGES.contains(value) ||
             (annotation.lenient() && EXTRA_RECOGNIZED.contains(value));
+        
 
         if (! recognized) {
 
