@@ -17,7 +17,7 @@ import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
  *<p>
  * Annotated with {@link XmlJavaTypeAdapter}, so it will automatically be marshalled and unmarshalled in XML's. 
  * <p>
- * Also annotated with jackon annotation, to be marshalled and unmarshalled in JSON as the code.
+ * Also annotated with jackson annotation, to be marshalled and unmarshalled in JSON as the code.
  *<p>
  * This class is immutable and can be used as a key in maps.
  */
@@ -314,6 +314,10 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
      */
     public String getPart1() {
         return part1;
+    }
+    
+    public ISO_639_1 getISO_639_1() {
+        return part1 == null ? null :  ISO_639_1.valueOf(part1);
     }
 
     public Scope getScope() {

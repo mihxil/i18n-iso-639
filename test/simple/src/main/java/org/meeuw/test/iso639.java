@@ -10,6 +10,8 @@ public class iso639 {
         String code;
         if (args.length == 0) {
             System.out.println("Usage: iso639 <code>");
+            System.out.println("Showing that it works with no dependencies");
+
             code = "nld";
         } else {
             code = args[0];

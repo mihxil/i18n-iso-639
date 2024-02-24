@@ -20,11 +20,12 @@ public class iso639 {
         String code;
         if (args.length == 0) {
             System.out.println("Usage: iso639 <code>");
+            System.out.println("Showing json marshalling of language code using jackson");
             code = "nld";
         } else {
             code = args[0];
         }
-        Container languageContainer = LanguageCode.get(code).map(c -> new Container(c)).orElseThrow();
+        Container languageContainer = LanguageCode.get(code).map(Container::new).orElseThrow();
         System.out.println(
             code + " -> " + languageContainer.language  + 
             "\n" + new ObjectMapper().valueToTree(languageContainer));

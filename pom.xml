@@ -7,13 +7,13 @@
   <version>2.2-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>i18n-iso-639-3</name>
-  <description>Provides an enum with ISO 639-3 languages</description>
-  <url>https://github.com/mihxil/i18n-iso-639-2</url>
+  <description>Provides a class with one instance of every of the ISO 639-3 languages</description>
+  <url>https://github.com/mihxil/i18n-iso-639-3</url>
 
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
       <distribution>repo</distribution>
       <comments>A business-friendly OSS license</comments>
     </license>
@@ -131,6 +131,13 @@
       <version>2.16.1</version>
       <optional>true</optional>
     </dependency>
+    
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>codemodel</artifactId>
+      <version>${codemodel.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -138,7 +145,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
+        <version>3.12.1</version>
         <configuration>
           <target>11</target>
           <source>11</source>
@@ -166,7 +173,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.2.2</version>
+        <version>3.2.5</version>
         <configuration>
           <useModulePath>false</useModulePath>
         </configuration>

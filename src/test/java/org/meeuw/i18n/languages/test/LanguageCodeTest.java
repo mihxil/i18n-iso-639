@@ -15,7 +15,10 @@ class LanguageCodeTest {
             assertThat(lc.getCode()).isNotNull();
             assertThat(lc.getLanguageType()).isNotNull();
             assertThat(lc.getScope()).isNotNull();
-
+            
+            if (lc.getPart1() != null) {
+                System.out.println("Part1: " + lc.getISO_639_1());
+            }
 
             if (lc.getComment() != null) {
                 System.out.println("Comment: " + lc.getComment());
