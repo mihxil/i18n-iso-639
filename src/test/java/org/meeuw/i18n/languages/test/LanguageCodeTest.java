@@ -1,5 +1,7 @@
 package org.meeuw.i18n.languages.test;
 
+import java.util.Comparator;
+import java.util.concurrent.atomic.AtomicLong;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.meeuw.i18n.languages.LanguageCode;
@@ -24,11 +26,21 @@ class LanguageCodeTest {
             }
         });
     }
+    
+    @Test
+    public void streamByName() {
+        AtomicLong count = new AtomicLong();
+        LanguageCode.streamByNames().forEach(e -> {
+            System.out.println(e.getKey() + " " + e.getValue());
+            count.incrementAndGet();
+        });
+        assertThat(count.get()).isGreaterThan(LanguageCode.stream().count());
+    }
 
     @Test
     public void sort() {
         LanguageCode.stream()
-            .sorted((lc1, lc2) -> lc2.names().get(0).value().compareTo(lc1.names().get(0).inverted()))
+            .sorted(Comparator.comparing(LanguageCode::refName))
             .forEach(lc -> {
             System.out.println(lc.code() + "\t" + lc.refName() + " " + lc.names());
         });

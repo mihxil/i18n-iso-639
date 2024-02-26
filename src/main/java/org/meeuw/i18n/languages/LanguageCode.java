@@ -25,17 +25,49 @@ import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 public interface LanguageCode extends Serializable {
 
     /**
-     * A stream with all known {@link LanguageCodeImpl}
+     * A stream with all known {@link LanguageCode language codes}.
+     * 
      *
      * @return a stream of all known language codes.
      */
     static Stream<LanguageCode> stream() {
         return KNOWN.values()
             .stream()
-            .map(LanguageCode::updateToEnum)
-            .sorted(Comparator.comparing(LanguageCode::getInvertedName));
-
+            .sorted(Comparator.comparing(LanguageCode::code))
+            .map(LanguageCode::updateToEnum);
     }
+    
+    
+    /**
+     * A stream with {@link Map.Entry map entries} with all known language names. Combined with their {@link LanguageCode}
+     * This means that the same language may occur more than once in this stream. For example Dutch will occur as both "Dutch" and as "Flemish".
+     *
+     * @param locale The locale to use for the names. Currently, must be english.
+     * @see #streamByNames()
+     * @since 3.0
+     */
+    static Stream<? extends Map.Entry<String, LanguageCode>> streamByNames(Locale locale) {
+        if (! locale.getLanguage().equals("en")) {
+            throw new UnsupportedOperationException("Only English is supported");
+        }
+        return KNOWN.values()
+            .stream()
+            .flatMap(l -> l.names().stream()
+                .map(n -> new AbstractMap.SimpleEntry<>(n.inverted(), LanguageCode.updateToEnum(l))))             
+            .sorted(Map.Entry.comparingByKey());
+    }
+
+    /**
+     * Defaulting version of {@link #streamByNames(Locale)}, using {@link Locale#US}.
+     * @since 3.0
+     */
+    static Stream<? extends Map.Entry<String, LanguageCode>> streamByNames() {
+        return streamByNames(Locale.US);
+    }
+
+    
+
+
 
     /**
      * Retrieves a {@link LanguageCodeImpl} by its three-letter identifier {@link #id()} (using {@link #getByCode(String)}, or by its two letter identifier {@link #part1()}.

@@ -60,7 +60,7 @@ The `LanguageCode` is serializable, and ensures that on deserialization the same
 
 === Sortable
 
-The default sort order of a `LanguageCode` is on 'Inverted Name'.
+The default sort order of a `LanguageCode` used to  on 'Inverted Name'. There may be more than one (inverted) name though (E.g. Dutch and Flemish). Since 3.0 LanguageCode is not Sortable anymore. LanguageCode#stream() is sorted by ISO-639-3 code.
 
 
 == Versions
