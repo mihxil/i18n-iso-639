@@ -22,7 +22,7 @@ class RetiredLanguageCodeTest {
 
     @Test
     public void ppr() throws RetiredLanguageCode.RetirementException {
-        assertThat(RetiredLanguageCode.getByCode("ppr").get().getChangeTo().getCode()).isEqualTo("lcq");
+        assertThat(RetiredLanguageCode.getByCode("ppr").get().getChangeTo().code()).isEqualTo("lcq");
 
     }
 
@@ -31,6 +31,6 @@ class RetiredLanguageCodeTest {
      */
     @Test
     public void lcq() throws RetiredLanguageCode.RetirementException {
-        assertThat(RetiredLanguageCode.getByCode("lcq").get().getChangeTo().getCode()).isEqualTo("lcq");
+        assertThat(RetiredLanguageCode.getByCode("lcq").get().getChangeTo().code()).isEqualTo("lcq");
     }
 }

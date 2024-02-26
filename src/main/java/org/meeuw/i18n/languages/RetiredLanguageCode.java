@@ -20,7 +20,7 @@ public class RetiredLanguageCode implements Serializable {
 
     static {
         Map<String, RetiredLanguageCode> map = new HashMap<>();
-        try (InputStream inputStream = LanguageCode.class.getResourceAsStream(LanguageCode.DIR + "iso-639-3_Retirements.tab");
+        try (InputStream inputStream = LanguageCode.class.getResourceAsStream(LanguageCodeImpl.DIR + "iso-639-3_Retirements.tab");
              BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         ) {
             inputStreamReader.readLine(); // first line is a header
@@ -123,7 +123,7 @@ public class RetiredLanguageCode implements Serializable {
             .add("retReason=" + retReason);
         if (changeTo != null) {
             try {
-                joiner.add("changeTo='" + getChangeTo().getCode() + "'");
+                joiner.add("changeTo='" + getChangeTo().code() + "'");
             } catch (RetirementException e) {
 
             }

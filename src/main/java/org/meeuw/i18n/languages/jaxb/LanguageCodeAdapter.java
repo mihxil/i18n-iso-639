@@ -11,6 +11,6 @@ public class LanguageCodeAdapter extends XmlAdapter<String, LanguageCode> {
 
     @Override
     public String marshal(LanguageCode v) throws Exception {
-        return v.getCode();
+        return v.code();
     }
 }

@@ -41,7 +41,7 @@ public class SerializationTest {
         assertThat(s).isEqualTo("{\"languageCode\":\"nl\"}");
         
         A rounded = objectMapper.readValue(s, A.class);
-        assertThat(rounded.languageCode.getCode()).isEqualTo("nl");         
+        assertThat(rounded.languageCode.code()).isEqualTo("nl");         
     }
     
     
@@ -60,7 +60,7 @@ public class SerializationTest {
         
         ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
         A deserialized = (A) inputStream.readObject();
-        assertThat(deserialized.languageCode.getCode()).isEqualTo("nl");
+        assertThat(deserialized.languageCode.code()).isEqualTo("nl");
         assertThat(deserialized.languageCode).isSameAs(languageCode("nld"));
 
         

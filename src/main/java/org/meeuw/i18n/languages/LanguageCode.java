@@ -1,15 +1,15 @@
 package org.meeuw.i18n.languages;
 
-import com.fasterxml.jackson.annotation.*;
-import jakarta.validation.constraints.NotNull;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Stream;
+import static org.meeuw.i18n.languages.LanguageCodeImpl.KNOWN;
+import static org.meeuw.i18n.languages.LanguageCodeImpl.LOGGER;
 import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 /**
@@ -22,126 +22,33 @@ import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
  * This class is immutable and can be used as a key in maps.
  */
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
-public class LanguageCode implements Serializable, Comparable<LanguageCode> {
-
-    private final static Logger LOGGER = Logger.getLogger(LanguageCode.class.getName());
-
-
-    static final Map<String, LanguageCode> KNOWN;
-
-    static final String DIR = "/iso-639-3_Code_Tables_20240207/";
-    static {
-        Map<String, String[]> names = new HashMap<>();
-        try (InputStream inputStream = LanguageCode.class.getResourceAsStream(DIR + "iso-639-3_Name_Index.tab");
-             BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-        ) {
-            String line = inputStreamReader.readLine();
-            while (line != null) {
-                String[] split = line.split("\t");
-                names.put(split[0], new String[] {split[1], split[2]});
-                line = inputStreamReader.readLine();
-            }
-        } catch (IOException e) {
-            throw new ExceptionInInitializerError(e);
-        }
-
-        Map<String, LanguageCode> temp = new HashMap<>();
-        try (InputStream inputStream = LanguageCode.class.getResourceAsStream(DIR + "iso-639-3.tab");
-             BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-        ) {
-            inputStreamReader.readLine(); // skipheader;
-            String line = inputStreamReader.readLine();
-            while (line != null) {
-                String[] split = line.split("\t");
-                String[] name = names.get(split[0]);
-                LanguageCode found = new LanguageCode(
-                    split[0],
-                    split[1].length() > 0 ? split[1] : null,
-                    split[2].length() > 0 ? split[2] : null,
-                    split[3].length() > 0 ? split[3] : null,
-                    Scope.valueOf(split[4]),
-                    Type.valueOf(split[5]),
-                    split[6],
-                    split.length == 8 ? split[7] : null,
-                    name[0],
-                    name[1]
-                );
-                temp.put(found.getId().toLowerCase(), found);
-                line = inputStreamReader.readLine();
-            }
-        } catch (IOException e) {
-            throw new ExceptionInInitializerError(e);
-        }
-        KNOWN = Collections.unmodifiableMap(temp);
-
-    }
-
-    @Size(min = 3, max = 3)
-    @NotNull
-    private final String id;
-
-    private transient final String part2B;
-
-    private transient final String part2T;
-
-
-    @Size(min = 2, max = 2)
-    @NotNull
-    private transient final String part1;
-    private transient final Scope scope;
-    private transient final Type languageType;
-    @NotNull
-    private transient final String refName;
-    private transient final String comment;
-
-    private transient  final String name;
-    private transient  final String invertedName;
-
-    private LanguageCode(
-        String id,
-        String part2B,
-        String part2T,
-        String part1,
-        Scope scope,
-        Type languageType,
-        String refName,
-        String comment,
-        String name,
-        String invertedName
-    ) {
-        this.id = id;
-        this.part2B = part2B;
-        this.part2T = part2T;
-        this.part1 = part1;
-        this.scope = scope;
-        this.languageType = languageType;
-        this.refName = refName;
-        this.comment = comment;
-        this.name  = name;
-        this.invertedName = invertedName;
-    }
+public interface LanguageCode extends Serializable {
 
     /**
-     * A stream with all known {@link LanguageCode}
+     * A stream with all known {@link LanguageCodeImpl}
      *
      * @return a stream of all known language codes.
      */
-    public static Stream<LanguageCode> stream() {
-        return KNOWN.values().stream();
+    static Stream<LanguageCode> stream() {
+        return KNOWN.values()
+            .stream()
+            .map(LanguageCode::updateToEnum)
+            .sorted(Comparator.comparing(LanguageCode::getInvertedName));
+
     }
 
     /**
-     * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()} (using {@link #getByCode(String)}, or by its two letter identifier {@link #getPart1()}.
+     * Retrieves a {@link LanguageCodeImpl} by its three-letter identifier {@link #id()} (using {@link #getByCode(String)}, or by its two letter identifier {@link #part1()}.
      *
      * @param code A 2 or 3 letter language code
-     * @return An optional containing the {@link LanguageCode} if found.
-     * @see #getCode()
+     * @return An optional containing the {@link LanguageCodeImpl} if found.
+     * @see #code()
      * @see #getByPart1(String)
      * @see #getByCode(String)
      * @see #languageCode(String)
      * @since 0.2
      */
-    public static Optional<LanguageCode> get(String code, boolean matchRetired) {
+    static Optional<LanguageCode> get(String code, boolean matchRetired) {
         if (code.length() == 2) {
             return getByPart1(code);
         } else {
@@ -149,32 +56,33 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
         }
     }
     
-    public static Optional<LanguageCode> get(String code) {
+    static Optional<LanguageCode> get(String code) {
         return get(code, true);
     }
 
     /**
      * As {@link #get(String)}, but throws an {@link IllegalArgumentException} if not found.
      *
-     * @return The {@link LanguageCode} if found
+     * @return The {@link LanguageCodeImpl} if found
      * @throws IllegalArgumentException if not found
      */
     @JsonCreator
-    public static LanguageCode languageCode(String code) {
-        return get(code).orElseThrow(() -> new IllegalArgumentException("Unknown language code " + code));
+    static LanguageCode languageCode(String code) {
+        return get(code)
+            .orElseThrow(() -> new IllegalArgumentException("Unknown language code " + code));
     }
 
 
     /**
-     * Retrieves a {@link LanguageCode} by its three-letter identifier {@link #getId()}
+     * Retrieves a {@link LanguageCodeImpl} by its three-letter identifier {@link #id()}
      *
      * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
      *
      * @param code A 3 letter language code
-     * @return An optional containing the {@link LanguageCode} if found.
+     * @return An optional containing the {@link LanguageCodeImpl} if found.
      * @since 2.2
      */
-    public static Optional<LanguageCode> getByPart3(@Size(min = 3, max=3) String code, boolean matchRetired) {
+    static Optional<LanguageCode> getByPart3(@Size(min = 3, max=3) String code, boolean matchRetired) {
         if (code == null) {
             return Optional.empty();
         }
@@ -190,104 +98,127 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
             }
         }
 
-        return Optional.ofNullable(prop);
+        return Optional
+            .ofNullable(prop)
+            .map(LanguageCode::updateToEnum)
+            ;
     }
 
 
     /**
      * Defaulting version of {@link #getByPart3(String, boolean)}, matching retired codes too.
-     * @deprecated Confusing, since not matching like {@link #getCode()}
+     * @deprecated Confusing, since not matching like {@link #code()}
      * @see #getByPart3(String,) 
      */
     @Deprecated
-    public static Optional<LanguageCode> getByCode(@Size(min = 3, max=3) String code) {
+    static Optional<LanguageCode> getByCode(@Size(min = 3, max=3) String code) {
         return getByPart3(code);
     }
     
     /**
      * Defaulting version of {@link #getByPart3(String, boolean)}, matching retired codes too.
      */
-    public static Optional<LanguageCode> getByPart3(@Size(min = 3, max=3) String code) {
+    static Optional<LanguageCode> getByPart3(@Size(min = 3, max=3) String code) {
         return getByPart3(code, true);
     }
 
     
     /**
-     * Retrieves a {@link LanguageCode} by its Part1 code {@link #getPart1()}
+     * Retrieves a {@link LanguageCodeImpl} by its Part1 code {@link #part1()}
      *
      * @param code A 2 letter language code
-     * @return An optional containing the {@link LanguageCode} if found.
+     * @return An optional containing the {@link LanguageCodeImpl} if found.
      */
-    public static Optional<LanguageCode> getByPart1(String code) {
+    static Optional<LanguageCode> getByPart1(String code) {
+        return getByPart1(code, true);
+    }
+    
+    static Optional<LanguageCode> getByPart1(String code, boolean resolveToEnum) {
         if (code == null) {
             return Optional.empty();
         }
         final String lowerCode = code.toLowerCase();
-        return KNOWN.values().stream().filter(i -> lowerCode.equals(i.getPart1())).findFirst();
+        Optional<LanguageCode> result =  KNOWN.values().stream()
+            .filter(i -> lowerCode.equals(i.part1()))
+            .findFirst();
+        if (resolveToEnum) {
+            result = result.map(LanguageCode::updateToEnum);
+        }
+        return result;
+    }
+    
+    static LanguageCode updateToEnum(LanguageCode languageCode) {
+        if (! (languageCode instanceof ISO_639_1) && languageCode.part1() != null) {
+            return ISO_639_1.valueOf(languageCode.part1());
+        } else {
+            return languageCode;
+        }
     }
 
     /**
-     * Retrieves a {@link LanguageCode} by its Part2B  ('bibliographic') code {@link #getPart2B()}
+     * Retrieves a {@link LanguageCodeImpl} by its Part2B  ('bibliographic') code {@link #part2B()}
      *
      * @param code A 3 letter language code
-     * @return An optional containing the {@link LanguageCode} if found.
+     * @return An optional containing the {@link LanguageCodeImpl} if found.
      */
-    public static Optional<LanguageCode> getByPart2B(String code) {
+    static Optional<LanguageCode> getByPart2B(String code) {
         if (code == null) {
             return Optional.empty();
         }
         final String lowerCode = code.toLowerCase();
-        return KNOWN.values().stream().filter(i -> lowerCode.equals(i.getPart2B())).findFirst();
+        return stream()
+            .filter(i -> lowerCode.equals(i.part2B()))
+            .map(LanguageCode::updateToEnum)
+            .findFirst();
     }
 
 
     /**
-     * Retrieves a {@link LanguageCode} by its Part2T ('terminology') code {@link #getPart2T()}
+     * Retrieves a {@link LanguageCodeImpl} by its Part2T ('terminology') code {@link #part2T()}
      *
      * @param code A 3 letter language code
-     * @return An optional containing the {@link LanguageCode} if found.
+     * @return An optional containing the {@link LanguageCodeImpl} if found.
      */
-    public static Optional<LanguageCode> getByPart2T(String code) {
+    static Optional<LanguageCode> getByPart2T(String code) {
         if (code == null) {
             return Optional.empty();
         }
         final String lowerCode = code.toLowerCase();
-        return KNOWN.values().stream().filter(i -> lowerCode.equals(i.getPart2T())).findFirst();
+        return KNOWN.values().stream()
+            .filter(i -> lowerCode.equals(i.part2T()))
+            .map(LanguageCode::updateToEnum)
+            .findFirst();
     }
 
 
+
     /**
-     * The {@link #getPart1() ISO-639-1-code} if available, otherwise the {@link #getPart3() ISO-639-3 code}.
+     * The {@link #part1() ISO-639-1-code} if available, otherwise the {@link #part3() ISO-639-3 code}.
      *
      * @return A 2 or 3 letter language code
      * @since 0.2
      */
     @JsonValue
-    public String getCode() {
-        return part1 != null ? part1 : id;
-    }
-
+    String code();
+        
 
     @Override
-    public String toString() {
-        return getCode() + " (" + refName + ")";
-    }
-
+    String toString();
+        
 
     /**
      * The three-letter 639-3 identifier
      * @return The three-letter 639-3 identifier
      */
-    public String getId() {
-        return id;
-    }
+    String id();
+
     
     /**
-     * Synonym for {@link #getId()}.
+     * Synonym for {@link #id()}.
      * @return The three-letter 639-3 identifier
      */
-    public String getPart3() {
-        return getId();
+    default String part3() {
+        return id();
     }
 
     /**
@@ -295,72 +226,59 @@ public class LanguageCode implements Serializable, Comparable<LanguageCode> {
      * code set, if there is one
      * @return bibliographic id or {@code null}
      */
-    public String getPart2B() {
-        return part2B;
-    }
+    String part2B();
 
     /**
      * Equivalent 639-2 identifier of the terminology applications code
      * set, if there is one
      * @return terminology id or {@code null}
      */
-    public String getPart2T() {
-        return part2T;
-    }
+    String part2T();
 
     /**
      * Equivalent 639-1 identifier, if there is one
      * @return 2 letter id or {@code null}
      */
-    public String getPart1() {
-        return part1;
-    }
+    String part1();
     
-    public ISO_639_1 getISO_639_1() {
-        return part1 == null ? null :  ISO_639_1.valueOf(part1);
-    }
+    Scope scope();
 
-    public Scope getScope() {
-        return scope;
-    }
+    Type languageType();
 
-    public Type getLanguageType() {
-        return languageType;
-    }
+    String refName();
 
-    public String getRefName() {
-        return refName;
-    }
-
-    public String getComment() {
-        return comment;
-    }
+    String comment();
 
     /**
-     * The name (in english) of the language.
+     * @since 2.2
      */
-    public String getName() {
-        return name;
-    }
+    List<Name> names();
 
     /**
-     * Sometimes the name of the language starts with something like 'eastern' or so. This returns the name with these prefixes postfixed, so this is the natural name to <em>sort</em> languages on.
+     * The (first) name (in english) of the language.
+     * @deprecated 
      */
-    public String getInvertedName() {
-        return invertedName;
-    }
-    
-    public Locale toLocale() {
-        return new Locale(getCode());
+    @Deprecated
+    default String getName() {
+        return names().get(0).value();
     }
 
-    @Override
-    public int compareTo(LanguageCode o) {
-        return invertedName.compareTo(o.invertedName);
+    @Deprecated
+    default String getInvertedName() {
+        return names().get(0).inverted();
+    }
+    
+    default Locale toLocale() {
+        return new Locale(code());
+    }
+
+ //   @Override
+    default int compareTo(LanguageCode o) {
+        return getInvertedName().compareTo(o.getInvertedName());
     }
 
     private Object readResolve() {
-        return get(id).orElse(this);
+        return get(id()).orElse(this);
     }
 
 

@@ -1,9 +1,8 @@
 package org.meeuw.i18n.languages.test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.meeuw.i18n.languages.LanguageCode;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 class LanguageCodeTest {
@@ -11,61 +10,63 @@ class LanguageCodeTest {
     @Test
     public void stream() {
         LanguageCode.stream().forEach(lc -> {
-            System.out.println(lc);
-            assertThat(lc.getCode()).isNotNull();
-            assertThat(lc.getLanguageType()).isNotNull();
-            assertThat(lc.getScope()).isNotNull();
+            System.out.println(lc + " " + lc.names());
+            assertThat(lc.code()).isNotNull();
+            assertThat(lc.languageType()).isNotNull();
+            assertThat(lc.scope()).isNotNull();
             
-            if (lc.getPart1() != null) {
-                System.out.println("Part1: " + lc.getISO_639_1());
+            if (lc.part1() != null) {
+                System.out.println("Part1: " + lc.getClass());
             }
 
-            if (lc.getComment() != null) {
-                System.out.println("Comment: " + lc.getComment());
+            if (lc.comment() != null) {
+                System.out.println("Comment: " + lc.comment());
             }
         });
     }
 
     @Test
     public void sort() {
-        LanguageCode.stream().sorted().forEach(lc -> {
-            System.out.println(lc.getCode() + "\t" + lc.getName() + (lc.getName().equals(lc.getInvertedName()) ? "" : (" (" + lc.getInvertedName() + ")")));
+        LanguageCode.stream()
+            .sorted((lc1, lc2) -> lc2.names().get(0).value().compareTo(lc1.names().get(0).inverted()))
+            .forEach(lc -> {
+            System.out.println(lc.code() + "\t" + lc.refName() + " " + lc.names());
         });
     }
 
     @Test
     public void getByCode() {
-        assertThat(LanguageCode.getByPart3("nld").get().getRefName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.getByPart3("nld").get().refName()).isEqualTo("Dutch");
         assertThat(LanguageCode.getByPart3(null)).isEmpty();
     }
 
     @Test
     public void get() {
-        assertThat(LanguageCode.get("nl").get().getRefName()).isEqualTo("Dutch");
-        assertThat(LanguageCode.languageCode("nl").getRefName()).isEqualTo("Dutch");
-        assertThat(LanguageCode.get("nld").get().getRefName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.get("nl").get().refName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.languageCode("nl").refName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.get("nld").get().refName()).isEqualTo("Dutch");
     }
 
     @Test
     public void getTokiPona() {
-        assertThat(LanguageCode.get("tok").get().getRefName()).isEqualTo("Toki Pona");
+        assertThat(LanguageCode.get("tok").get().refName()).isEqualTo("Toki Pona");
     }
 
     @Test
     public void getByPart1() {
-        assertThat(LanguageCode.getByPart1("nl").get().getRefName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.getByPart1("nl").get().refName()).isEqualTo("Dutch");
         assertThat(LanguageCode.getByPart1(null)).isEmpty();
 
     }
     @Test
     public void getByPart2T() {
-        assertThat(LanguageCode.getByPart2T("nld").get().getRefName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.getByPart2T("nld").get().refName()).isEqualTo("Dutch");
         assertThat(LanguageCode.getByPart2T(null)).isEmpty();
     }
 
     @Test
     public void getByPart2B() {
-        assertThat(LanguageCode.getByPart2B("dut").get().getRefName()).isEqualTo("Dutch");
+        assertThat(LanguageCode.getByPart2B("dut").get().refName()).isEqualTo("Dutch");
         assertThat(LanguageCode.getByPart2B(null)).isEmpty();
     }
 
@@ -76,25 +77,25 @@ class LanguageCodeTest {
 
     @Test
     public void getCode() {
-        assertThat(LanguageCode.getByPart3("nld").get().getCode()).isEqualTo("nl");
-        assertThat(LanguageCode.getByPart3("act").get().getCode()).isEqualTo("act");
+        assertThat(LanguageCode.getByPart3("nld").get().code()).isEqualTo("nl");
+        assertThat(LanguageCode.getByPart3("act").get().code()).isEqualTo("act");
     }
 
     @Test
     public void krm() {
         // the 'krim' dialect (Sierra Leano) officially merged into 'bmf' (Bom-Kim) in 2017
-        assertThat(LanguageCode.getByPart3("krm").get().getCode()).isEqualTo("bmf");
+        assertThat(LanguageCode.getByPart3("krm").get().code()).isEqualTo("bmf");
     }
 
 
     @Test
     public void ppr() {
-        assertThat(LanguageCode.getByPart3("ppr").get().getCode()).isEqualTo("lcq");
+        assertThat(LanguageCode.getByPart3("ppr").get().code()).isEqualTo("lcq");
     }
 
     @Test
     public void lcq() {
-        assertThat(LanguageCode.getByPart3("lcq").get().getCode()).isEqualTo("lcq");
+        assertThat(LanguageCode.getByPart3("lcq").get().code()).isEqualTo("lcq");
     }
 
 
