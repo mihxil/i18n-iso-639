@@ -175,15 +175,7 @@ public class LanguageValidatorTest {
                 + nl + "|" + self + "|");
         }
     }
-
-    static class AXml {
-        @Language()
-        final String language;
-        AXml(String l) {
-            this.language = l;
-        }
-    }
-
+ 
     static class C {
         @Language()
         final String language;
@@ -203,6 +195,23 @@ public class LanguageValidatorTest {
     void invalidA(String lang) {
         assertThat(VALIDATOR.validate(new C(lang))).hasSize(1);
     }
+    
+    @ParameterizedTest
+    @ValueSource(strings = {"bl", "bl-A"})
+    void invalidLocale(String lang) {
+        WithLanguageFields a = new WithLanguageFields();
+        a.object = Locale.forLanguageTag(lang);
+        assertThat(VALIDATOR.validate(a)).hasSize(1);
+    }
+    
+    @ParameterizedTest
+    @ValueSource(strings = {"nl", "NL", "nld-A"})
+    void validLocale(String lang) {
+        WithLanguageFields a = new WithLanguageFields();
+        a.object = Locale.forLanguageTag(lang);
+        assertThat(VALIDATOR.validate(a)).hasSize(0);
+    }
+ 
  
  
 }
