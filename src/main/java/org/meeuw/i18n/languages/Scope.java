@@ -1,7 +1,9 @@
 package org.meeuw.i18n.languages;
 
 /**
- * The 'scope' of the language as defined in ISO-639-3
+ * The 'scope' of the language as defined in ISO-639-3.
+ * <p>
+ * Or in the case of {@link #FAMILY} in it means that this code indicates a language family.
  */
 public enum Scope {
 
@@ -16,7 +18,14 @@ public enum Scope {
     /**
      * Special
      */
-    S("Special language");
+    S("Special language"),
+    
+    
+    /**
+     * ISO-639-5
+     */
+    FAMILY("Language family")
+    ;
 
     private final String string;
 

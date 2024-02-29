@@ -20,11 +20,11 @@ This package has the tab seperated files provided by https://iso639-3.sil.org/, 
 
 [source,java]
 ----
-import org.meeuw.i18n.languages.LanguageCode;
+import org.meeuw.i18n.languages.ISO_639_Code;
 
-Optional<LanguageCode> languageCode = LanguageCode.getByPart3("nld");
+Optional<ISO_639_Code> languageCode = ISO_639_Code.getByPart3("nld");
 
-LanguageCode languageCode = LanguageCode.languageCode("nl");
+ISO_639_Code languageCode = ISO_639_Code.languageCode("nl");
 
 languageCode.getInvertedName();
 

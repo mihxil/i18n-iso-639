@@ -2,16 +2,17 @@ package org.meeuw.test.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.meeuw.i18n.languages.LanguageCode;
+import org.meeuw.i18n.languages.ISO_639_Code;
 
 public class iso639 {
     
     static class Container {
-        LanguageCode language;
+        ISO_639_Code language;
         
-        public Container(LanguageCode language) {
+        public Container(ISO_639_Code language) {
             this.language = language;
         }
-        public LanguageCode getLanguage() {
+        public ISO_639_Code getLanguage() {
             return language;
         }
     }

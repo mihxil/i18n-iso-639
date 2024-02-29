@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.meeuw.i18n.languages.LanguageCode;
+import org.meeuw.i18n.languages.ISO_639_Code;
 import org.meeuw.i18n.languages.validation.Language;
 
 /**
@@ -155,8 +155,8 @@ public class LanguageValidatorTest {
         for (String s : Locale.getISOLanguages()) {
             result.put(s, new Locale(s).getDisplayLanguage(new Locale("en")));
         }
-        for (LanguageCode s : LanguageCode.stream().collect(Collectors.toList())) {
-            result.put(s.toString(), s.getName());
+        for (ISO_639_Code s : ISO_639_Code.stream().collect(Collectors.toList())) {
+            result.put(s.toString(), s.name(Locale.ENGLISH).value());
         }
         // output sorted
         System.out.println("||code||name in english||name in dutch||name in language itself||");

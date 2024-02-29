@@ -37,9 +37,9 @@ public @interface Language {
     boolean lenient() default false;
 
 
-    Type[] type() default {};
+    Type[] type() default {Type.L, Type.C};
 
-    Scope[] scope() default {};
+    Scope[] scope() default { Scope.I, Scope.M, Scope.S };
 
     /**
      * The default is to accept both ISO-639-1 and ISO-639-3 codes. If you want to restrict to ISO-639-1 only, set this to false.
@@ -52,6 +52,12 @@ public @interface Language {
      * The default is to accept also part 2 codes.
      */
     boolean iso639_2() default true;
+    
+    
+     /**
+     * The default is not to accept also part 5 codes (language families)
+     */
+    boolean iso639_5() default false;
 
     
     boolean requireLowerCase() default true;

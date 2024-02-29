@@ -2,15 +2,16 @@ package org.meeuw.i18n.languages.jaxb;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import org.meeuw.i18n.languages.LanguageCode;
+import org.meeuw.i18n.languages.ISO_639_Code;
 
-public class LanguageCodeAdapter extends XmlAdapter<String, LanguageCode> {
+public class LanguageCodeAdapter extends XmlAdapter<String, ISO_639_Code> {
     @Override
-    public LanguageCode unmarshal(String v) throws Exception {
+    public ISO_639_Code unmarshal(String v) throws Exception {
         return LanguageCode.get(v).orElseThrow(Exception::new);
     }
 
     @Override
-    public String marshal(LanguageCode v) throws Exception {
+    public String marshal(ISO_639_Code v) throws Exception {
         return v.code();
     }
 }

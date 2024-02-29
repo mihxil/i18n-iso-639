@@ -3,12 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.meeuw.i18n</groupId>
-  <artifactId>i18n-iso-639-3</artifactId>
-  <version>3.1-SNAPSHOT</version>
+  <artifactId>i18n-iso-639</artifactId>
   <packaging>jar</packaging>
-  <name>i18n-iso-639-3</name>
+  
+  <version>3.1-SNAPSHOT</version>
+  
+  <name>i18n-iso-639</name>
   <description>Provides a class with one instance of every of the ISO 639-3 languages</description>
-  <url>https://github.com/mihxil/i18n-iso-639-3</url>
+  <url>https://github.com/mihxil/i18n-iso-639</url>
 
   <licenses>
     <license>

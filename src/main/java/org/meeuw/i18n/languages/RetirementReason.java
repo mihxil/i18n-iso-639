@@ -31,7 +31,8 @@ public enum RetirementReason {
      /**
      * 'merge'. The language is not considered a separate language anymore, and its code is merged with another. E.g. the Souletin dialect of Basque is now considered to be just Basque ('eus').
      */
-    M("merge");
+    M("merge")
+    ;
 
     private final String string;
 

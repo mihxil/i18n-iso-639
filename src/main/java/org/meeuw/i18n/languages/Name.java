@@ -2,13 +2,16 @@ package org.meeuw.i18n.languages;
 
 public class Name {
     
-
     private final String value;
     private final String inverted;
 
     public Name(String value, String inverted) {
         this.value = value;
         this.inverted = inverted;
+    }
+    
+    public Name(String value) {
+        this(value, value);
     }
 
 

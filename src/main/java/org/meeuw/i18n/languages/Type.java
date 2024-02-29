@@ -8,25 +8,38 @@ public enum Type {
     /**
      * Ancient language
      */
-    A,
+    A("Ancient language"),
     /**
      * Constructed language
      */
-    C,
+    C("Constructed language"),
     /**
      * Extinct language
      */
-    E,
+    E("Extinct language"),
     /**
      * Historical language
      */
-    H,
+    H("Historical language"),
     /**
      * Living language
      */
-    L,
+    L("Living language"),
     /**
      * Special language
      */
-    S
+    S("Special language");
+
+  
+    private final String toString;
+
+    Type(String toString) {
+        this.toString = toString;
+    }
+
+    @Override
+    public String toString() {
+        return toString;
+    }
+    
 }

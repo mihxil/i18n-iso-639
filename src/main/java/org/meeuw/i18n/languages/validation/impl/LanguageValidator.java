@@ -21,7 +21,7 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
 
     public static final String[] LEGACY = {"jw"}; // javanese?
 
-        private static final Set<String> VALID_ISO_LANGUAGES;
+    private static final Set<String> VALID_ISO_LANGUAGES;
 
     private static final Set<String> EXTRA_RECOGNIZED = ConcurrentHashMap.newKeySet();;
 
@@ -106,7 +106,7 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
 
         if (! recognized) {
 
-            Optional<LanguageCode> iso3 = LanguageCode.getByPart1(value);
+            Optional<? extends LanguageCode> iso3 = LanguageCode.getByPart1(value);
             if (iso3.isPresent()) {
                 return true;
             }
@@ -127,10 +127,19 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
                     return true;
                 }
             }
+            if (annotation.iso639_5()) {
+                try {
+                    //LanguageFamilyCode isoPart5 = LanguageFamilyCode.valueOf(value);
+                    return true;
+                } catch (IllegalArgumentException iae) {
+                    return false;
+                }
+            }
+            
             if (annotation.lenient()) {
                 String displayLanguage = new Locale(value).getDisplayLanguage();
                 if (!language.equals(displayLanguage)) { // last fall back is iso code itself.
-                    logger.info("Not a recognized language " + language + " -> " + displayLanguage + ", so recognized by the JMS. Will follow that");
+                    logger.info("Not a recognized language " + language + " -> " + displayLanguage + ", but recognized by the JVM. Will follow that");
                     EXTRA_RECOGNIZED.add(value);
                     return true;
                 }

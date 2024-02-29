@@ -1,15 +1,14 @@
 package org.meeuw.i18n.languages;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-import java.io.Serializable;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.stream.Stream;
-import static org.meeuw.i18n.languages.LanguageCodeImpl.KNOWN;
-import static org.meeuw.i18n.languages.LanguageCodeImpl.LOGGER;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
+import static org.meeuw.i18n.languages.ISO_639_3_Code.LOGGER;
 import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 /**
@@ -22,16 +21,16 @@ import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
  * This class is immutable and can be used as a key in maps.
  */
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
-public interface LanguageCode extends Serializable {
-
+public interface LanguageCode extends ISO_639_Code {
+    
     /**
-     * A stream with all known {@link LanguageCode language codes}.
+     * A stream with all known {@link ISO_639_Code language codes}.
      * 
      *
      * @return a stream of all known language codes.
      */
-    static Stream<LanguageCode> stream() {
-        return KNOWN.values()
+    static Stream<@NonNull LanguageCode> stream() {
+        return ISO_639_3_Code
             .stream()
             .sorted(Comparator.comparing(LanguageCode::code))
             .map(LanguageCode::updateToEnum);
@@ -39,18 +38,18 @@ public interface LanguageCode extends Serializable {
     
     
     /**
-     * A stream with {@link Map.Entry map entries} with all known language names. Combined with their {@link LanguageCode}
+     * A stream with {@link Map.Entry map entries} with all known language names. Combined with their {@link ISO_639_Code}
      * This means that the same language may occur more than once in this stream. For example Dutch will occur as both "Dutch" and as "Flemish".
      *
      * @param locale The locale to use for the names. Currently, must be english.
      * @see #streamByNames()
      * @since 3.0
      */
-    static Stream<? extends Map.Entry<String, LanguageCode>> streamByNames(Locale locale) {
+    static Stream<? extends Map.Entry<String, ? extends LanguageCode>> streamByNames(Locale locale) {
         if (! locale.getLanguage().equals("en")) {
             throw new UnsupportedOperationException("Only English is supported");
         }
-        return KNOWN.values()
+        return ISO_639_3_Code
             .stream()
             .flatMap(l -> l.names().stream()
                 .map(n -> new AbstractMap.SimpleEntry<>(n.inverted(), LanguageCode.updateToEnum(l))))             
@@ -61,19 +60,18 @@ public interface LanguageCode extends Serializable {
      * Defaulting version of {@link #streamByNames(Locale)}, using {@link Locale#US}.
      * @since 3.0
      */
-    static Stream<? extends Map.Entry<String, LanguageCode>> streamByNames() {
+    static Stream<? extends Map.Entry<String, ? extends LanguageCode>> streamByNames() {
         return streamByNames(Locale.US);
     }
 
     
 
-
-
+    
     /**
-     * Retrieves a {@link LanguageCodeImpl} by its three-letter identifier {@link #id()} (using {@link #getByCode(String)}, or by its two letter identifier {@link #part1()}.
+     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link #id()} (using {@link #getByCode(String)}, or by its two letter identifier {@link #part1()}.
      *
      * @param code A 2 or 3 letter language code
-     * @return An optional containing the {@link LanguageCodeImpl} if found.
+     * @return An optional containing the {@link ISO_639_3_Code} if found.
      * @see #code()
      * @see #getByPart1(String)
      * @see #getByCode(String)
@@ -95,7 +93,7 @@ public interface LanguageCode extends Serializable {
     /**
      * As {@link #get(String)}, but throws an {@link IllegalArgumentException} if not found.
      *
-     * @return The {@link LanguageCodeImpl} if found
+     * @return The {@link ISO_639_3_Code} if found
      * @throws IllegalArgumentException if not found
      */
     @JsonCreator
@@ -106,12 +104,12 @@ public interface LanguageCode extends Serializable {
 
 
     /**
-     * Retrieves a {@link LanguageCodeImpl} by its three-letter identifier {@link #id()}
+     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link #id()}
      *
      * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
      *
      * @param code A 3 letter language code
-     * @return An optional containing the {@link LanguageCodeImpl} if found.
+     * @return An optional containing the {@link ISO_639_3_Code} if found.
      * @since 2.2
      */
     static Optional<LanguageCode> getByPart3(@Size(min = 3, max=3) String code, boolean matchRetired) {
@@ -140,7 +138,7 @@ public interface LanguageCode extends Serializable {
     /**
      * Defaulting version of {@link #getByPart3(String, boolean)}, matching retired codes too.
      * @deprecated Confusing, since not matching like {@link #code()}
-     * @see #getByPart3(String,) 
+     * @see #getByPart3(String) 
      */
     @Deprecated
     static Optional<LanguageCode> getByCode(@Size(min = 3, max=3) String code) {
@@ -156,42 +154,32 @@ public interface LanguageCode extends Serializable {
 
     
     /**
-     * Retrieves a {@link LanguageCodeImpl} by its Part1 code {@link #part1()}
+     * Retrieves a {@link ISO_639_3_Code} by its Part1 code {@link #part1()}
      *
      * @param code A 2 letter language code
-     * @return An optional containing the {@link LanguageCodeImpl} if found.
+     * @return An optional containing the {@link ISO_639_3_Code} if found.
      */
+    
     static Optional<LanguageCode> getByPart1(String code) {
-        return getByPart1(code, true);
+        return  ISO_639_3_Code
+            .getByPart1(code)
+            .map(LanguageCode::updateToEnum);
     }
     
-    static Optional<LanguageCode> getByPart1(String code, boolean resolveToEnum) {
-        if (code == null) {
-            return Optional.empty();
-        }
-        final String lowerCode = code.toLowerCase();
-        Optional<LanguageCode> result =  KNOWN.values().stream()
-            .filter(i -> lowerCode.equals(i.part1()))
-            .findFirst();
-        if (resolveToEnum) {
-            result = result.map(LanguageCode::updateToEnum);
-        }
-        return result;
-    }
-    
-    static LanguageCode updateToEnum(LanguageCode languageCode) {
-        if (! (languageCode instanceof ISO_639_1) && languageCode.part1() != null) {
-            return ISO_639_1.valueOf(languageCode.part1());
+    @NonNull
+    static LanguageCode updateToEnum(@NonNull LanguageCode languageCode) {
+        if (! (languageCode instanceof ISO_639_1_Code) && languageCode.part1() != null) {
+            return ISO_639_1_Code.valueOf(languageCode.part1());
         } else {
             return languageCode;
         }
     }
 
     /**
-     * Retrieves a {@link LanguageCodeImpl} by its Part2B  ('bibliographic') code {@link #part2B()}
+     * Retrieves a {@link ISO_639_3_Code} by its Part2B  ('bibliographic') code {@link #part2B()}
      *
      * @param code A 3 letter language code
-     * @return An optional containing the {@link LanguageCodeImpl} if found.
+     * @return An optional containing the {@link ISO_639_3_Code} if found.
      */
     static Optional<LanguageCode> getByPart2B(String code) {
         if (code == null) {
@@ -206,10 +194,10 @@ public interface LanguageCode extends Serializable {
 
 
     /**
-     * Retrieves a {@link LanguageCodeImpl} by its Part2T ('terminology') code {@link #part2T()}
+     * Retrieves a {@link ISO_639_3_Code} by its Part2T ('terminology') code {@link #part2T()}
      *
      * @param code A 3 letter language code
-     * @return An optional containing the {@link LanguageCodeImpl} if found.
+     * @return An optional containing the {@link ISO_639_3_Code} if found.
      */
     static Optional<LanguageCode> getByPart2T(String code) {
         if (code == null) {
@@ -223,26 +211,6 @@ public interface LanguageCode extends Serializable {
     }
 
 
-
-    /**
-     * The {@link #part1() ISO-639-1-code} if available, otherwise the {@link #part3() ISO-639-3 code}.
-     *
-     * @return A 2 or 3 letter language code
-     * @since 0.2
-     */
-    @JsonValue
-    String code();
-        
-
-    @Override
-    String toString();
-        
-
-    /**
-     * The three-letter 639-3 identifier
-     * @return The three-letter 639-3 identifier
-     */
-    String id();
 
     
     /**
@@ -280,38 +248,29 @@ public interface LanguageCode extends Serializable {
     String refName();
 
     String comment();
-
     /**
      * @since 2.2
      */
     List<Name> names();
 
-    /**
-     * The (first) name (in english) of the language.
-     * @deprecated 
-     */
-    @Deprecated
-    default String getName() {
-        return names().get(0).value();
-    }
-
-    @Deprecated
-    default String getInvertedName() {
-        return names().get(0).inverted();
-    }
     
     default Locale toLocale() {
         return new Locale(code());
     }
+    
+    /**
+     * The three-letter 639  identifier
+     * @return The three-letter 639 identifier
+     */
+    String id();
 
- //   @Override
-    default int compareTo(LanguageCode o) {
-        return getInvertedName().compareTo(o.getInvertedName());
+    
+    default Name name(Locale locale) {
+        if (locale.getLanguage().equals("en")) {
+            return names().get(0);
+        } else {
+            throw new UnsupportedOperationException();
+        }
     }
-
-    private Object readResolve() {
-        return get(id()).orElse(this);
-    }
-
 
 }

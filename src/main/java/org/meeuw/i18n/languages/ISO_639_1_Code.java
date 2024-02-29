@@ -8,10 +8,16 @@ import java.util.List;
  * This class is automatically generated.It contains the ISO 639-1 language codes.
  * 
  */
-public enum ISO_639_1
+public enum ISO_639_1_Code
     implements LanguageCode
 {
 
+
+    /**
+     * aar Afar [Afar]
+     * 
+     */
+    aa,
 
     /**
      * abk Abkhazian [Abkhazian]
@@ -20,10 +26,10 @@ public enum ISO_639_1
     ab,
 
     /**
-     * aar Afar [Afar]
+     * ave Avestan [Avestan]
      * 
      */
-    aa,
+    ae,
 
     /**
      * afr Afrikaans [Afrikaans]
@@ -38,22 +44,10 @@ public enum ISO_639_1
     ak,
 
     /**
-     * sqi Albanian [Albanian]
-     * 
-     */
-    sq,
-
-    /**
      * amh Amharic [Amharic]
      * 
      */
     am,
-
-    /**
-     * ara Arabic [Arabic]
-     * 
-     */
-    ar,
 
     /**
      * arg Aragonese [Aragonese]
@@ -62,10 +56,10 @@ public enum ISO_639_1
     an,
 
     /**
-     * hye Armenian [Armenian]
+     * ara Arabic [Arabic]
      * 
      */
-    hy,
+    ar,
 
     /**
      * asm Assamese [Assamese]
@@ -80,12 +74,6 @@ public enum ISO_639_1
     av,
 
     /**
-     * ave Avestan [Avestan]
-     * 
-     */
-    ae,
-
-    /**
      * aym Aymara [Aymara]
      * 
      */
@@ -98,22 +86,10 @@ public enum ISO_639_1
     az,
 
     /**
-     * bam Bambara [Bambara]
-     * 
-     */
-    bm,
-
-    /**
      * bak Bashkir [Bashkir]
      * 
      */
     ba,
-
-    /**
-     * eus Basque [Basque]
-     * 
-     */
-    eu,
 
     /**
      * bel Belarusian [Belarusian]
@@ -122,10 +98,10 @@ public enum ISO_639_1
     be,
 
     /**
-     * ben Bengali [Bengali]
+     * bul Bulgarian [Bulgarian]
      * 
      */
-    bn,
+    bg,
 
     /**
      * bis Bislama [Bislama]
@@ -134,10 +110,22 @@ public enum ISO_639_1
     bi,
 
     /**
-     * bos Bosnian [Bosnian]
+     * bam Bambara [Bambara]
      * 
      */
-    bs,
+    bm,
+
+    /**
+     * ben Bengali [Bengali]
+     * 
+     */
+    bn,
+
+    /**
+     * bod Tibetan [Tibetan]
+     * 
+     */
+    bo,
 
     /**
      * bre Breton [Breton]
@@ -146,22 +134,10 @@ public enum ISO_639_1
     br,
 
     /**
-     * bul Bulgarian [Bulgarian]
+     * bos Bosnian [Bosnian]
      * 
      */
-    bg,
-
-    /**
-     * mya Burmese [Burmese]
-     * 
-     */
-    my,
-
-    /**
-     * spa Spanish [Castilian, Spanish]
-     * 
-     */
-    es,
+    bs,
 
     /**
      * cat Catalan [Catalan, Valencian]
@@ -170,46 +146,16 @@ public enum ISO_639_1
     ca,
 
     /**
-     * cha Chamorro [Chamorro]
-     * 
-     */
-    ch,
-
-    /**
      * che Chechen [Chechen]
      * 
      */
     ce,
 
     /**
-     * nya Nyanja [Chewa, Chichewa, Nyanja]
+     * cha Chamorro [Chamorro]
      * 
      */
-    ny,
-
-    /**
-     * zho Chinese [Chinese]
-     * 
-     */
-    zh,
-
-    /**
-     * zha Zhuang [Chuang, Zhuang]
-     * 
-     */
-    za,
-
-    /**
-     * chv Chuvash [Chuvash]
-     * 
-     */
-    cv,
-
-    /**
-     * cor Cornish [Cornish]
-     * 
-     */
-    kw,
+    ch,
 
     /**
      * cos Corsican [Corsican]
@@ -224,16 +170,28 @@ public enum ISO_639_1
     cr,
 
     /**
-     * hrv Croatian [Croatian]
-     * 
-     */
-    hr,
-
-    /**
      * ces Czech [Czech]
      * 
      */
     cs,
+
+    /**
+     * chu Church Slavic [Church Slavic, Church Slavonic, Old Bulgarian, Old Church Slavonic, Old Slavonic]
+     * 
+     */
+    cu,
+
+    /**
+     * chv Chuvash [Chuvash]
+     * 
+     */
+    cv,
+
+    /**
+     * cym Welsh [Welsh]
+     * 
+     */
+    cy,
 
     /**
      * dan Danish [Danish]
@@ -242,22 +200,34 @@ public enum ISO_639_1
     da,
 
     /**
+     * deu German [German]
+     * 
+     */
+    de,
+
+    /**
      * div Dhivehi [Dhivehi, Divehi, Maldivian]
      * 
      */
     dv,
 
     /**
-     * nld Dutch [Dutch, Flemish]
-     * 
-     */
-    nl,
-
-    /**
      * dzo Dzongkha [Dzongkha]
      * 
      */
     dz,
+
+    /**
+     * ewe Ewe [Ewe]
+     * 
+     */
+    ee,
+
+    /**
+     * ell Modern Greek (1453-) [Modern Greek (1453-)]
+     * 
+     */
+    el,
 
     /**
      * eng English [English]
@@ -272,22 +242,40 @@ public enum ISO_639_1
     eo,
 
     /**
+     * spa Spanish [Castilian, Spanish]
+     * 
+     */
+    es,
+
+    /**
      * est Estonian [Estonian]
      * 
      */
     et,
 
     /**
-     * ewe Ewe [Ewe]
+     * eus Basque [Basque]
      * 
      */
-    ee,
+    eu,
 
     /**
-     * fao Faroese [Faroese]
+     * fas Persian [Persian]
      * 
      */
-    fo,
+    fa,
+
+    /**
+     * ful Fulah [Fulah]
+     * 
+     */
+    ff,
+
+    /**
+     * fin Finnish [Finnish]
+     * 
+     */
+    fi,
 
     /**
      * fij Fijian [Fijian]
@@ -296,10 +284,10 @@ public enum ISO_639_1
     fj,
 
     /**
-     * fin Finnish [Finnish]
+     * fao Faroese [Faroese]
      * 
      */
-    fi,
+    fo,
 
     /**
      * fra French [French]
@@ -314,10 +302,10 @@ public enum ISO_639_1
     fy,
 
     /**
-     * ful Fulah [Fulah]
+     * gle Irish [Irish]
      * 
      */
-    ff,
+    ga,
 
     /**
      * gla Scottish Gaelic [Gaelic, Scottish Gaelic]
@@ -332,42 +320,6 @@ public enum ISO_639_1
     gl,
 
     /**
-     * lug Ganda [Ganda]
-     * 
-     */
-    lg,
-
-    /**
-     * kat Georgian [Georgian]
-     * 
-     */
-    ka,
-
-    /**
-     * deu German [German]
-     * 
-     */
-    de,
-
-    /**
-     * kik Kikuyu [Gikuyu, Kikuyu]
-     * 
-     */
-    ki,
-
-    /**
-     * ell Modern Greek (1453-) [Modern Greek (1453-)]
-     * 
-     */
-    el,
-
-    /**
-     * kal Kalaallisut [Greenlandic, Kalaallisut]
-     * 
-     */
-    kl,
-
-    /**
      * grn Guarani [Guarani]
      * 
      */
@@ -380,10 +332,10 @@ public enum ISO_639_1
     gu,
 
     /**
-     * hat Haitian [Haitian, Haitian Creole]
+     * glv Manx [Manx]
      * 
      */
-    ht,
+    gv,
 
     /**
      * hau Hausa [Hausa]
@@ -398,12 +350,6 @@ public enum ISO_639_1
     he,
 
     /**
-     * her Herero [Herero]
-     * 
-     */
-    hz,
-
-    /**
      * hin Hindi [Hindi]
      * 
      */
@@ -416,34 +362,34 @@ public enum ISO_639_1
     ho,
 
     /**
+     * hrv Croatian [Croatian]
+     * 
+     */
+    hr,
+
+    /**
+     * hat Haitian [Haitian, Haitian Creole]
+     * 
+     */
+    ht,
+
+    /**
      * hun Hungarian [Hungarian]
      * 
      */
     hu,
 
     /**
-     * isl Icelandic [Icelandic]
+     * hye Armenian [Armenian]
      * 
      */
-    is,
+    hy,
 
     /**
-     * ido Ido [Ido]
+     * her Herero [Herero]
      * 
      */
-    io,
-
-    /**
-     * ibo Igbo [Igbo]
-     * 
-     */
-    ig,
-
-    /**
-     * ind Indonesian [Indonesian]
-     * 
-     */
-    id,
+    hz,
 
     /**
      * ina Interlingua (International Auxiliary Language Association) [Interlingua (International Auxiliary Language Association)]
@@ -452,16 +398,28 @@ public enum ISO_639_1
     ia,
 
     /**
+     * ind Indonesian [Indonesian]
+     * 
+     */
+    id,
+
+    /**
      * ile Interlingue [Interlingue, Occidental]
      * 
      */
     ie,
 
     /**
-     * iku Inuktitut [Inuktitut]
+     * ibo Igbo [Igbo]
      * 
      */
-    iu,
+    ig,
+
+    /**
+     * iii Sichuan Yi [Nuosu, Sichuan Yi]
+     * 
+     */
+    ii,
 
     /**
      * ipk Inupiaq [Inupiaq]
@@ -470,16 +428,28 @@ public enum ISO_639_1
     ik,
 
     /**
-     * gle Irish [Irish]
+     * ido Ido [Ido]
      * 
      */
-    ga,
+    io,
+
+    /**
+     * isl Icelandic [Icelandic]
+     * 
+     */
+    is,
 
     /**
      * ita Italian [Italian]
      * 
      */
     it,
+
+    /**
+     * iku Inuktitut [Inuktitut]
+     * 
+     */
+    iu,
 
     /**
      * jpn Japanese [Japanese]
@@ -494,10 +464,58 @@ public enum ISO_639_1
     jv,
 
     /**
+     * kat Georgian [Georgian]
+     * 
+     */
+    ka,
+
+    /**
+     * kon Kongo [Kongo]
+     * 
+     */
+    kg,
+
+    /**
+     * kik Kikuyu [Gikuyu, Kikuyu]
+     * 
+     */
+    ki,
+
+    /**
+     * kua Kuanyama [Kuanyama, Kwanyama]
+     * 
+     */
+    kj,
+
+    /**
+     * kaz Kazakh [Kazakh]
+     * 
+     */
+    kk,
+
+    /**
+     * kal Kalaallisut [Greenlandic, Kalaallisut]
+     * 
+     */
+    kl,
+
+    /**
+     * khm Khmer [Central Khmer, Khmer]
+     * 
+     */
+    km,
+
+    /**
      * kan Kannada [Kannada]
      * 
      */
     kn,
+
+    /**
+     * kor Korean [Korean]
+     * 
+     */
+    ko,
 
     /**
      * kau Kanuri [Kanuri]
@@ -512,28 +530,10 @@ public enum ISO_639_1
     ks,
 
     /**
-     * kaz Kazakh [Kazakh]
+     * kur Kurdish [Kurdish]
      * 
      */
-    kk,
-
-    /**
-     * khm Khmer [Central Khmer, Khmer]
-     * 
-     */
-    km,
-
-    /**
-     * kin Kinyarwanda [Kinyarwanda]
-     * 
-     */
-    rw,
-
-    /**
-     * kir Kirghiz [Kirghiz, Kyrgyz]
-     * 
-     */
-    ky,
+    ku,
 
     /**
      * kom Komi [Komi]
@@ -542,34 +542,16 @@ public enum ISO_639_1
     kv,
 
     /**
-     * kon Kongo [Kongo]
+     * cor Cornish [Cornish]
      * 
      */
-    kg,
+    kw,
 
     /**
-     * kor Korean [Korean]
+     * kir Kirghiz [Kirghiz, Kyrgyz]
      * 
      */
-    ko,
-
-    /**
-     * kua Kuanyama [Kuanyama, Kwanyama]
-     * 
-     */
-    kj,
-
-    /**
-     * kur Kurdish [Kurdish]
-     * 
-     */
-    ku,
-
-    /**
-     * lao Lao [Lao]
-     * 
-     */
-    lo,
+    ky,
 
     /**
      * lat Latin [Latin]
@@ -578,16 +560,16 @@ public enum ISO_639_1
     la,
 
     /**
-     * lav Latvian [Latvian]
-     * 
-     */
-    lv,
-
-    /**
      * ltz Luxembourgish [Letzeburgesch, Luxembourgish]
      * 
      */
     lb,
+
+    /**
+     * lug Ganda [Ganda]
+     * 
+     */
+    lg,
 
     /**
      * lim Limburgan [Limburgan, Limburger, Limburgish]
@@ -602,6 +584,12 @@ public enum ISO_639_1
     ln,
 
     /**
+     * lao Lao [Lao]
+     * 
+     */
+    lo,
+
+    /**
      * lit Lithuanian [Lithuanian]
      * 
      */
@@ -614,10 +602,10 @@ public enum ISO_639_1
     lu,
 
     /**
-     * mkd Macedonian [Macedonian]
+     * lav Latvian [Latvian]
      * 
      */
-    mk,
+    lv,
 
     /**
      * mlg Malagasy [Malagasy]
@@ -626,28 +614,10 @@ public enum ISO_639_1
     mg,
 
     /**
-     * msa Malay (macrolanguage) [Malay (macrolanguage)]
+     * mah Marshallese [Marshallese]
      * 
      */
-    ms,
-
-    /**
-     * mal Malayalam [Malayalam]
-     * 
-     */
-    ml,
-
-    /**
-     * mlt Maltese [Maltese]
-     * 
-     */
-    mt,
-
-    /**
-     * glv Manx [Manx]
-     * 
-     */
-    gv,
+    mh,
 
     /**
      * mri Maori [Maori]
@@ -656,22 +626,16 @@ public enum ISO_639_1
     mi,
 
     /**
-     * mar Marathi [Marathi]
+     * mkd Macedonian [Macedonian]
      * 
      */
-    mr,
+    mk,
 
     /**
-     * mah Marshallese [Marshallese]
+     * mal Malayalam [Malayalam]
      * 
      */
-    mh,
-
-    /**
-     * ron Romanian [Moldavian, Moldovan, Romanian]
-     * 
-     */
-    ro,
+    ml,
 
     /**
      * mon Mongolian [Mongolian]
@@ -680,46 +644,34 @@ public enum ISO_639_1
     mn,
 
     /**
+     * mar Marathi [Marathi]
+     * 
+     */
+    mr,
+
+    /**
+     * msa Malay (macrolanguage) [Malay (macrolanguage)]
+     * 
+     */
+    ms,
+
+    /**
+     * mlt Maltese [Maltese]
+     * 
+     */
+    mt,
+
+    /**
+     * mya Burmese [Burmese]
+     * 
+     */
+    my,
+
+    /**
      * nau Nauru [Nauru]
      * 
      */
     na,
-
-    /**
-     * nav Navajo [Navaho, Navajo]
-     * 
-     */
-    nv,
-
-    /**
-     * nde North Ndebele [North Ndebele]
-     * 
-     */
-    nd,
-
-    /**
-     * nbl South Ndebele [South Ndebele]
-     * 
-     */
-    nr,
-
-    /**
-     * ndo Ndonga [Ndonga]
-     * 
-     */
-    ng,
-
-    /**
-     * nep Nepali (macrolanguage) [Nepali (macrolanguage)]
-     * 
-     */
-    ne,
-
-    /**
-     * nor Norwegian [Norwegian]
-     * 
-     */
-    no,
 
     /**
      * nob Norwegian Bokmål [Norwegian Bokmål]
@@ -728,16 +680,58 @@ public enum ISO_639_1
     nb,
 
     /**
+     * nde North Ndebele [North Ndebele]
+     * 
+     */
+    nd,
+
+    /**
+     * nep Nepali (macrolanguage) [Nepali (macrolanguage)]
+     * 
+     */
+    ne,
+
+    /**
+     * ndo Ndonga [Ndonga]
+     * 
+     */
+    ng,
+
+    /**
+     * nld Dutch [Dutch, Flemish]
+     * 
+     */
+    nl,
+
+    /**
      * nno Norwegian Nynorsk [Norwegian Nynorsk]
      * 
      */
     nn,
 
     /**
-     * iii Sichuan Yi [Nuosu, Sichuan Yi]
+     * nor Norwegian [Norwegian]
      * 
      */
-    ii,
+    no,
+
+    /**
+     * nbl South Ndebele [South Ndebele]
+     * 
+     */
+    nr,
+
+    /**
+     * nav Navajo [Navaho, Navajo]
+     * 
+     */
+    nv,
+
+    /**
+     * nya Nyanja [Chewa, Chichewa, Nyanja]
+     * 
+     */
+    ny,
 
     /**
      * oci Occitan (post 1500) [Occitan (post 1500)]
@@ -752,16 +746,16 @@ public enum ISO_639_1
     oj,
 
     /**
-     * ori Oriya (macrolanguage) [Oriya (macrolanguage)]
-     * 
-     */
-    or,
-
-    /**
      * orm Oromo [Oromo]
      * 
      */
     om,
+
+    /**
+     * ori Oriya (macrolanguage) [Oriya (macrolanguage)]
+     * 
+     */
+    or,
 
     /**
      * oss Ossetian [Ossetian, Ossetic]
@@ -770,34 +764,28 @@ public enum ISO_639_1
     os,
 
     /**
-     * pli Pali [Pali]
-     * 
-     */
-    pi,
-
-    /**
      * pan Panjabi [Panjabi, Punjabi]
      * 
      */
     pa,
 
     /**
-     * pus Pushto [Pashto, Pushto]
+     * pli Pali [Pali]
      * 
      */
-    ps,
-
-    /**
-     * fas Persian [Persian]
-     * 
-     */
-    fa,
+    pi,
 
     /**
      * pol Polish [Polish]
      * 
      */
     pl,
+
+    /**
+     * pus Pushto [Pashto, Pushto]
+     * 
+     */
+    ps,
 
     /**
      * por Portuguese [Portuguese]
@@ -824,28 +812,22 @@ public enum ISO_639_1
     rn,
 
     /**
+     * ron Romanian [Moldavian, Moldovan, Romanian]
+     * 
+     */
+    ro,
+
+    /**
      * rus Russian [Russian]
      * 
      */
     ru,
 
     /**
-     * sme Northern Sami [Northern Sami]
+     * kin Kinyarwanda [Kinyarwanda]
      * 
      */
-    se,
-
-    /**
-     * smo Samoan [Samoan]
-     * 
-     */
-    sm,
-
-    /**
-     * sag Sango [Sango]
-     * 
-     */
-    sg,
+    rw,
 
     /**
      * san Sanskrit [Sanskrit]
@@ -860,10 +842,22 @@ public enum ISO_639_1
     sc,
 
     /**
-     * srp Serbian [Serbian]
+     * snd Sindhi [Sindhi]
      * 
      */
-    sr,
+    sd,
+
+    /**
+     * sme Northern Sami [Northern Sami]
+     * 
+     */
+    se,
+
+    /**
+     * sag Sango [Sango]
+     * 
+     */
+    sg,
 
     /**
      * hbs Serbo-Croatian [Serbo-Croatian]
@@ -872,28 +866,10 @@ public enum ISO_639_1
     sh,
 
     /**
-     * sna Shona [Shona]
-     * 
-     */
-    sn,
-
-    /**
-     * snd Sindhi [Sindhi]
-     * 
-     */
-    sd,
-
-    /**
      * sin Sinhala [Sinhala, Sinhalese]
      * 
      */
     si,
-
-    /**
-     * chu Church Slavic [Church Slavic, Church Slavonic, Old Bulgarian, Old Church Slavonic, Old Slavonic]
-     * 
-     */
-    cu,
 
     /**
      * slk Slovak [Slovak]
@@ -908,10 +884,40 @@ public enum ISO_639_1
     sl,
 
     /**
+     * smo Samoan [Samoan]
+     * 
+     */
+    sm,
+
+    /**
+     * sna Shona [Shona]
+     * 
+     */
+    sn,
+
+    /**
      * som Somali [Somali]
      * 
      */
     so,
+
+    /**
+     * sqi Albanian [Albanian]
+     * 
+     */
+    sq,
+
+    /**
+     * srp Serbian [Serbian]
+     * 
+     */
+    sr,
+
+    /**
+     * ssw Swati [Swati]
+     * 
+     */
+    ss,
 
     /**
      * sot Southern Sotho [Southern Sotho]
@@ -926,40 +932,16 @@ public enum ISO_639_1
     su,
 
     /**
-     * swa Swahili (macrolanguage) [Swahili (macrolanguage)]
-     * 
-     */
-    sw,
-
-    /**
-     * ssw Swati [Swati]
-     * 
-     */
-    ss,
-
-    /**
      * swe Swedish [Swedish]
      * 
      */
     sv,
 
     /**
-     * tgl Tagalog [Tagalog]
+     * swa Swahili (macrolanguage) [Swahili (macrolanguage)]
      * 
      */
-    tl,
-
-    /**
-     * tah Tahitian [Tahitian]
-     * 
-     */
-    ty,
-
-    /**
-     * tgk Tajik [Tajik]
-     * 
-     */
-    tg,
+    sw,
 
     /**
      * tam Tamil [Tamil]
@@ -968,16 +950,16 @@ public enum ISO_639_1
     ta,
 
     /**
-     * tat Tatar [Tatar]
-     * 
-     */
-    tt,
-
-    /**
      * tel Telugu [Telugu]
      * 
      */
     te,
+
+    /**
+     * tgk Tajik [Tajik]
+     * 
+     */
+    tg,
 
     /**
      * tha Thai [Thai]
@@ -986,40 +968,10 @@ public enum ISO_639_1
     th,
 
     /**
-     * bod Tibetan [Tibetan]
-     * 
-     */
-    bo,
-
-    /**
      * tir Tigrinya [Tigrinya]
      * 
      */
     ti,
-
-    /**
-     * ton Tonga (Tonga Islands) [Tonga (Tonga Islands)]
-     * 
-     */
-    to,
-
-    /**
-     * tso Tsonga [Tsonga]
-     * 
-     */
-    ts,
-
-    /**
-     * tsn Tswana [Tswana]
-     * 
-     */
-    tn,
-
-    /**
-     * tur Turkish [Turkish]
-     * 
-     */
-    tr,
 
     /**
      * tuk Turkmen [Turkmen]
@@ -1028,10 +980,52 @@ public enum ISO_639_1
     tk,
 
     /**
+     * tgl Tagalog [Tagalog]
+     * 
+     */
+    tl,
+
+    /**
+     * tsn Tswana [Tswana]
+     * 
+     */
+    tn,
+
+    /**
+     * ton Tonga (Tonga Islands) [Tonga (Tonga Islands)]
+     * 
+     */
+    to,
+
+    /**
+     * tur Turkish [Turkish]
+     * 
+     */
+    tr,
+
+    /**
+     * tso Tsonga [Tsonga]
+     * 
+     */
+    ts,
+
+    /**
+     * tat Tatar [Tatar]
+     * 
+     */
+    tt,
+
+    /**
      * twi Twi [Twi]
      * 
      */
     tw,
+
+    /**
+     * tah Tahitian [Tahitian]
+     * 
+     */
+    ty,
 
     /**
      * uig Uighur [Uighur, Uyghur]
@@ -1082,12 +1076,6 @@ public enum ISO_639_1
     wa,
 
     /**
-     * cym Welsh [Welsh]
-     * 
-     */
-    cy,
-
-    /**
      * wol Wolof [Wolof]
      * 
      */
@@ -1112,18 +1100,30 @@ public enum ISO_639_1
     yo,
 
     /**
+     * zha Zhuang [Chuang, Zhuang]
+     * 
+     */
+    za,
+
+    /**
+     * zho Chinese [Chinese]
+     * 
+     */
+    zh,
+
+    /**
      * zul Zulu [Zulu]
      * 
      */
     zu;
-    private LanguageCode languageCode;
+    private ISO_639_3_Code languageCode;
 
-    ISO_639_1() {
+    ISO_639_1_Code() {
     }
 
     public LanguageCode getLanguageCode() {
         if (this.languageCode == null) {
-            this.languageCode = LanguageCode.getByPart1(this.name(), false).orElse(null);
+            this.languageCode = ISO_639_3_Code.getByPart1(this.name()).orElse(null);
         }
         return this.languageCode;
     }

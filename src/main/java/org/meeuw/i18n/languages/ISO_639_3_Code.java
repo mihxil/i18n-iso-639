@@ -8,6 +8,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 /**
  * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if they exist.
@@ -18,17 +19,17 @@ import java.util.logging.Logger;
  *<p>
  * This class is immutable and can be used as a key in maps.
  */
-public class LanguageCodeImpl implements LanguageCode {
+public class ISO_639_3_Code implements LanguageCode {
 
     final static Logger LOGGER = Logger.getLogger(LanguageCode.class.getName());
 
 
-    static final Map<String, LanguageCode> KNOWN;
+    static final Map<String, ISO_639_3_Code> KNOWN;
 
     static final String DIR = "/iso-639-3_Code_Tables_20240207/";
     static {
         Map<String, List<Name>> namesMap = new HashMap<>();
-        try (InputStream inputStream = LanguageCodeImpl.class.getResourceAsStream(DIR + "iso-639-3_Name_Index.tab");
+        try (InputStream inputStream = ISO_639_3_Code.class.getResourceAsStream(DIR + "iso-639-3_Name_Index.tab");
              BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         ) {
             String line = inputStreamReader.readLine();
@@ -42,8 +43,8 @@ public class LanguageCodeImpl implements LanguageCode {
             throw new ExceptionInInitializerError(e);
         }
 
-        Map<String, LanguageCodeImpl> temp = new HashMap<>();
-        try (InputStream inputStream = LanguageCodeImpl.class.getResourceAsStream(DIR + "iso-639-3.tab");
+        Map<String, ISO_639_3_Code> temp = new HashMap<>();
+        try (InputStream inputStream = ISO_639_3_Code.class.getResourceAsStream(DIR + "iso-639-3.tab");
              BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         ) {
             inputStreamReader.readLine(); // skipheader;
@@ -51,7 +52,7 @@ public class LanguageCodeImpl implements LanguageCode {
             while (line != null) {
                 String[] split = line.split("\t");
                 List<Name> names = namesMap.get(split[0]);
-                LanguageCodeImpl found = new LanguageCodeImpl(
+                ISO_639_3_Code found = new ISO_639_3_Code(
                     split[0],
                     split[1].length() > 0 ? split[1] : null,
                     split[2].length() > 0 ? split[2] : null,
@@ -69,8 +70,31 @@ public class LanguageCodeImpl implements LanguageCode {
             throw new ExceptionInInitializerError(e);
         }
         KNOWN = Collections.unmodifiableMap(temp);
-
     }
+    
+     /**
+     * A stream with all known {@link ISO_639_Code language codes}.
+     * 
+     *
+     * @return a stream of all known language codes.
+     */
+     public static Stream<ISO_639_3_Code> stream() {
+        return KNOWN.values()
+            .stream()
+            .sorted(Comparator.comparing(ISO_639_3_Code::code));
+    }
+    
+    static Optional<ISO_639_3_Code> getByPart1(String code) {
+        if (code == null) {
+            return Optional.empty();
+        }
+        final String lowerCode = code.toLowerCase();
+        return  ISO_639_3_Code.stream()
+            .filter(i -> lowerCode.equals(i.part1()))
+            .findFirst();
+    }
+    
+    
 
     @Size(min = 3, max = 3)
     @NotNull
@@ -92,7 +116,7 @@ public class LanguageCodeImpl implements LanguageCode {
 
     private transient  final List<Name> names;
 
-    private LanguageCodeImpl(
+    private ISO_639_3_Code(
         String id,
         String part2B,
         String part2T,
@@ -199,10 +223,23 @@ public class LanguageCodeImpl implements LanguageCode {
         return names;
     }
     
+    @Size
+    public Name name(Locale locale) {
+        if (locale.getLanguage().equals("en")) {
+            return names.get(0);
+        } else {
+            throw new UnsupportedOperationException();
+        }
+    }
+    
     
     private Object readResolve() {
-        return LanguageCode.get(id).orElse(this);
+        LanguageCode gotten = LanguageCode.get(id()).orElse(null);
+        if (gotten == null) {
+            return this;
+        } else {
+            return gotten;
+        }
     }
-
-
+    
 }
