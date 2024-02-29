@@ -1,11 +1,11 @@
 = JAVA ISO-639-3 support
 :toc:
 
-image:https://www.javadoc.io/badge/org.meeuw.i18n/i18n-iso-639-3.svg?color=blue[javadoc,link=https://www.javadoc.io/doc/org.meeuw.i18n/i18n-iso-639-3/latest]
-image:https://github.com/mihxil/i18n-iso-639-3/workflows/build/badge.svg?[Build Status,link=https://github.com/mihxil/i18n-iso-639-3/actions?query=workflow/build]
-image:https://img.shields.io/maven-central/v/org.meeuw.i18n/i18n-iso-639-3.svg?label=Maven%20Central[Maven Central,link=https://central.sonatype.com/search?namespace=org.meeuw.i18n&name=i18n-iso-639-3]
-image:https://img.shields.io/nexus/s/https/oss.sonatype.org/org.meeuw.i18n/i18n-iso-639-3.svg[snapshots,link=https://oss.sonatype.org/content/repositories/snapshots/org/meeuw/i18n/]
-image:https://codecov.io/gh/mihxil/i18n-iso-639-3/branch/main/graph/badge.svg[codecov,link=https://codecov.io/gh/mihxil/i18n-iso-639-3]
+image:https://www.javadoc.io/badge/org.meeuw.i18n/i18n-iso-639.svg?color=blue[javadoc,link=https://www.javadoc.io/doc/org.meeuw.i18n/i18n-iso-639/latest]
+image:https://github.com/mihxil/i18n-iso-639/workflows/build/badge.svg?[Build Status,link=https://github.com/mihxil/i18n-iso-639/actions?query=workflow/build]
+image:https://img.shields.io/maven-central/v/org.meeuw.i18n/i18n-iso-639.svg?label=Maven%20Central[Maven Central,link=https://central.sonatype.com/search?namespace=org.meeuw.i18n&name=i18n-iso-639]
+image:https://img.shields.io/nexus/s/https/oss.sonatype.org/org.meeuw.i18n/i18n-iso-639.svg[snapshots,link=https://oss.sonatype.org/content/repositories/snapshots/org/meeuw/i18n/]
+image:https://codecov.io/gh/mihxil/i18n-iso-639/branch/main/graph/badge.svg[codecov,link=https://codecov.io/gh/mihxil/i18n-iso-639-3]
 
 
 Codes for Languages of the World are covered by the https://en.wikipedia.org/wiki/ISO_639-3[ISO-639-3 standard]
