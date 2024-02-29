@@ -6,6 +6,7 @@ import java.io.*;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.Test;
 import org.meeuw.i18n.languages.*;
 
@@ -17,9 +18,6 @@ public class GenerateEnums {
 
     @Test
     public void create639_1() throws JClassAlreadyExistsException, IOException {
-        
-        System.out.println("File path : " + absolutePath);
-
         JCodeModel model = new JCodeModel();
         JDefinedClass iso639_1 = model._class("org.meeuw.i18n.languages.ISO_639_1_Code", ClassType.ENUM);
         iso639_1._implements(LanguageCode.class);
@@ -46,7 +44,7 @@ public class GenerateEnums {
 
         overrideGetter(iso639_1, languageCode, "toString", String.class);
         overrideGetter(iso639_1, languageCode, "code", String.class);
-        overrideGetter(iso639_1, languageCode, "id", String.class);
+        overrideGetter(iso639_1, languageCode, "part3", String.class);
         overrideGetter(iso639_1, languageCode, "part2B", String.class);
         overrideGetter(iso639_1, languageCode, "part2T", String.class);
         overrideGetter(iso639_1, languageCode, "part1", String.class);
@@ -57,20 +55,27 @@ public class GenerateEnums {
         overrideGetter(iso639_1, languageCode, "names", 
             model.ref(List.class).narrow(Name.class)
         );
+        model.ref(ISO_639_Code.class);
         Map<String, JEnumConstant> generated = new TreeMap<>();
         ISO_639_3_Code.stream()
             .filter(lc -> lc.part1() != null)
             .forEach(lc -> {
-                JEnumConstant enumConstant = generated.computeIfAbsent(lc.part1(), (k) -> iso639_1.enumConstant(lc.part1()));
-                enumConstant.javadoc()
-                    .append(lc.part3() + " " + lc.refName() + " " + lc.names())
-                ;
-                }    
+                    JEnumConstant enumConstant = generated.computeIfAbsent(lc.part1(), (k) -> iso639_1.enumConstant(lc.part1()));
+                    JDocComment javadoc = enumConstant.javadoc()
+                        .append("{@link ISO_639_3_Code iso 639 3 code}: " + lc.part3() + " " + lc.names().stream().map(Name::value).collect(Collectors.joining(", ")))
+                        .append("\n<p>\n")
+                        .append("scope: " + lc.scope())
+                        .append("\n<p>\n")
+                        .append("type: " + lc.languageType());
+                    String comment = lc.comment();
+                    if (comment != null) {
+                        javadoc.append("\n<p>\n").append(comment);
+                    }
+                }
             );
         model.build(new FileCodeWriter(new File(absolutePath), false));
     }
-    
-    @Test
+        @Test
     public void create639_5() throws JClassAlreadyExistsException, IOException, ClassNotFoundException {
         
         JCodeModel model = new JCodeModel();

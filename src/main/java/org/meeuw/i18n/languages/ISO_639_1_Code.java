@@ -14,1105 +14,1843 @@ public enum ISO_639_1_Code
 
 
     /**
-     * aar Afar [Afar]
+     * {@link ISO_639_3_Code iso 639 3 code}: aar Afar
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     aa,
 
     /**
-     * abk Abkhazian [Abkhazian]
+     * {@link ISO_639_3_Code iso 639 3 code}: abk Abkhazian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ab,
 
     /**
-     * ave Avestan [Avestan]
+     * {@link ISO_639_3_Code iso 639 3 code}: ave Avestan
+     * <p>
+     * scope: individual
+     * <p>
+     * type: historical
      * 
      */
     ae,
 
     /**
-     * afr Afrikaans [Afrikaans]
+     * {@link ISO_639_3_Code iso 639 3 code}: afr Afrikaans
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     af,
 
     /**
-     * aka Akan [Akan]
+     * {@link ISO_639_3_Code iso 639 3 code}: aka Akan
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     ak,
 
     /**
-     * amh Amharic [Amharic]
+     * {@link ISO_639_3_Code iso 639 3 code}: amh Amharic
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     am,
 
     /**
-     * arg Aragonese [Aragonese]
+     * {@link ISO_639_3_Code iso 639 3 code}: arg Aragonese
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     an,
 
     /**
-     * ara Arabic [Arabic]
+     * {@link ISO_639_3_Code iso 639 3 code}: ara Arabic
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     ar,
 
     /**
-     * asm Assamese [Assamese]
+     * {@link ISO_639_3_Code iso 639 3 code}: asm Assamese
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     as,
 
     /**
-     * ava Avaric [Avaric]
+     * {@link ISO_639_3_Code iso 639 3 code}: ava Avaric
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     av,
 
     /**
-     * aym Aymara [Aymara]
+     * {@link ISO_639_3_Code iso 639 3 code}: aym Aymara
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     ay,
 
     /**
-     * aze Azerbaijani [Azerbaijani]
+     * {@link ISO_639_3_Code iso 639 3 code}: aze Azerbaijani
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     az,
 
     /**
-     * bak Bashkir [Bashkir]
+     * {@link ISO_639_3_Code iso 639 3 code}: bak Bashkir
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ba,
 
     /**
-     * bel Belarusian [Belarusian]
+     * {@link ISO_639_3_Code iso 639 3 code}: bel Belarusian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     be,
 
     /**
-     * bul Bulgarian [Bulgarian]
+     * {@link ISO_639_3_Code iso 639 3 code}: bul Bulgarian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     bg,
 
     /**
-     * bis Bislama [Bislama]
+     * {@link ISO_639_3_Code iso 639 3 code}: bis Bislama
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     bi,
 
     /**
-     * bam Bambara [Bambara]
+     * {@link ISO_639_3_Code iso 639 3 code}: bam Bambara
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     bm,
 
     /**
-     * ben Bengali [Bengali]
+     * {@link ISO_639_3_Code iso 639 3 code}: ben Bengali
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     bn,
 
     /**
-     * bod Tibetan [Tibetan]
+     * {@link ISO_639_3_Code iso 639 3 code}: bod Tibetan
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     bo,
 
     /**
-     * bre Breton [Breton]
+     * {@link ISO_639_3_Code iso 639 3 code}: bre Breton
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     br,
 
     /**
-     * bos Bosnian [Bosnian]
+     * {@link ISO_639_3_Code iso 639 3 code}: bos Bosnian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     bs,
 
     /**
-     * cat Catalan [Catalan, Valencian]
+     * {@link ISO_639_3_Code iso 639 3 code}: cat Catalan, Valencian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ca,
 
     /**
-     * che Chechen [Chechen]
+     * {@link ISO_639_3_Code iso 639 3 code}: che Chechen
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ce,
 
     /**
-     * cha Chamorro [Chamorro]
+     * {@link ISO_639_3_Code iso 639 3 code}: cha Chamorro
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ch,
 
     /**
-     * cos Corsican [Corsican]
+     * {@link ISO_639_3_Code iso 639 3 code}: cos Corsican
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     co,
 
     /**
-     * cre Cree [Cree]
+     * {@link ISO_639_3_Code iso 639 3 code}: cre Cree
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     cr,
 
     /**
-     * ces Czech [Czech]
+     * {@link ISO_639_3_Code iso 639 3 code}: ces Czech
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     cs,
 
     /**
-     * chu Church Slavic [Church Slavic, Church Slavonic, Old Bulgarian, Old Church Slavonic, Old Slavonic]
+     * {@link ISO_639_3_Code iso 639 3 code}: chu Church Slavic, Church Slavonic, Old Bulgarian, Old Church Slavonic, Old Slavonic
+     * <p>
+     * scope: individual
+     * <p>
+     * type: historical
      * 
      */
     cu,
 
     /**
-     * chv Chuvash [Chuvash]
+     * {@link ISO_639_3_Code iso 639 3 code}: chv Chuvash
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     cv,
 
     /**
-     * cym Welsh [Welsh]
+     * {@link ISO_639_3_Code iso 639 3 code}: cym Welsh
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     cy,
 
     /**
-     * dan Danish [Danish]
+     * {@link ISO_639_3_Code iso 639 3 code}: dan Danish
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     da,
 
     /**
-     * deu German [German]
+     * {@link ISO_639_3_Code iso 639 3 code}: deu German
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     de,
 
     /**
-     * div Dhivehi [Dhivehi, Divehi, Maldivian]
+     * {@link ISO_639_3_Code iso 639 3 code}: div Dhivehi, Divehi, Maldivian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     dv,
 
     /**
-     * dzo Dzongkha [Dzongkha]
+     * {@link ISO_639_3_Code iso 639 3 code}: dzo Dzongkha
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     dz,
 
     /**
-     * ewe Ewe [Ewe]
+     * {@link ISO_639_3_Code iso 639 3 code}: ewe Ewe
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ee,
 
     /**
-     * ell Modern Greek (1453-) [Modern Greek (1453-)]
+     * {@link ISO_639_3_Code iso 639 3 code}: ell Modern Greek (1453-)
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     el,
 
     /**
-     * eng English [English]
+     * {@link ISO_639_3_Code iso 639 3 code}: eng English
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     en,
 
     /**
-     * epo Esperanto [Esperanto]
+     * {@link ISO_639_3_Code iso 639 3 code}: epo Esperanto
+     * <p>
+     * scope: individual
+     * <p>
+     * type: constructed
      * 
      */
     eo,
 
     /**
-     * spa Spanish [Castilian, Spanish]
+     * {@link ISO_639_3_Code iso 639 3 code}: spa Castilian, Spanish
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     es,
 
     /**
-     * est Estonian [Estonian]
+     * {@link ISO_639_3_Code iso 639 3 code}: est Estonian
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     et,
 
     /**
-     * eus Basque [Basque]
+     * {@link ISO_639_3_Code iso 639 3 code}: eus Basque
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     eu,
 
     /**
-     * fas Persian [Persian]
+     * {@link ISO_639_3_Code iso 639 3 code}: fas Persian
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     fa,
 
     /**
-     * ful Fulah [Fulah]
+     * {@link ISO_639_3_Code iso 639 3 code}: ful Fulah
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     ff,
 
     /**
-     * fin Finnish [Finnish]
+     * {@link ISO_639_3_Code iso 639 3 code}: fin Finnish
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     fi,
 
     /**
-     * fij Fijian [Fijian]
+     * {@link ISO_639_3_Code iso 639 3 code}: fij Fijian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     fj,
 
     /**
-     * fao Faroese [Faroese]
+     * {@link ISO_639_3_Code iso 639 3 code}: fao Faroese
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     fo,
 
     /**
-     * fra French [French]
+     * {@link ISO_639_3_Code iso 639 3 code}: fra French
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     fr,
 
     /**
-     * fry Western Frisian [Western Frisian]
+     * {@link ISO_639_3_Code iso 639 3 code}: fry Western Frisian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     fy,
 
     /**
-     * gle Irish [Irish]
+     * {@link ISO_639_3_Code iso 639 3 code}: gle Irish
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ga,
 
     /**
-     * gla Scottish Gaelic [Gaelic, Scottish Gaelic]
+     * {@link ISO_639_3_Code iso 639 3 code}: gla Gaelic, Scottish Gaelic
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     gd,
 
     /**
-     * glg Galician [Galician]
+     * {@link ISO_639_3_Code iso 639 3 code}: glg Galician
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     gl,
 
     /**
-     * grn Guarani [Guarani]
+     * {@link ISO_639_3_Code iso 639 3 code}: grn Guarani
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     gn,
 
     /**
-     * guj Gujarati [Gujarati]
+     * {@link ISO_639_3_Code iso 639 3 code}: guj Gujarati
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     gu,
 
     /**
-     * glv Manx [Manx]
+     * {@link ISO_639_3_Code iso 639 3 code}: glv Manx
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     gv,
 
     /**
-     * hau Hausa [Hausa]
+     * {@link ISO_639_3_Code iso 639 3 code}: hau Hausa
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ha,
 
     /**
-     * heb Hebrew [Hebrew]
+     * {@link ISO_639_3_Code iso 639 3 code}: heb Hebrew
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     he,
 
     /**
-     * hin Hindi [Hindi]
+     * {@link ISO_639_3_Code iso 639 3 code}: hin Hindi
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     hi,
 
     /**
-     * hmo Hiri Motu [Hiri Motu]
+     * {@link ISO_639_3_Code iso 639 3 code}: hmo Hiri Motu
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ho,
 
     /**
-     * hrv Croatian [Croatian]
+     * {@link ISO_639_3_Code iso 639 3 code}: hrv Croatian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     hr,
 
     /**
-     * hat Haitian [Haitian, Haitian Creole]
+     * {@link ISO_639_3_Code iso 639 3 code}: hat Haitian, Haitian Creole
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ht,
 
     /**
-     * hun Hungarian [Hungarian]
+     * {@link ISO_639_3_Code iso 639 3 code}: hun Hungarian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     hu,
 
     /**
-     * hye Armenian [Armenian]
+     * {@link ISO_639_3_Code iso 639 3 code}: hye Armenian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     hy,
 
     /**
-     * her Herero [Herero]
+     * {@link ISO_639_3_Code iso 639 3 code}: her Herero
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     hz,
 
     /**
-     * ina Interlingua (International Auxiliary Language Association) [Interlingua (International Auxiliary Language Association)]
+     * {@link ISO_639_3_Code iso 639 3 code}: ina Interlingua (International Auxiliary Language Association)
+     * <p>
+     * scope: individual
+     * <p>
+     * type: constructed
      * 
      */
     ia,
 
     /**
-     * ind Indonesian [Indonesian]
+     * {@link ISO_639_3_Code iso 639 3 code}: ind Indonesian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     id,
 
     /**
-     * ile Interlingue [Interlingue, Occidental]
+     * {@link ISO_639_3_Code iso 639 3 code}: ile Interlingue, Occidental
+     * <p>
+     * scope: individual
+     * <p>
+     * type: constructed
      * 
      */
     ie,
 
     /**
-     * ibo Igbo [Igbo]
+     * {@link ISO_639_3_Code iso 639 3 code}: ibo Igbo
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ig,
 
     /**
-     * iii Sichuan Yi [Nuosu, Sichuan Yi]
+     * {@link ISO_639_3_Code iso 639 3 code}: iii Nuosu, Sichuan Yi
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ii,
 
     /**
-     * ipk Inupiaq [Inupiaq]
+     * {@link ISO_639_3_Code iso 639 3 code}: ipk Inupiaq
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     ik,
 
     /**
-     * ido Ido [Ido]
+     * {@link ISO_639_3_Code iso 639 3 code}: ido Ido
+     * <p>
+     * scope: individual
+     * <p>
+     * type: constructed
      * 
      */
     io,
 
     /**
-     * isl Icelandic [Icelandic]
+     * {@link ISO_639_3_Code iso 639 3 code}: isl Icelandic
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     is,
 
     /**
-     * ita Italian [Italian]
+     * {@link ISO_639_3_Code iso 639 3 code}: ita Italian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     it,
 
     /**
-     * iku Inuktitut [Inuktitut]
+     * {@link ISO_639_3_Code iso 639 3 code}: iku Inuktitut
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     iu,
 
     /**
-     * jpn Japanese [Japanese]
+     * {@link ISO_639_3_Code iso 639 3 code}: jpn Japanese
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ja,
 
     /**
-     * jav Javanese [Javanese]
+     * {@link ISO_639_3_Code iso 639 3 code}: jav Javanese
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     jv,
 
     /**
-     * kat Georgian [Georgian]
+     * {@link ISO_639_3_Code iso 639 3 code}: kat Georgian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ka,
 
     /**
-     * kon Kongo [Kongo]
+     * {@link ISO_639_3_Code iso 639 3 code}: kon Kongo
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     kg,
 
     /**
-     * kik Kikuyu [Gikuyu, Kikuyu]
+     * {@link ISO_639_3_Code iso 639 3 code}: kik Gikuyu, Kikuyu
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ki,
 
     /**
-     * kua Kuanyama [Kuanyama, Kwanyama]
+     * {@link ISO_639_3_Code iso 639 3 code}: kua Kuanyama, Kwanyama
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     kj,
 
     /**
-     * kaz Kazakh [Kazakh]
+     * {@link ISO_639_3_Code iso 639 3 code}: kaz Kazakh
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     kk,
 
     /**
-     * kal Kalaallisut [Greenlandic, Kalaallisut]
+     * {@link ISO_639_3_Code iso 639 3 code}: kal Greenlandic, Kalaallisut
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     kl,
 
     /**
-     * khm Khmer [Central Khmer, Khmer]
+     * {@link ISO_639_3_Code iso 639 3 code}: khm Central Khmer, Khmer
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     km,
 
     /**
-     * kan Kannada [Kannada]
+     * {@link ISO_639_3_Code iso 639 3 code}: kan Kannada
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     kn,
 
     /**
-     * kor Korean [Korean]
+     * {@link ISO_639_3_Code iso 639 3 code}: kor Korean
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ko,
 
     /**
-     * kau Kanuri [Kanuri]
+     * {@link ISO_639_3_Code iso 639 3 code}: kau Kanuri
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     kr,
 
     /**
-     * kas Kashmiri [Kashmiri]
+     * {@link ISO_639_3_Code iso 639 3 code}: kas Kashmiri
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ks,
 
     /**
-     * kur Kurdish [Kurdish]
+     * {@link ISO_639_3_Code iso 639 3 code}: kur Kurdish
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     ku,
 
     /**
-     * kom Komi [Komi]
+     * {@link ISO_639_3_Code iso 639 3 code}: kom Komi
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     kv,
 
     /**
-     * cor Cornish [Cornish]
+     * {@link ISO_639_3_Code iso 639 3 code}: cor Cornish
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     kw,
 
     /**
-     * kir Kirghiz [Kirghiz, Kyrgyz]
+     * {@link ISO_639_3_Code iso 639 3 code}: kir Kirghiz, Kyrgyz
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ky,
 
     /**
-     * lat Latin [Latin]
+     * {@link ISO_639_3_Code iso 639 3 code}: lat Latin
+     * <p>
+     * scope: individual
+     * <p>
+     * type: historical
      * 
      */
     la,
 
     /**
-     * ltz Luxembourgish [Letzeburgesch, Luxembourgish]
+     * {@link ISO_639_3_Code iso 639 3 code}: ltz Letzeburgesch, Luxembourgish
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     lb,
 
     /**
-     * lug Ganda [Ganda]
+     * {@link ISO_639_3_Code iso 639 3 code}: lug Ganda
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     lg,
 
     /**
-     * lim Limburgan [Limburgan, Limburger, Limburgish]
+     * {@link ISO_639_3_Code iso 639 3 code}: lim Limburgan, Limburger, Limburgish
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     li,
 
     /**
-     * lin Lingala [Lingala]
+     * {@link ISO_639_3_Code iso 639 3 code}: lin Lingala
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ln,
 
     /**
-     * lao Lao [Lao]
+     * {@link ISO_639_3_Code iso 639 3 code}: lao Lao
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     lo,
 
     /**
-     * lit Lithuanian [Lithuanian]
+     * {@link ISO_639_3_Code iso 639 3 code}: lit Lithuanian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     lt,
 
     /**
-     * lub Luba-Katanga [Luba-Katanga]
+     * {@link ISO_639_3_Code iso 639 3 code}: lub Luba-Katanga
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     lu,
 
     /**
-     * lav Latvian [Latvian]
+     * {@link ISO_639_3_Code iso 639 3 code}: lav Latvian
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     lv,
 
     /**
-     * mlg Malagasy [Malagasy]
+     * {@link ISO_639_3_Code iso 639 3 code}: mlg Malagasy
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     mg,
 
     /**
-     * mah Marshallese [Marshallese]
+     * {@link ISO_639_3_Code iso 639 3 code}: mah Marshallese
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     mh,
 
     /**
-     * mri Maori [Maori]
+     * {@link ISO_639_3_Code iso 639 3 code}: mri Maori
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     mi,
 
     /**
-     * mkd Macedonian [Macedonian]
+     * {@link ISO_639_3_Code iso 639 3 code}: mkd Macedonian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     mk,
 
     /**
-     * mal Malayalam [Malayalam]
+     * {@link ISO_639_3_Code iso 639 3 code}: mal Malayalam
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ml,
 
     /**
-     * mon Mongolian [Mongolian]
+     * {@link ISO_639_3_Code iso 639 3 code}: mon Mongolian
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     mn,
 
     /**
-     * mar Marathi [Marathi]
+     * {@link ISO_639_3_Code iso 639 3 code}: mar Marathi
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     mr,
 
     /**
-     * msa Malay (macrolanguage) [Malay (macrolanguage)]
+     * {@link ISO_639_3_Code iso 639 3 code}: msa Malay (macrolanguage)
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     ms,
 
     /**
-     * mlt Maltese [Maltese]
+     * {@link ISO_639_3_Code iso 639 3 code}: mlt Maltese
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     mt,
 
     /**
-     * mya Burmese [Burmese]
+     * {@link ISO_639_3_Code iso 639 3 code}: mya Burmese
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     my,
 
     /**
-     * nau Nauru [Nauru]
+     * {@link ISO_639_3_Code iso 639 3 code}: nau Nauru
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     na,
 
     /**
-     * nob Norwegian Bokmål [Norwegian Bokmål]
+     * {@link ISO_639_3_Code iso 639 3 code}: nob Norwegian Bokmål
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     nb,
 
     /**
-     * nde North Ndebele [North Ndebele]
+     * {@link ISO_639_3_Code iso 639 3 code}: nde North Ndebele
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     nd,
 
     /**
-     * nep Nepali (macrolanguage) [Nepali (macrolanguage)]
+     * {@link ISO_639_3_Code iso 639 3 code}: nep Nepali (macrolanguage)
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     ne,
 
     /**
-     * ndo Ndonga [Ndonga]
+     * {@link ISO_639_3_Code iso 639 3 code}: ndo Ndonga
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ng,
 
     /**
-     * nld Dutch [Dutch, Flemish]
+     * {@link ISO_639_3_Code iso 639 3 code}: nld Dutch, Flemish
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     nl,
 
     /**
-     * nno Norwegian Nynorsk [Norwegian Nynorsk]
+     * {@link ISO_639_3_Code iso 639 3 code}: nno Norwegian Nynorsk
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     nn,
 
     /**
-     * nor Norwegian [Norwegian]
+     * {@link ISO_639_3_Code iso 639 3 code}: nor Norwegian
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     no,
 
     /**
-     * nbl South Ndebele [South Ndebele]
+     * {@link ISO_639_3_Code iso 639 3 code}: nbl South Ndebele
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     nr,
 
     /**
-     * nav Navajo [Navaho, Navajo]
+     * {@link ISO_639_3_Code iso 639 3 code}: nav Navaho, Navajo
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     nv,
 
     /**
-     * nya Nyanja [Chewa, Chichewa, Nyanja]
+     * {@link ISO_639_3_Code iso 639 3 code}: nya Chewa, Chichewa, Nyanja
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ny,
 
     /**
-     * oci Occitan (post 1500) [Occitan (post 1500)]
+     * {@link ISO_639_3_Code iso 639 3 code}: oci Occitan (post 1500)
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     oc,
 
     /**
-     * oji Ojibwa [Ojibwa]
+     * {@link ISO_639_3_Code iso 639 3 code}: oji Ojibwa
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     oj,
 
     /**
-     * orm Oromo [Oromo]
+     * {@link ISO_639_3_Code iso 639 3 code}: orm Oromo
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     om,
 
     /**
-     * ori Oriya (macrolanguage) [Oriya (macrolanguage)]
+     * {@link ISO_639_3_Code iso 639 3 code}: ori Oriya (macrolanguage)
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     or,
 
     /**
-     * oss Ossetian [Ossetian, Ossetic]
+     * {@link ISO_639_3_Code iso 639 3 code}: oss Ossetian, Ossetic
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     os,
 
     /**
-     * pan Panjabi [Panjabi, Punjabi]
+     * {@link ISO_639_3_Code iso 639 3 code}: pan Panjabi, Punjabi
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     pa,
 
     /**
-     * pli Pali [Pali]
+     * {@link ISO_639_3_Code iso 639 3 code}: pli Pali
+     * <p>
+     * scope: individual
+     * <p>
+     * type: historical
      * 
      */
     pi,
 
     /**
-     * pol Polish [Polish]
+     * {@link ISO_639_3_Code iso 639 3 code}: pol Polish
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     pl,
 
     /**
-     * pus Pushto [Pashto, Pushto]
+     * {@link ISO_639_3_Code iso 639 3 code}: pus Pashto, Pushto
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     ps,
 
     /**
-     * por Portuguese [Portuguese]
+     * {@link ISO_639_3_Code iso 639 3 code}: por Portuguese
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     pt,
 
     /**
-     * que Quechua [Quechua]
+     * {@link ISO_639_3_Code iso 639 3 code}: que Quechua
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     qu,
 
     /**
-     * roh Romansh [Romansh]
+     * {@link ISO_639_3_Code iso 639 3 code}: roh Romansh
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     rm,
 
     /**
-     * run Rundi [Rundi]
+     * {@link ISO_639_3_Code iso 639 3 code}: run Rundi
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     rn,
 
     /**
-     * ron Romanian [Moldavian, Moldovan, Romanian]
+     * {@link ISO_639_3_Code iso 639 3 code}: ron Moldavian, Moldovan, Romanian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ro,
 
     /**
-     * rus Russian [Russian]
+     * {@link ISO_639_3_Code iso 639 3 code}: rus Russian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ru,
 
     /**
-     * kin Kinyarwanda [Kinyarwanda]
+     * {@link ISO_639_3_Code iso 639 3 code}: kin Kinyarwanda
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     rw,
 
     /**
-     * san Sanskrit [Sanskrit]
+     * {@link ISO_639_3_Code iso 639 3 code}: san Sanskrit
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: historical
      * 
      */
     sa,
 
     /**
-     * srd Sardinian [Sardinian]
+     * {@link ISO_639_3_Code iso 639 3 code}: srd Sardinian
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     sc,
 
     /**
-     * snd Sindhi [Sindhi]
+     * {@link ISO_639_3_Code iso 639 3 code}: snd Sindhi
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     sd,
 
     /**
-     * sme Northern Sami [Northern Sami]
+     * {@link ISO_639_3_Code iso 639 3 code}: sme Northern Sami
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     se,
 
     /**
-     * sag Sango [Sango]
+     * {@link ISO_639_3_Code iso 639 3 code}: sag Sango
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     sg,
 
     /**
-     * hbs Serbo-Croatian [Serbo-Croatian]
+     * {@link ISO_639_3_Code iso 639 3 code}: hbs Serbo-Croatian
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
+     * <p>
+     * Code element for 639-1 has been deprecated
      * 
      */
     sh,
 
     /**
-     * sin Sinhala [Sinhala, Sinhalese]
+     * {@link ISO_639_3_Code iso 639 3 code}: sin Sinhala, Sinhalese
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     si,
 
     /**
-     * slk Slovak [Slovak]
+     * {@link ISO_639_3_Code iso 639 3 code}: slk Slovak
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     sk,
 
     /**
-     * slv Slovenian [Slovenian]
+     * {@link ISO_639_3_Code iso 639 3 code}: slv Slovenian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     sl,
 
     /**
-     * smo Samoan [Samoan]
+     * {@link ISO_639_3_Code iso 639 3 code}: smo Samoan
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     sm,
 
     /**
-     * sna Shona [Shona]
+     * {@link ISO_639_3_Code iso 639 3 code}: sna Shona
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     sn,
 
     /**
-     * som Somali [Somali]
+     * {@link ISO_639_3_Code iso 639 3 code}: som Somali
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     so,
 
     /**
-     * sqi Albanian [Albanian]
+     * {@link ISO_639_3_Code iso 639 3 code}: sqi Albanian
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     sq,
 
     /**
-     * srp Serbian [Serbian]
+     * {@link ISO_639_3_Code iso 639 3 code}: srp Serbian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     sr,
 
     /**
-     * ssw Swati [Swati]
+     * {@link ISO_639_3_Code iso 639 3 code}: ssw Swati
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ss,
 
     /**
-     * sot Southern Sotho [Southern Sotho]
+     * {@link ISO_639_3_Code iso 639 3 code}: sot Southern Sotho
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     st,
 
     /**
-     * sun Sundanese [Sundanese]
+     * {@link ISO_639_3_Code iso 639 3 code}: sun Sundanese
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     su,
 
     /**
-     * swe Swedish [Swedish]
+     * {@link ISO_639_3_Code iso 639 3 code}: swe Swedish
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     sv,
 
     /**
-     * swa Swahili (macrolanguage) [Swahili (macrolanguage)]
+     * {@link ISO_639_3_Code iso 639 3 code}: swa Swahili (macrolanguage)
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     sw,
 
     /**
-     * tam Tamil [Tamil]
+     * {@link ISO_639_3_Code iso 639 3 code}: tam Tamil
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ta,
 
     /**
-     * tel Telugu [Telugu]
+     * {@link ISO_639_3_Code iso 639 3 code}: tel Telugu
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     te,
 
     /**
-     * tgk Tajik [Tajik]
+     * {@link ISO_639_3_Code iso 639 3 code}: tgk Tajik
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     tg,
 
     /**
-     * tha Thai [Thai]
+     * {@link ISO_639_3_Code iso 639 3 code}: tha Thai
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     th,
 
     /**
-     * tir Tigrinya [Tigrinya]
+     * {@link ISO_639_3_Code iso 639 3 code}: tir Tigrinya
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ti,
 
     /**
-     * tuk Turkmen [Turkmen]
+     * {@link ISO_639_3_Code iso 639 3 code}: tuk Turkmen
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     tk,
 
     /**
-     * tgl Tagalog [Tagalog]
+     * {@link ISO_639_3_Code iso 639 3 code}: tgl Tagalog
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     tl,
 
     /**
-     * tsn Tswana [Tswana]
+     * {@link ISO_639_3_Code iso 639 3 code}: tsn Tswana
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     tn,
 
     /**
-     * ton Tonga (Tonga Islands) [Tonga (Tonga Islands)]
+     * {@link ISO_639_3_Code iso 639 3 code}: ton Tonga (Tonga Islands)
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     to,
 
     /**
-     * tur Turkish [Turkish]
+     * {@link ISO_639_3_Code iso 639 3 code}: tur Turkish
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     tr,
 
     /**
-     * tso Tsonga [Tsonga]
+     * {@link ISO_639_3_Code iso 639 3 code}: tso Tsonga
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ts,
 
     /**
-     * tat Tatar [Tatar]
+     * {@link ISO_639_3_Code iso 639 3 code}: tat Tatar
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     tt,
 
     /**
-     * twi Twi [Twi]
+     * {@link ISO_639_3_Code iso 639 3 code}: twi Twi
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     tw,
 
     /**
-     * tah Tahitian [Tahitian]
+     * {@link ISO_639_3_Code iso 639 3 code}: tah Tahitian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ty,
 
     /**
-     * uig Uighur [Uighur, Uyghur]
+     * {@link ISO_639_3_Code iso 639 3 code}: uig Uighur, Uyghur
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ug,
 
     /**
-     * ukr Ukrainian [Ukrainian]
+     * {@link ISO_639_3_Code iso 639 3 code}: ukr Ukrainian
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     uk,
 
     /**
-     * urd Urdu [Urdu]
+     * {@link ISO_639_3_Code iso 639 3 code}: urd Urdu
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ur,
 
     /**
-     * uzb Uzbek [Uzbek]
+     * {@link ISO_639_3_Code iso 639 3 code}: uzb Uzbek
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     uz,
 
     /**
-     * ven Venda [Venda]
+     * {@link ISO_639_3_Code iso 639 3 code}: ven Venda
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     ve,
 
     /**
-     * vie Vietnamese [Vietnamese]
+     * {@link ISO_639_3_Code iso 639 3 code}: vie Vietnamese
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     vi,
 
     /**
-     * vol Volapük [Volapük]
+     * {@link ISO_639_3_Code iso 639 3 code}: vol Volapük
+     * <p>
+     * scope: individual
+     * <p>
+     * type: constructed
      * 
      */
     vo,
 
     /**
-     * wln Walloon [Walloon]
+     * {@link ISO_639_3_Code iso 639 3 code}: wln Walloon
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     wa,
 
     /**
-     * wol Wolof [Wolof]
+     * {@link ISO_639_3_Code iso 639 3 code}: wol Wolof
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     wo,
 
     /**
-     * xho Xhosa [Xhosa]
+     * {@link ISO_639_3_Code iso 639 3 code}: xho Xhosa
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     xh,
 
     /**
-     * yid Yiddish [Yiddish]
+     * {@link ISO_639_3_Code iso 639 3 code}: yid Yiddish
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     yi,
 
     /**
-     * yor Yoruba [Yoruba]
+     * {@link ISO_639_3_Code iso 639 3 code}: yor Yoruba
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     yo,
 
     /**
-     * zha Zhuang [Chuang, Zhuang]
+     * {@link ISO_639_3_Code iso 639 3 code}: zha Chuang, Zhuang
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     za,
 
     /**
-     * zho Chinese [Chinese]
+     * {@link ISO_639_3_Code iso 639 3 code}: zho Chinese
+     * <p>
+     * scope: macrolanguage
+     * <p>
+     * type: living
      * 
      */
     zh,
 
     /**
-     * zul Zulu [Zulu]
+     * {@link ISO_639_3_Code iso 639 3 code}: zul Zulu
+     * <p>
+     * scope: individual
+     * <p>
+     * type: living
      * 
      */
     zu;
@@ -1139,8 +1877,8 @@ public enum ISO_639_1_Code
     }
 
     @Override
-    public String id() {
-        return this.getLanguageCode().id();
+    public String part3() {
+        return this.getLanguageCode().part3();
     }
 
     @Override

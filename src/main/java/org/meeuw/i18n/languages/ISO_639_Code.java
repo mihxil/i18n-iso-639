@@ -23,7 +23,7 @@ public interface ISO_639_Code extends Serializable {
     }
     
     /**
-     * The {@link #part1() ISO-639-1-code} if available, otherwise the {@link #part3() ISO-639-3 code}.
+     * The code associated with this language or language family.
      *
      * @return A 2 or 3 letter language code
      * @since 0.2

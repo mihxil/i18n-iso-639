@@ -3,7 +3,6 @@ package org.meeuw.i18n.languages;
 import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -11,13 +10,10 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 /**
- * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if they exist.
- *<p>
- * Annotated with {@link XmlJavaTypeAdapter}, so it will automatically be marshalled and unmarshalled in XML's. 
+ * Implementation of {@link LanguageCode} that {@link #stream() produces} all ISO-639-3 codes.
  * <p>
- * Also annotated with jackson annotation, to be marshalled and unmarshalled in JSON as the code.
- *<p>
- * This class is immutable and can be used as a key in maps.
+ * Normally it makes sense to just use {@link LanguageCode}. 
+ 
  */
 public class ISO_639_3_Code implements LanguageCode {
 
@@ -63,7 +59,7 @@ public class ISO_639_3_Code implements LanguageCode {
                     split.length == 8 ? split[7] : null,
                     names
                 );
-                temp.put(found.id().toLowerCase(), found);
+                temp.put(found.part3().toLowerCase(), found);
                 line = inputStreamReader.readLine();
             }
         } catch (IOException e) {
@@ -82,7 +78,7 @@ public class ISO_639_3_Code implements LanguageCode {
         return KNOWN.values()
             .stream()
             .sorted(Comparator.comparing(ISO_639_3_Code::code));
-    }
+     }
     
     static Optional<ISO_639_3_Code> getByPart1(String code) {
         if (code == null) {
@@ -98,7 +94,7 @@ public class ISO_639_3_Code implements LanguageCode {
 
     @Size(min = 3, max = 3)
     @NotNull
-    private final String id;
+    private final String part3;
 
     private transient final String part2B;
 
@@ -117,7 +113,7 @@ public class ISO_639_3_Code implements LanguageCode {
     private transient  final List<Name> names;
 
     private ISO_639_3_Code(
-        String id,
+        String part3,
         String part2B,
         String part2T,
         String part1,
@@ -127,7 +123,7 @@ public class ISO_639_3_Code implements LanguageCode {
         String comment,
         List<Name> names
     ) {
-        this.id = id;
+        this.part3 = part3;
         this.part2B = part2B;
         this.part2T = part2T;
         this.part1 = part1;
@@ -147,7 +143,7 @@ public class ISO_639_3_Code implements LanguageCode {
      */
     @JsonValue
     public String code() {
-        return part1 != null ? part1 : id;
+        return part1 != null ? part1 : part3;
     }
 
 
@@ -157,20 +153,9 @@ public class ISO_639_3_Code implements LanguageCode {
     }
 
 
-    /**
-     * The three-letter 639-3 identifier
-     * @return The three-letter 639-3 identifier
-     */
-    public String id() {
-        return id;
-    }
     
-    /**
-     * Synonym for {@link #id()}.
-     * @return The three-letter 639-3 identifier
-     */
     public String part3() {
-        return id();
+        return part3;
     }
 
     /**
@@ -232,14 +217,8 @@ public class ISO_639_3_Code implements LanguageCode {
         }
     }
     
-    
     private Object readResolve() {
-        LanguageCode gotten = LanguageCode.get(id()).orElse(null);
-        if (gotten == null) {
-            return this;
-        } else {
-            return gotten;
-        }
+        return LanguageCode.get(part3()).orElse(this);
     }
     
 }

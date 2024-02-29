@@ -1,6 +1,7 @@
 package org.meeuw.i18n.languages;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.*;
@@ -12,13 +13,13 @@ import static org.meeuw.i18n.languages.ISO_639_3_Code.LOGGER;
 import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 /**
- * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if they exist.
+ * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if that exist.
  *<p>
  * Annotated with {@link XmlJavaTypeAdapter}, so it will automatically be marshalled and unmarshalled in XML's. 
  * <p>
  * Also annotated with jackson annotation, to be marshalled and unmarshalled in JSON as the code.
  *<p>
- * This class is immutable and can be used as a key in maps.
+ * Implementations are immutable and can be used as a key in maps.
  */
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
 public interface LanguageCode extends ISO_639_Code {
@@ -210,16 +211,23 @@ public interface LanguageCode extends ISO_639_Code {
             .findFirst();
     }
 
-
-
     
     /**
-     * Synonym for {@link #id()}.
-     * @return The three-letter 639-3 identifier
+     * The {@link LanguageCode#part1() ISO-639-1-code} if available, otherwise the {@link LanguageCode#part3() ISO-639-3 code}.
+     *
+     * @return A 2 or 3 letter language code
+     * @since 0.2
      */
-    default String part3() {
-        return id();
-    }
+    @JsonValue
+    @Override
+    String code();
+        
+    
+    
+    /**
+     * The three-letter 639-3 identifier
+     */
+    String part3();
 
     /**
      * Equivalent 639-2 identifier of the bibliographic applications
@@ -258,12 +266,7 @@ public interface LanguageCode extends ISO_639_Code {
         return new Locale(code());
     }
     
-    /**
-     * The three-letter 639  identifier
-     * @return The three-letter 639 identifier
-     */
-    String id();
-
+ 
     
     default Name name(Locale locale) {
         if (locale.getLanguage().equals("en")) {
