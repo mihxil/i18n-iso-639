@@ -10,7 +10,6 @@ import java.util.stream.Stream;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
 import static org.meeuw.i18n.languages.ISO_639_3_Code.LOGGER;
-import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 /**
  * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if that exist.
@@ -21,7 +20,6 @@ import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
  *<p>
  * Implementations are immutable and can be used as a key in maps.
  */
-@XmlJavaTypeAdapter(LanguageCodeAdapter.class)
 public interface LanguageCode extends ISO_639_Code {
     
     /**
@@ -94,7 +92,7 @@ public interface LanguageCode extends ISO_639_Code {
     /**
      * As {@link #get(String)}, but throws an {@link IllegalArgumentException} if not found.
      *
-     * @return The {@link ISO_639_3_Code} if found
+     * @return The {@link LanguageCode} if found
      * @throws IllegalArgumentException if not found
      */
     @JsonCreator
