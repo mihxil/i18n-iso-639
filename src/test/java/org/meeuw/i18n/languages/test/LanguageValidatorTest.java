@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.meeuw.i18n.languages.ISO_639_Code;
-import org.meeuw.i18n.languages.validation.Language;
 
 /**
  * @author Michiel Meeuwissen
@@ -176,24 +175,48 @@ public class LanguageValidatorTest {
         }
     }
  
-    static class C {
-        @Language()
-        final String language;
-        C(String l) {
-            this.language = l;
-        }
-    }
+   
 
     @ParameterizedTest
     @ValueSource(strings = {"nl", "nl-NL", "nl-A"})
-    void validA(String lang) {
-        assertThat(VALIDATOR.validate(new C(lang))).isEmpty();
+    void validField(String lang) {
+        assertThat(VALIDATOR.validate(new WithLanguageFields(lang))).isEmpty();
+    }
+    
+    
+    @ParameterizedTest
+    @ValueSource(strings = {"nl", "nl-NL", "nl-A", "hok"})
+    void validLanguageOrFamilyField(String lang) {
+        WithLanguageFields withLanguageFields = new WithLanguageFields();
+        withLanguageFields.livingLanguageOrFamily = lang;
+        assertThat(VALIDATOR.validate(withLanguageFields)).isEmpty();
+    }
+    
+    @ParameterizedTest
+    @ValueSource(strings = {"hok"})
+    void validFamilyField(String lang) {
+        WithLanguageFields withLanguageFields = new WithLanguageFields();
+        withLanguageFields.family = lang;
+        assertThat(VALIDATOR.validate(withLanguageFields)).isEmpty();
+    }
+    
+    @ParameterizedTest
+    @ValueSource(strings = {"nl", "nl-NL", "nl-A"})
+    void invalidFamilyField(String lang) {
+        WithLanguageFields withLanguageFields = new WithLanguageFields();
+        withLanguageFields.family = lang;
+        assertThat(VALIDATOR.validate(withLanguageFields)).hasSize(1);
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"NL", "bl", "bl-A"})
-    void invalidA(String lang) {
-        assertThat(VALIDATOR.validate(new C(lang))).hasSize(1);
+    @ValueSource(strings = {
+        "NL", // uppercase 
+        "bl", // not a code
+        "bl-A", // not a code 
+        "hok" // a family, not a language
+    })
+    void invalidFieldValues(String lang) {
+        assertThat(VALIDATOR.validate(new WithLanguageFields(lang))).hasSize(1);
     }
     
     @ParameterizedTest

@@ -2,6 +2,7 @@
 package org.meeuw.i18n.languages;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -155,6 +156,15 @@ public enum LanguageFamilyCode
 
     public URI uri() {
         return uri;
+    }
+
+    @Override
+    public String refName() {
+        return labels.get("en");
+    }
+
+    public Map<String, String> labels() {
+        return Collections.unmodifiableMap(labels);
     }
 
 }

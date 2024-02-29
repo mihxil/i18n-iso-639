@@ -37,9 +37,9 @@ public @interface Language {
     boolean lenient() default false;
 
 
-    Type[] type() default {Type.L, Type.C};
+    Type[] type() default {};
 
-    Scope[] scope() default { Scope.I, Scope.M, Scope.S };
+    Scope[] scope() default { };
 
     /**
      * The default is to accept both ISO-639-1 and ISO-639-3 codes. If you want to restrict to ISO-639-1 only, set this to false.

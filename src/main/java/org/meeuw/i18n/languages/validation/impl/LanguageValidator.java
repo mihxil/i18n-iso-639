@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import org.checkerframework.checker.nullness.qual.*;
-import org.meeuw.i18n.languages.LanguageCode;
+import org.meeuw.i18n.languages.*;
 import org.meeuw.i18n.languages.validation.Language;
 import org.meeuw.i18n.languages.validation.LanguageValidationInfo;
 
@@ -87,8 +87,6 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
             return false;
         }
         
-    
-        
         value = components[0];
         
         if (! annotation.requireLowerCase()) {
@@ -102,8 +100,9 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
         
         boolean recognized  = VALID_ISO_LANGUAGES.contains(value) ||
             (annotation.lenient() && EXTRA_RECOGNIZED.contains(value));
-        
 
+
+        ISO_639_Code code;
         if (! recognized) {
 
             Optional<? extends LanguageCode> iso3 = LanguageCode.getByPart1(value);
@@ -129,7 +128,7 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
             }
             if (annotation.iso639_5()) {
                 try {
-                    //LanguageFamilyCode isoPart5 = LanguageFamilyCode.valueOf(value);
+                    LanguageFamilyCode isoPart5 = LanguageFamilyCode.valueOf(value);
                     return true;
                 } catch (IllegalArgumentException iae) {
                     return false;

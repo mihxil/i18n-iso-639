@@ -125,6 +125,18 @@ public class GenerateEnums {
             uriM.body()._return(uri);
         }
         
+        {
+            JMethod refName = iso639_5.method(JMod.PUBLIC, String.class, "refName");
+            refName.annotate(Override.class);
+            refName.body()._return(labels.invoke("get").arg("en"));
+        }
+        
+        {
+            JMethod labelsM = iso639_5.method(JMod.PUBLIC, narrowedMap, "labels");
+            JClass collections = model.ref(Collections.class);
+            labelsM.body()._return(collections.staticInvoke("unmodifiableMap").arg(labels));
+        }
+        
         
         
         
