@@ -1,4 +1,4 @@
-= JAVA ISO-639-3 support
+= JAVA ISO-639 support
 :toc:
 
 image:https://www.javadoc.io/badge/org.meeuw.i18n/i18n-iso-639.svg?color=blue[javadoc,link=https://www.javadoc.io/doc/org.meeuw.i18n/i18n-iso-639/latest]
