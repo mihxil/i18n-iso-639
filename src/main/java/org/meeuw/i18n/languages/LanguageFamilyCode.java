@@ -167,4 +167,9 @@ public enum LanguageFamilyCode
         return Collections.unmodifiableMap(labels);
     }
 
+    @Override
+    public String toString() {
+        return (this.name()+(" ("+(this.refName()+")")));
+    }
+
 }

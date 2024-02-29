@@ -8,27 +8,27 @@ public enum Type {
     /**
      * Ancient language
      */
-    A("Ancient language"),
+    A("ancient"),
     /**
      * Constructed language
      */
-    C("Constructed language"),
+    C("constructed"),
     /**
      * Extinct language
      */
-    E("Extinct language"),
+    E("extinct"),
     /**
      * Historical language
      */
-    H("Historical language"),
+    H("historical"),
     /**
      * Living language
      */
-    L("Living language"),
+    L("living"),
     /**
      * Special language
      */
-    S("Special language");
+    S("special");
 
   
     private final String toString;

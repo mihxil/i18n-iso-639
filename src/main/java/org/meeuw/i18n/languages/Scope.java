@@ -10,21 +10,21 @@ public enum Scope {
     /**
      * Individual languages as defined by ISO 639-3
      */
-    I("Individual"),
+    I("individual"),
     /**
      * MacroLanguage
      */
-    M("Macrolanguage"),
+    M("macrolanguage"),
     /**
      * Special
      */
-    S("Special language"),
+    S("special language"),
     
     
     /**
      * ISO-639-5
      */
-    FAMILY("Language family")
+    FAMILY("language family")
     ;
 
     private final String string;

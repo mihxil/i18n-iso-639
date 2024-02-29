@@ -137,6 +137,12 @@ public class GenerateEnums {
             labelsM.body()._return(collections.staticInvoke("unmodifiableMap").arg(labels));
         }
         
+        {
+            JMethod toString = iso639_5.method(JMod.PUBLIC, String.class, "toString");
+            toString.annotate(Override.class);
+            toString.body()._return(JExpr._this().invoke("name").plus(JExpr.lit(" (").plus(JExpr._this().invoke("refName").plus(JExpr.lit(")")))));
+        }
+        
         
         
         
