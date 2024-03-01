@@ -80,13 +80,27 @@ public class ISO_639_3_Code implements LanguageCode {
             .sorted(Comparator.comparing(ISO_639_3_Code::code));
      }
     
+    private static Map<String, String> RETIRED = new HashMap<>();
+    static {
+        RETIRED.put("jw", "jv"); // 'Javanese is rendered as "jw" in table 1, while it is correctly given as "jv" in the other tables
+        RETIRED.put("iw", "he"); // The identifier for Hebrew was changed from "iw" to "he".
+        RETIRED.put("in", "id"); // The identifier for Indonesian was changed from "in" to "id".
+        RETIRED.put("ji", "yi"); // The identifier for Yiddish was changed from "ji" to "yi".
+        
+    }
+    
     static Optional<ISO_639_3_Code> getByPart1(String code) {
         if (code == null) {
             return Optional.empty();
         }
-        final String lowerCode = code.toLowerCase();
+        code = code.toLowerCase();
+        String retired = RETIRED.get(code);
+        if (retired != null) {
+            code = retired;
+        }
+        final String finalCode = code;
         return  ISO_639_3_Code.stream()
-            .filter(i -> lowerCode.equals(i.part1()))
+            .filter(i -> finalCode.equals(i.part1()))
             .findFirst();
     }
     

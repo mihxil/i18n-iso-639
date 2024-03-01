@@ -67,7 +67,7 @@ public interface LanguageCode extends ISO_639_Code {
 
     
     /**
-     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link #id()} (using {@link #getByCode(String)}, or by its two letter identifier {@link #part1()}.
+     * Retrieves a {@link ISO_639_3_Code} by on of its three-letter identifiers {@link #getByPart3(String)}, {@link #getByPart2B(String)}, or {@link #getByPart2T(String)}  or its two letter identifier {@link #part1()}.
      *
      * @param code A 2 or 3 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
@@ -81,7 +81,17 @@ public interface LanguageCode extends ISO_639_Code {
         if (code.length() == 2) {
             return getByPart1(code);
         } else {
-            return getByPart3(code, matchRetired);
+            Optional<LanguageCode> byPart3 = getByPart3(code, matchRetired);
+            if (byPart3.isPresent()) {
+                return byPart3;
+            } else {
+                Optional<LanguageCode> byPart2B = getByPart2B(code);
+                if (byPart2B.isPresent()) {
+                    return byPart2B;
+                } else {
+                    return getByPart2T(code);
+                }
+            }
         }
     }
     
@@ -103,7 +113,7 @@ public interface LanguageCode extends ISO_639_Code {
 
 
     /**
-     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link #id()}
+     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link #getByPart3(String, boolean)} ()}
      *
      * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
      *

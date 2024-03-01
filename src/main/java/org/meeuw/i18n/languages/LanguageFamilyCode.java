@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 /**
@@ -170,6 +171,14 @@ public enum LanguageFamilyCode
     @Override
     public String toString() {
         return (this.name()+(" ("+(this.refName()+")")));
+    }
+
+    public static Optional<LanguageFamilyCode> get(String code) {
+        try {
+            return Optional.of(LanguageFamilyCode.valueOf(code));
+        } catch (IllegalArgumentException _x) {
+            return Optional.empty();
+        }
     }
 
 }

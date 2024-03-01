@@ -25,7 +25,7 @@ class RetiredLanguageCodeTest {
         assertThat(RetiredLanguageCode.getByCode("ppr").get().getChangeTo().code()).isEqualTo("lcq");
 
     }
-
+    
     /**
      * This is an odd case, the code was retired, but now it is back.
      */

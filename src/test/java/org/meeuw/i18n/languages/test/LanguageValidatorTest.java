@@ -34,15 +34,27 @@ public class LanguageValidatorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"nl", "zxx", "jw", "iw", "dut", "sh", "iw", "ji", "in"})
+    @ValueSource(strings = {
+        "nl", 
+        "zxx", 
+        "jw", // should be jv, but wrong in specs on one palce
+        "iw", // was changed to he
+        "id", // was changed to in
+        "ji", // was changed to yi
+        "dut", // part 2 b code. Valid.
+        "sh",
+        "in"
+    })
     public void testIsValid(String lang) {
-        String displayName = new Locale(lang).getDisplayLanguage();
-        System.out.println(lang + ":" + displayName);
         WithLanguageFields a = new WithLanguageFields();
         a.language = lang;
+        String displayName = new Locale(lang).getDisplayLanguage();
+        System.out.println(lang + ":" + ISO_639_Code.get(a.language).get() + "  (" + displayName + ")");
+        
         assertThat(VALIDATOR.validate(a)).isEmpty();
-
     }
+   
+
 
 
 

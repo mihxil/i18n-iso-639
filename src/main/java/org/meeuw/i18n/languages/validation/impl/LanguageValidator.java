@@ -3,7 +3,6 @@ package org.meeuw.i18n.languages.validation.impl;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import org.checkerframework.checker.nullness.qual.*;
 import org.meeuw.i18n.languages.*;
@@ -21,18 +20,7 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
 
     public static final String[] LEGACY = {"jw"}; // javanese?
 
-    private static final Set<String> VALID_ISO_LANGUAGES;
-
-    private static final Set<String> EXTRA_RECOGNIZED = ConcurrentHashMap.newKeySet();;
-
-
-    static {
-        Set<String> valid = new HashSet<>();
-        valid.addAll(Arrays.asList(Locale.getISOLanguages()));
-        valid.addAll(Arrays.asList(LEGACY));
-        VALID_ISO_LANGUAGES = Collections.unmodifiableSet(valid);
-    }
-
+   
     @MonotonicNonNull
     Language annotation;
 
@@ -76,75 +64,86 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
             return true;
         }
         String value = language.toString();
-      
-        String splitter = annotation.forXml() ? "-" :"[_-]";
+
+        String splitter = annotation.forXml() ? "-" : "[_-]";
         String[] components = value.split(splitter, 3);
-        
-        if (! annotation.mayContainCountry() && components.length > 1 && components[1].length() > 0) { 
-            return false;
-        } 
-        if (! annotation.mayContainVariant() && components.length > 2 && components[2].length() > 0) { 
+
+        if (!annotation.mayContainCountry() && components.length > 1 && components[1].length() > 0) {
             return false;
         }
-        
+        if (!annotation.mayContainVariant() && components.length > 2 && components[2].length() > 0) {
+            return false;
+        }
+
         value = components[0];
-        
-        if (! annotation.requireLowerCase()) {
+
+        if (!annotation.requireLowerCase()) {
             value = value.toLowerCase();
-        } else if ( ! value.equals(value.toLowerCase())) {
+        } else if (!value.equals(value.toLowerCase())) {
             return false;
         }
         if (annotation.forXml()) {
             value = Locale.forLanguageTag(value).getLanguage();
         }
         
-        boolean recognized  = VALID_ISO_LANGUAGES.contains(value) ||
-            (annotation.lenient() && EXTRA_RECOGNIZED.contains(value));
+        Optional<? extends ISO_639_Code> languageCode = getLanguage(annotation, value);
+        if (languageCode.isPresent()) {
+            ISO_639_Code lc = languageCode.get();
+            if (annotation.scope().length > 0 && !Arrays.asList(annotation.scope()).contains(lc.scope())) {
+                return false;
+            }
+            if (annotation.type().length > 0 && !Arrays.asList(annotation.type()).contains(lc.languageType())) {
+                return false;
+            }
 
-
-        ISO_639_Code code;
-        if (! recognized) {
-
-            Optional<? extends LanguageCode> iso3 = LanguageCode.getByPart1(value);
-            if (iso3.isPresent()) {
-                return true;
-            }
-            if (annotation.iso639_3()) {
-                Optional<LanguageCode> isoPart1 = LanguageCode.getByPart3(value, annotation.iso639_3_retired());
-                if (isoPart1.isPresent()){
-                    return true;
-                }
-            }
-            if (annotation.iso639_2()) {
-                Optional<LanguageCode> isoPart2B = LanguageCode.getByPart2B(value);
-                if (isoPart2B.isPresent()) {
-                    return true;
-                }
-
-                Optional<LanguageCode> isoPart2T = LanguageCode.getByPart2T(value);
-                if (isoPart2T.isPresent()) {
-                    return true;
-                }
-            }
-            if (annotation.iso639_5()) {
-                try {
-                    LanguageFamilyCode isoPart5 = LanguageFamilyCode.valueOf(value);
-                    return true;
-                } catch (IllegalArgumentException iae) {
-                    return false;
-                }
-            }
-            
-            if (annotation.lenient()) {
-                String displayLanguage = new Locale(value).getDisplayLanguage();
-                if (!language.equals(displayLanguage)) { // last fall back is iso code itself.
-                    logger.info("Not a recognized language " + language + " -> " + displayLanguage + ", but recognized by the JVM. Will follow that");
-                    EXTRA_RECOGNIZED.add(value);
-                    return true;
-                }
-            }
+            return true;
+        } else {
+            return false;
         }
-        return recognized;
+
 
     }
+    
+    private static Optional<? extends ISO_639_Code> getLanguage(LanguageValidationInfo annotation, String value) {
+      
+        
+        Optional<LanguageCode> iso3 = LanguageCode.getByPart1(value);
+        if (iso3.isPresent()) {
+            return iso3;
+        }
+        if (annotation.iso639_3()) {
+            Optional<LanguageCode> isoPart1 = LanguageCode.getByPart3(value, annotation.iso639_3_retired());
+            if (isoPart1.isPresent()){
+                return isoPart1;
+            }
+        }
+        if (annotation.iso639_2()) {
+            Optional<LanguageCode> isoPart2B = LanguageCode.getByPart2B(value);
+            if (isoPart2B.isPresent()) {
+                return isoPart2B;
+            }
+            
+            Optional<LanguageCode> isoPart2T = LanguageCode.getByPart2T(value);
+            if (isoPart2T.isPresent()) {
+                return isoPart2T;
+            }
+        }
+        if (annotation.iso639_5()) {
+            Optional<LanguageFamilyCode> isoPart5 = LanguageFamilyCode.get(value);
+            if (isoPart5.isPresent()) {
+                return isoPart5;
+            }
+        }
+        
+        if (annotation.lenient()) {
+            String displayLanguage = new Locale(value).getDisplayLanguage();
+            if (!value.equals(displayLanguage)) { // last fall back is iso code itself.
+                logger.info("Not a recognized language " + value+ " -> " + displayLanguage + ", but recognized by the JVM. Will follow that");
+                //EXTRA_RECOGNIZED.add(value);
+                //return ;
+            }
+        }
+        return Optional.empty();
+    }
+    
 }

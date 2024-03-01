@@ -75,10 +75,10 @@ public class GenerateEnums {
             );
         model.build(new FileCodeWriter(new File(absolutePath), false));
     }
-        @Test
+    @Test
     public void create639_5() throws JClassAlreadyExistsException, IOException, ClassNotFoundException {
         
-        JCodeModel model = new JCodeModel();
+            JCodeModel model = new JCodeModel();
         JDefinedClass iso639_5 = model._class("org.meeuw.i18n.languages.LanguageFamilyCode", ClassType.ENUM);
         iso639_5._implements(ISO_639_Code.class);
 
@@ -146,6 +146,22 @@ public class GenerateEnums {
             JMethod toString = iso639_5.method(JMod.PUBLIC, String.class, "toString");
             toString.annotate(Override.class);
             toString.body()._return(JExpr._this().invoke("name").plus(JExpr.lit(" (").plus(JExpr._this().invoke("refName").plus(JExpr.lit(")")))));
+        }
+        {
+            
+            JType optional = model.ref(Optional.class).narrow(iso639_5);
+            JMethod get = iso639_5.method(JMod.PUBLIC | JMod.STATIC, optional, "get");
+            JVar code = get.param(String.class, "code");
+            JTryBlock jTryBlock = get.body()._try();
+            jTryBlock.body()
+                ._return(model.ref(Optional.class).staticInvoke("of").arg(
+                    iso639_5.staticInvoke( "valueOf").arg(code)
+                ));
+            jTryBlock
+                ._catch(model.ref(IllegalArgumentException.class))
+                .body()
+                ._return(model.ref(Optional.class).staticInvoke("empty"));
+
         }
         
         
