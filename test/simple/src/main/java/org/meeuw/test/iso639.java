@@ -18,7 +18,6 @@ public class iso639 {
                 final Predicate<ISO_639_Code> predicate;
                 if (args[0].equals("-")) {
                     predicate = c -> true;
-                    ISO_639_Code.stream().forEach(iso639::print);
                 } else {
                     Scope scope = Scope.valueOf(args[0]);
                     predicate = c -> c.scope() == scope;
