@@ -5,7 +5,7 @@ image:https://www.javadoc.io/badge/org.meeuw.i18n/i18n-iso-639.svg?color=blue[ja
 image:https://github.com/mihxil/i18n-iso-639/workflows/build/badge.svg?[Build Status,link=https://github.com/mihxil/i18n-iso-639/actions?query=workflow/build]
 image:https://img.shields.io/maven-central/v/org.meeuw.i18n/i18n-iso-639.svg?label=Maven%20Central[Maven Central,link=https://central.sonatype.com/search?namespace=org.meeuw.i18n&name=i18n-iso-639]
 image:https://img.shields.io/nexus/s/https/oss.sonatype.org/org.meeuw.i18n/i18n-iso-639.svg[snapshots,link=https://oss.sonatype.org/content/repositories/snapshots/org/meeuw/i18n/]
-image:https://codecov.io/gh/mihxil/i18n-iso-639/branch/main/graph/badge.svg[codecov,link=https://codecov.io/gh/mihxil/i18n-iso-639-3]
+image:https://codecov.io/gh/mihxil/i18n-iso-639/branch/main/graph/badge.svg[codecov,link=https://codecov.io/gh/mihxil/i18n-iso-639]
 
 
 Codes for Languages of the World are covered by the https://en.wikipedia.org/wiki/ISO_639-3[ISO-639-3 standard]
@@ -101,8 +101,15 @@ The default sort order of a `LanguageCode` used to  on 'Inverted Name'. There ma
 | 3.0
 | Refactoring
 | 2024-3
-|  Added enum for ISO-639-1 codes and ISO-639-4. Dropped the -3 from the artifact id. 
-|   Made syntax forward compabitble with records. So, getters like `getPart1()`) are dropped in favor of `part1()`. `LanguageCode` itself is now an interface. This may be backported to 1.2 for javax compatibility. 
+|  Added enum for ISO-639-1 codes.
+|   Made syntax forward compabible with records. So, getters like `getPart1()`) are dropped in favor of `part1()`. `LanguageCode` itself is now an interface. This may be backported to 1.2 for javax compatibility.
+
+
+| 3.1
+| Refactoring
+| 2024-3
+| Support for ISO-639-5.    Dropped the -3 from the artifact id. 
+
 
 |===
 

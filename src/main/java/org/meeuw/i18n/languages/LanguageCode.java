@@ -50,8 +50,14 @@ public interface LanguageCode extends ISO_639_Code {
         }
         return ISO_639_3_Code
             .stream()
-            .flatMap(l -> l.names().stream()
-                .map(n -> new AbstractMap.SimpleEntry<>(n.inverted(), LanguageCode.updateToEnum(l))))             
+            .flatMap(l ->
+                l.names().stream()
+                    .map(n -> new AbstractMap.SimpleEntry<>(
+                        n.inverted(), 
+                        LanguageCode.updateToEnum(l)
+                        )
+                    )
+            )             
             .sorted(Map.Entry.comparingByKey());
     }
 
