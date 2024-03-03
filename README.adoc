@@ -101,8 +101,8 @@ The default sort order of a `LanguageCode` used to  on 'Inverted Name'. There ma
 | 3.0
 | Refactoring
 | 2024-3
-|  Added enum for ISO-639-1 codes.
-|   Made syntax forward compabible with records. So, getters like `getPart1()`) are dropped in favor of `part1()`. `LanguageCode` itself is now an interface. This may be backported to 1.2 for javax compatibility.
+|  Added enum for ISO-639-1 codes,
+   Made syntax forward compabible with records. So, getters like `getPart1()`) are dropped in favor of `part1()`. `LanguageCode` itself is now an interface. This may be backported to 1.2 for javax compatibility.
 
 
 | 3.1
