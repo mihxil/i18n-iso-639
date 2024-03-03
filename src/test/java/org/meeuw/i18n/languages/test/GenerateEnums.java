@@ -52,9 +52,17 @@ public class GenerateEnums {
         overrideGetter(iso639_1, languageCode, "languageType", Type.class);
         overrideGetter(iso639_1, languageCode, "refName", String.class);
         overrideGetter(iso639_1, languageCode, "comment", String.class);
-        overrideGetter(iso639_1, languageCode, "names", 
-            model.ref(List.class).narrow(Name.class)
+        overrideGetter(iso639_1, languageCode, "nameRecords", 
+            model.ref(List.class).narrow(NameRecord.class)
         );
+        
+        overrideGetter(iso639_1, languageCode, "macroLanguages", 
+            model.ref(List.class).narrow(LanguageCode.class)
+        );
+        overrideGetter(iso639_1, languageCode, "individualLanguages", 
+            model.ref(List.class).narrow(LanguageCode.class)
+        );
+        
         model.ref(ISO_639_Code.class);
         Map<String, JEnumConstant> generated = new TreeMap<>();
         ISO_639_3_Code.stream()
@@ -62,7 +70,7 @@ public class GenerateEnums {
             .forEach(lc -> {
                     JEnumConstant enumConstant = generated.computeIfAbsent(lc.part1(), (k) -> iso639_1.enumConstant(lc.part1()));
                     JDocComment javadoc = enumConstant.javadoc()
-                        .append("{@link ISO_639_3_Code iso 639 3 code}: " + lc.part3() + " " + lc.names().stream().map(Name::value).collect(Collectors.joining(", ")))
+                        .append("{@link ISO_639_3_Code iso 639 3 code}: " + lc.part3() + " " + lc.nameRecords().stream().map(NameRecord::print).collect(Collectors.joining(", ")))
                         .append("\n<p>\n")
                         .append("scope: " + lc.scope())
                         .append("\n<p>\n")
@@ -145,7 +153,7 @@ public class GenerateEnums {
         {
             JMethod toString = iso639_5.method(JMod.PUBLIC, String.class, "toString");
             toString.annotate(Override.class);
-            toString.body()._return(JExpr._this().invoke("name").plus(JExpr.lit(" (").plus(JExpr._this().invoke("refName").plus(JExpr.lit(")")))));
+            toString.body()._return(JExpr._this().invoke("nameRecord").plus(JExpr.lit(" (").plus(JExpr._this().invoke("refName").plus(JExpr.lit(")")))));
         }
         {
             

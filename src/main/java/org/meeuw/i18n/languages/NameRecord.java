@@ -1,22 +1,25 @@
 package org.meeuw.i18n.languages;
 
-public class Name {
+/**
+ * @since 3.1
+ */
+public class NameRecord {
     
-    private final String value;
+    private final String print;
     private final String inverted;
 
-    public Name(String value, String inverted) {
-        this.value = value;
+    public NameRecord(String print, String inverted) {
+        this.print = print;
         this.inverted = inverted;
     }
     
-    public Name(String value) {
+    public NameRecord(String value) {
         this(value, value);
     }
 
 
-    public String value() {
-        return value;
+    public String print() {
+        return print;
     }
     
     /**
@@ -28,6 +31,6 @@ public class Name {
     
     @Override
     public String toString() {
-        return value;
+        return print;
     }
 }

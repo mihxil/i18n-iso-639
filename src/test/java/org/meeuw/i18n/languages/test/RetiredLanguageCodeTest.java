@@ -12,7 +12,7 @@ class RetiredLanguageCodeTest {
     public void stream() {
         RetiredLanguageCode.stream().forEach(lc -> {
             try {
-                System.out.println(lc + "\n-> " + lc.getChangeTo());
+                System.out.println(lc + "\n-> " + lc.changeTo());
             } catch (RetiredLanguageCode.RetirementException re) {
                 System.out.println(lc + "\n-> " + re.getMessage());
 
@@ -22,7 +22,7 @@ class RetiredLanguageCodeTest {
 
     @Test
     public void ppr() throws RetiredLanguageCode.RetirementException {
-        assertThat(RetiredLanguageCode.getByCode("ppr").get().getChangeTo().code()).isEqualTo("lcq");
+        assertThat(RetiredLanguageCode.getByCode("ppr").get().changeTo().code()).isEqualTo("lcq");
 
     }
     
@@ -31,6 +31,6 @@ class RetiredLanguageCodeTest {
      */
     @Test
     public void lcq() throws RetiredLanguageCode.RetirementException {
-        assertThat(RetiredLanguageCode.getByCode("lcq").get().getChangeTo().code()).isEqualTo("lcq");
+        assertThat(RetiredLanguageCode.getByCode("lcq").get().changeTo().code()).isEqualTo("lcq");
     }
 }

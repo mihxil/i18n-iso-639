@@ -5,11 +5,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.*;
-import java.util.logging.Level;
 import java.util.stream.Stream;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
-import static org.meeuw.i18n.languages.ISO_639_3_Code.LOGGER;
 
 /**
  * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if that exist.
@@ -51,7 +49,7 @@ public interface LanguageCode extends ISO_639_Code {
         return ISO_639_3_Code
             .stream()
             .flatMap(l ->
-                l.names().stream()
+                l.nameRecords().stream()
                     .map(n -> new AbstractMap.SimpleEntry<>(
                         n.inverted(), 
                         LanguageCode.updateToEnum(l)
@@ -73,7 +71,7 @@ public interface LanguageCode extends ISO_639_Code {
 
     
     /**
-     * Retrieves a {@link ISO_639_3_Code} by on of its three-letter identifiers {@link #getByPart3(String)}, {@link #getByPart2B(String)}, or {@link #getByPart2T(String)}  or its two letter identifier {@link #part1()}.
+         * Retrieves a {@link ISO_639_3_Code} by on of its three-letter identifiers {@link #getByPart3(String)}, {@link #getByPart2B(String)}, or {@link #getByPart2T(String)}  or its two letter identifier {@link #part1()}.
      *
      * @param code A 2 or 3 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
@@ -120,7 +118,7 @@ public interface LanguageCode extends ISO_639_Code {
 
     /**
      * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link #getByPart3(String, boolean)} ()}
-     *
+     * <p>
      * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
      *
      * @param code A 3 letter language code
@@ -128,23 +126,8 @@ public interface LanguageCode extends ISO_639_Code {
      * @since 2.2
      */
     static Optional<LanguageCode> getByPart3(@Size(min = 3, max=3) String code, boolean matchRetired) {
-        if (code == null) {
-            return Optional.empty();
-        }
-        LanguageCode prop = KNOWN.get(code.toLowerCase());
-        if (prop == null && matchRetired){
-            Optional<RetiredLanguageCode> retiredLanguageCode = RetiredLanguageCode.getByCode(code);
-            if (retiredLanguageCode.isPresent() && retiredLanguageCode.get().getRetReason() != RetirementReason.N) {
-                try {
-                    prop = retiredLanguageCode.get().getChangeTo();
-                } catch (RetiredLanguageCode.RetirementException e) {
-                    LOGGER.log(Level.WARNING, "Could not find single replacement for " + code + " " + e.getMessage());
-                }
-            }
-        }
-
-        return Optional
-            .ofNullable(prop)
+        
+        return ISO_639_3_Code.getByPart3(code, matchRetired)
             .map(LanguageCode::updateToEnum)
             ;
     }
@@ -277,24 +260,32 @@ public interface LanguageCode extends ISO_639_Code {
     String refName();
 
     String comment();
+    
     /**
      * @since 2.2
      */
-    List<Name> names();
-
+    List<NameRecord> nameRecords();
     
     default Locale toLocale() {
         return new Locale(code());
     }
     
- 
-    
-    default Name name(Locale locale) {
+    default NameRecord nameRecord(Locale locale) {
         if (locale.getLanguage().equals("en")) {
-            return names().get(0);
+            return nameRecords().get(0);
         } else {
             throw new UnsupportedOperationException();
         }
     }
+
+    /**
+     * The macro language(s) of which this language is a part.
+     */
+    List<LanguageCode> macroLanguages();
+
+    /**
+     * If this is a {@link Scope#M macro language}, the individual languages which are part of this macro language.
+     */
+    List<LanguageCode> individualLanguages();
 
 }

@@ -1,11 +1,10 @@
 package org.meeuw.test;
 
 
-import java.util.Arrays;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import org.meeuw.i18n.languages.ISO_639_Code;
-import org.meeuw.i18n.languages.Scope;
+import org.meeuw.i18n.languages.*;
 
 public class iso639 {
     
@@ -31,6 +30,16 @@ public class iso639 {
                 print(language);
             }
         }
+        
+        Optional<LanguageCode> optional = LanguageCode.getByPart3("nld");
+
+        ISO_639_Code languageCode = LanguageCode.languageCode("nl");
+
+        languageCode.nameRecord(Locale.US).inverted();
+
+        
+     LanguageCode.stream()
+         .sorted();
     }
     
     private static void print(ISO_639_Code language) {

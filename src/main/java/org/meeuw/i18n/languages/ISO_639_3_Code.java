@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
@@ -21,18 +22,25 @@ public class ISO_639_3_Code implements LanguageCode {
 
 
     static final Map<String, ISO_639_3_Code> KNOWN;
+    
+    
+    static final Map<LanguageCode, List<LanguageCode>> INDIVIDUAL_LANGUAGES;
+    
+    static final Map<LanguageCode, List<LanguageCode>> MACRO;
+
+
 
     static final String DIR = "/iso-639-3_Code_Tables_20240207/";
     static {
-        Map<String, List<Name>> namesMap = new HashMap<>();
+        Map<String, List<NameRecord>> namesMap = new HashMap<>();
         try (InputStream inputStream = ISO_639_3_Code.class.getResourceAsStream(DIR + "iso-639-3_Name_Index.tab");
              BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         ) {
             String line = inputStreamReader.readLine();
             while (line != null) {
                 String[] split = line.split("\t");
-                List<Name> names = namesMap.computeIfAbsent(split[0], k -> new ArrayList<>());
-                names.add(new Name(split[1], split[2]));
+                List<NameRecord> names = namesMap.computeIfAbsent(split[0], k -> new ArrayList<>());
+                names.add(new NameRecord(split[1], split[2]));
                 line = inputStreamReader.readLine();
             }
         } catch (IOException e) {
@@ -47,7 +55,7 @@ public class ISO_639_3_Code implements LanguageCode {
             String line = inputStreamReader.readLine();
             while (line != null) {
                 String[] split = line.split("\t");
-                List<Name> names = namesMap.get(split[0]);
+                List<NameRecord> names = namesMap.get(split[0]);
                 ISO_639_3_Code found = new ISO_639_3_Code(
                     split[0],
                     split[1].length() > 0 ? split[1] : null,
@@ -66,6 +74,35 @@ public class ISO_639_3_Code implements LanguageCode {
             throw new ExceptionInInitializerError(e);
         }
         KNOWN = Collections.unmodifiableMap(temp);
+        
+        Map<LanguageCode, List<LanguageCode>> tempIndividual = new HashMap<>();
+        Map<LanguageCode, List<LanguageCode>> tempMacro = new HashMap<>();
+        try (InputStream inputStream = ISO_639_3_Code.class.getResourceAsStream(DIR + "iso-639-3-macrolanguages.tab");
+             BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+        ) {
+            inputStreamReader.readLine(); // skipheader;
+            String line = inputStreamReader.readLine();
+            while (line != null) {
+                String[] split = line.split("\t");
+                ISO_639_3_Code macro = KNOWN.get(split[0]);
+                List<LanguageCode> list = tempIndividual.computeIfAbsent(macro, (m) -> new ArrayList<>());
+                Optional<ISO_639_3_Code> individual = getByPart3(split[1], true);
+                if (individual.isPresent()) {
+                    list.add(LanguageCode.updateToEnum(individual.get()));
+                    tempMacro.computeIfAbsent(individual.get(), (m) -> new ArrayList<>()).add(LanguageCode.updateToEnum(macro));
+                } else {
+                    System.out.println("Unknown individual language: " + split[1] + " for " + macro);
+                }
+                line = inputStreamReader.readLine();
+            }
+        } catch (IOException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+        tempIndividual.replaceAll((k, v) -> Collections.unmodifiableList(v));
+        tempMacro.replaceAll((k, v) -> Collections.unmodifiableList(v));
+        
+        INDIVIDUAL_LANGUAGES = Collections.unmodifiableMap(tempIndividual);
+        MACRO = Collections.unmodifiableMap(tempMacro);
     }
     
      /**
@@ -101,6 +138,32 @@ public class ISO_639_3_Code implements LanguageCode {
     }
     
     
+    /**
+     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link #getByPart3(String, boolean)} ()}
+     * <p>
+     * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
+     *
+     * @param code A 3 letter language code
+     * @return An optional containing the {@link ISO_639_3_Code} if found.
+     * @since 2.2
+     */
+    static Optional<ISO_639_3_Code> getByPart3(@Size(min = 3, max=3) String code, boolean matchRetired) {
+        if (code == null) {
+            return Optional.empty();
+        }
+        ISO_639_3_Code prop = KNOWN.get(code.toLowerCase());
+        if (prop == null && matchRetired) {
+            Optional<RetiredLanguageCode> retiredLanguageCode = RetiredLanguageCode.getByCode(code);
+            if (retiredLanguageCode.isPresent() && retiredLanguageCode.get().retReason() != RetirementReason.N) {
+                try {
+                    prop = KNOWN.get(retiredLanguageCode.get().changeTo().part3());
+                } catch (RetiredLanguageCode.RetirementException e) {
+                    LOGGER.log(Level.WARNING, "Could not find single replacement for " + code + " " + e.getMessage());
+                }
+            }
+        }
+        return Optional.ofNullable(prop);
+    }
 
     @Size(min = 3, max = 3)
     @NotNull
@@ -120,7 +183,7 @@ public class ISO_639_3_Code implements LanguageCode {
     private transient final String refName;
     private transient final String comment;
 
-    private transient  final List<Name> names;
+    private transient  final List<NameRecord> names;
 
     private ISO_639_3_Code(
         String part3,
@@ -131,7 +194,7 @@ public class ISO_639_3_Code implements LanguageCode {
         Type languageType,
         String refName,
         String comment,
-        List<Name> names
+        List<NameRecord> names
     ) {
         this.part3 = part3;
         this.part2B = part2B;
@@ -214,19 +277,29 @@ public class ISO_639_3_Code implements LanguageCode {
      * The names (in english) of the language.
      */
     @Override
-    public List<Name> names() {
+    public List<NameRecord> nameRecords() {
         return names;
     }
     
     @Size
-    public Name name(Locale locale) {
+    public NameRecord nameRecord(Locale locale) {
         if (locale.getLanguage().equals("en")) {
             return names.get(0);
         } else {
             throw new UnsupportedOperationException();
         }
     }
-    
+
+    @Override
+    public List<LanguageCode> macroLanguages() {
+        return MACRO.getOrDefault(this, Collections.emptyList());
+    }
+
+    @Override
+    public List<LanguageCode> individualLanguages() {
+        return INDIVIDUAL_LANGUAGES.getOrDefault(this, Collections.emptyList());
+    }
+
     private Object readResolve() {
         return LanguageCode.get(part3()).orElse(this);
     }

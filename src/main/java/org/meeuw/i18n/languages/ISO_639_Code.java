@@ -68,11 +68,15 @@ public interface ISO_639_Code extends Serializable {
     Type languageType();
     
     default String refName() {
-        return name(Locale.US).value();
+        return nameRecord(Locale.US).print();
     }
     
-    default Name name(Locale locale) {
-        return new Name(toString());
+    default NameRecord nameRecord(Locale locale) {
+        return new NameRecord(toString());
+    }
+    
+    default NameRecord nameRecord() {
+        return new NameRecord(toString());
     }
     
 }

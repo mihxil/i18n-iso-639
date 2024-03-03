@@ -1917,8 +1917,18 @@ public enum ISO_639_1_Code
     }
 
     @Override
-    public List<Name> names() {
-        return this.getLanguageCode().names();
+    public List<NameRecord> nameRecords() {
+        return this.getLanguageCode().nameRecords();
+    }
+
+    @Override
+    public List<LanguageCode> macroLanguages() {
+        return this.getLanguageCode().macroLanguages();
+    }
+
+    @Override
+    public List<LanguageCode> individualLanguages() {
+        return this.getLanguageCode().individualLanguages();
     }
 
 }

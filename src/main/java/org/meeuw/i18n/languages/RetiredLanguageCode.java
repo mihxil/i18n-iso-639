@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  * The main goal of this class is to be used in {@link ISO_639_3_Code#getByPart3(String)}, which will return the unretired language code if possible.
  *
  */
-public class RetiredLanguageCode implements Serializable {
+public class RetiredLanguageCode implements Serializable, LanguageCode {
 
     static final Map<String, RetiredLanguageCode> KNOWN;
 
@@ -76,28 +76,47 @@ public class RetiredLanguageCode implements Serializable {
         return KNOWN.values().stream();
     }
 
+    @Override
+    public String code() {
+        return code;
+    }
+
+    @Override
+    public String part3() {
+        return code;
+    }
+
+    @Override
+    public String part2B() {
+        return null;
+    }
+
+    @Override
+    public String part2T() {
+        return null;
+    }
+
+    @Override
+    public String part1() {
+        return null;
+    }
+
     public static Optional<RetiredLanguageCode> getByCode(String code) {
         return Optional.ofNullable(KNOWN.get(code));
     }
 
-    public String getCode() {
-        return code;
-    }
+    
 
-    public String getRefName() {
-        return refName;
-    }
-
-    public RetirementReason getRetReason() {
+    public RetirementReason retReason() {
         return retReason;
     }
 
 
     /**
      * @return the language code to which this language was changed, or null if it doesn't exist
-     * @throws RetirementException If the {@link #getRetRemedy()} should be inspected by a human.
+     * @throws RetirementException If the {@link #retRemedy()} should be inspected by a human.
      */
-    public LanguageCode getChangeTo() throws RetirementException{
+    public LanguageCode changeTo() throws RetirementException{
         if (retReason == RetirementReason.N) {
             return null;
         }
@@ -107,11 +126,11 @@ public class RetiredLanguageCode implements Serializable {
         return LanguageCode.getByPart3(changeTo).orElseThrow();
     }
 
-    public String getRetRemedy() {
+    public String retRemedy() {
         return retRemedy;
     }
 
-    public LocalDate getEffective() {
+    public LocalDate effective() {
         return effective;
     }
 
@@ -123,7 +142,7 @@ public class RetiredLanguageCode implements Serializable {
             .add("retReason=" + retReason);
         if (changeTo != null) {
             try {
-                joiner.add("changeTo='" + getChangeTo().code() + "'");
+                joiner.add("changeTo='" + changeTo().code() + "'");
             } catch (RetirementException e) {
 
             }
@@ -134,6 +153,42 @@ public class RetiredLanguageCode implements Serializable {
 
         return joiner.add("effective=" + effective)
             .toString();
+    }
+
+    @Override
+    public Scope scope() {
+        return Scope.I;
+    }
+
+    @Override
+    public Type languageType() {
+        return null;
+    }
+
+    @Override
+    public String refName() {
+        return refName;
+    }
+
+    @Override
+    public String comment() {
+        return retRemedy;
+    }
+
+
+    @Override
+    public List<NameRecord> nameRecords() {
+        return Arrays.asList(new NameRecord(refName));
+    }
+
+    @Override
+    public List<LanguageCode> macroLanguages() {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<LanguageCode> individualLanguages() {
+        return Collections.emptyList();
     }
 
     public static class RetirementException extends Exception {

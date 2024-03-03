@@ -167,7 +167,7 @@ public class LanguageValidatorTest {
             result.put(s, new Locale(s).getDisplayLanguage(new Locale("en")));
         }
         for (ISO_639_Code s : ISO_639_Code.stream().collect(Collectors.toList())) {
-            result.put(s.toString(), s.name(Locale.ENGLISH).value());
+            result.put(s.toString(), s.nameRecord(Locale.ENGLISH).print());
         }
         // output sorted
         System.out.println("||code||name in english||name in dutch||name in language itself||");
