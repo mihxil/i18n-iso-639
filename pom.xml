@@ -52,7 +52,7 @@
   <scm>
     <connection>scm:git:${project.scm.url}.git</connection>
     <developerConnection>scm:git:${project.scm.url}.git</developerConnection>
-    <url>https://github.com/mihxil/i18n-iso-639-3</url>
+    <url>https://github.com/mihxil/i18n-iso-639</url>
     <tag>HEAD</tag>
   </scm>
 
