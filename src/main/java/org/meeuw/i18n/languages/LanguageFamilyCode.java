@@ -170,7 +170,7 @@ public enum LanguageFamilyCode
 
     @Override
     public String toString() {
-        return (this.nameRecord()+(" ("+(this.refName()+")")));
+        return (this.name()+(" ("+(this.refName()+")")));
     }
 
     public static Optional<LanguageFamilyCode> get(String code) {

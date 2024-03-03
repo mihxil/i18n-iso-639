@@ -84,7 +84,7 @@ public class GenerateEnums {
     @Test
     public void create639_5() throws JClassAlreadyExistsException, IOException, ClassNotFoundException {
         
-            JCodeModel model = new JCodeModel();
+        JCodeModel model = new JCodeModel();
         JDefinedClass iso639_5 = model._class("org.meeuw.i18n.languages.LanguageFamilyCode", ClassType.ENUM);
         iso639_5._implements(ISO_639_Code.class);
 
@@ -151,7 +151,7 @@ public class GenerateEnums {
         {
             JMethod toString = iso639_5.method(JMod.PUBLIC, String.class, "toString");
             toString.annotate(Override.class);
-            toString.body()._return(JExpr._this().invoke("nameRecord").plus(JExpr.lit(" (").plus(JExpr._this().invoke("refName").plus(JExpr.lit(")")))));
+            toString.body()._return(JExpr._this().invoke("name").plus(JExpr.lit(" (").plus(JExpr._this().invoke("refName").plus(JExpr.lit(")")))));
         }
         {
             
