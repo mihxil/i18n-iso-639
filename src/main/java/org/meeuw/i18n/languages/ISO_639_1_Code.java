@@ -1,6 +1,7 @@
 
 package org.meeuw.i18n.languages;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import java.util.List;
 
 
@@ -1931,4 +1932,8 @@ public enum ISO_639_1_Code
         return this.getLanguageCode().individualLanguages();
     }
 
+    @JsonCreator
+    public static ISO_639_Code iso639(String code) {
+        return ISO_639.iso639(code);
+    }
 }

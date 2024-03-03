@@ -7,6 +7,7 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.*;
 import java.util.stream.Stream;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 /**
  * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if that exist.
@@ -17,6 +18,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  *<p>
  * Implementations are immutable and can be used as a key in maps.
  */
+@XmlJavaTypeAdapter(LanguageCodeAdapter.class)
 public interface LanguageCode extends ISO_639_Code {
     
     /**
@@ -231,5 +233,6 @@ public interface LanguageCode extends ISO_639_Code {
      * If this is a {@link Scope#M macro language}, the known individual languages which are part of this macro language.
      */
     List<LanguageCode> individualLanguages();
+         
 
 }

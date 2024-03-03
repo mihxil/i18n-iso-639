@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.meeuw.i18n.languages.ISO_639_Code;
 import static org.meeuw.i18n.languages.ISO_639.iso639;
+import org.meeuw.i18n.languages.LanguageCode;
 
 public class SerializationTest {
     
@@ -19,12 +20,12 @@ public class SerializationTest {
     public void xml(String code) {
         StringWriter writer = new StringWriter();
         JAXB.marshal(
-            new A(iso639(code)), writer);
+            new A(iso639(code), LanguageCode.languageCode("be")), writer);
         System.out.println(writer);
         A a = JAXB.unmarshal(new StringReader(writer.toString()), A.class);
         
         
-        assertThat(a.languageCode).isSameAs(iso639(code));
+        assertThat(a.isoCode).isSameAs(iso639(code));
     }
     
     
@@ -38,13 +39,13 @@ public class SerializationTest {
         String targetCode = iso639(code).code();
         //objectMapper.registerModule(new org.meeuw.i18n.languages.jackson.LanguageModule(true));
         
-        String s = objectMapper.writeValueAsString(new A(iso639(code)));
+        String s = objectMapper.writeValueAsString(new A(iso639(code), LanguageCode.languageCode("be")));
         System.out.println(s);
         
-        assertThat(s).isEqualTo("{\"languageCode\":\"" + targetCode + "\"}");
+        assertThat(s).isEqualTo("{\"isoCode\":\"" + targetCode + "\",\"languageCode\":\"be\"}");
         
         A rounded = objectMapper.readValue(s, A.class);
-        assertThat(rounded.languageCode.code()).isEqualTo(targetCode);         
+        assertThat(rounded.isoCode.code()).isEqualTo(targetCode);         
     }
     
     
@@ -56,7 +57,7 @@ public class SerializationTest {
     @ValueSource(strings = {"nld", "gem"})
     public void serialize(String code) throws IOException, ClassNotFoundException {
         ISO_639_Code looked = iso639(code);
-        A a = new A(looked);
+        A a = new A(looked, LanguageCode.languageCode("be"));
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream 
             = new ObjectOutputStream(byteArrayOutputStream);
@@ -65,8 +66,8 @@ public class SerializationTest {
         
         ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(byteArrayOutputStream.toByteArray()));
         A deserialized = (A) inputStream.readObject();
-        assertThat(deserialized.languageCode.code()).isEqualTo(looked.code());
-        assertThat(deserialized.languageCode).isSameAs(looked);
+        assertThat(deserialized.isoCode.code()).isEqualTo(looked.code());
+        assertThat(deserialized.isoCode).isSameAs(looked);
 
         
         

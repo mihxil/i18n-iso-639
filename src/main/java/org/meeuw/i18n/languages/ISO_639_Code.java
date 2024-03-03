@@ -1,5 +1,6 @@
 package org.meeuw.i18n.languages;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
@@ -38,5 +39,11 @@ public interface ISO_639_Code extends Serializable {
     default NameRecord nameRecord() {
         return new NameRecord(toString());
     }
+    
+    @JsonCreator
+    static ISO_639_Code fromCode(String code) {
+        return ISO_639.iso639(code);
+    }
+
     
 }
