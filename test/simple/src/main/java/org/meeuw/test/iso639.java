@@ -21,25 +21,19 @@ public class iso639 {
                     Scope scope = Scope.valueOf(args[0]);
                     predicate = c -> c.scope() == scope;
                 }
-                ISO_639_Code.stream()
+                ISO_639.stream()
                     .filter(predicate)
                     .forEach(iso639::print);
             } else {
                 String code = args[0];
-                ISO_639_Code language = ISO_639_Code.get(code).orElseThrow(() -> new IllegalArgumentException("No language found for " + code));
+                ISO_639_Code language = ISO_639.get(code).orElseThrow(() -> new IllegalArgumentException("No language found for " + code));
                 print(language);
             }
         }
         
-        Optional<LanguageCode> optional = LanguageCode.getByPart3("nld");
-
-        ISO_639_Code languageCode = LanguageCode.languageCode("nl");
-
-        languageCode.nameRecord(Locale.US).inverted();
+      
 
         
-     LanguageCode.stream()
-         .sorted();
     }
     
     private static void print(ISO_639_Code language) {

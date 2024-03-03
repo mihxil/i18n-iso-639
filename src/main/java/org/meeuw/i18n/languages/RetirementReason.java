@@ -1,7 +1,7 @@
 package org.meeuw.i18n.languages;
 
 /**
- * The 'reason' for retirement of a code.
+ * The 'reason' for retirement of a code. 
  * @see RetiredLanguageCode
  */
 public enum RetirementReason {

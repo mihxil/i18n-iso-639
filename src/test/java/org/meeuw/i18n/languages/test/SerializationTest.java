@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.meeuw.i18n.languages.ISO_639_Code;
-import static org.meeuw.i18n.languages.ISO_639_Code.iso639;
+import static org.meeuw.i18n.languages.ISO_639.iso639;
 
 public class SerializationTest {
     

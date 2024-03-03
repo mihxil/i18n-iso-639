@@ -2,7 +2,7 @@ package org.meeuw.i18n.languages.jaxb;
 
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 import org.meeuw.i18n.languages.*;
-import static org.meeuw.i18n.languages.ISO_639_Code.iso639;
+import static org.meeuw.i18n.languages.ISO_639.iso639;
 
 public class LanguageCodeAdapter extends XmlAdapter<String, ISO_639_Code> {
     @Override

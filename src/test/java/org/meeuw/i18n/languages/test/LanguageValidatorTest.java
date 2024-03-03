@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.meeuw.i18n.languages.ISO_639;
 import org.meeuw.i18n.languages.ISO_639_Code;
 
 /**
@@ -49,7 +50,7 @@ public class LanguageValidatorTest {
         WithLanguageFields a = new WithLanguageFields();
         a.language = lang;
         String displayName = new Locale(lang).getDisplayLanguage();
-        System.out.println(lang + ":" + ISO_639_Code.get(a.language).get() + "  (" + displayName + ")");
+        System.out.println(lang + ":" + ISO_639.get(a.language).get() + "  (" + displayName + ")");
         
         assertThat(VALIDATOR.validate(a)).isEmpty();
     }
@@ -166,7 +167,7 @@ public class LanguageValidatorTest {
         for (String s : Locale.getISOLanguages()) {
             result.put(s, new Locale(s).getDisplayLanguage(new Locale("en")));
         }
-        for (ISO_639_Code s : ISO_639_Code.stream().collect(Collectors.toList())) {
+        for (ISO_639_Code s : ISO_639.stream().collect(Collectors.toList())) {
             result.put(s.toString(), s.nameRecord(Locale.ENGLISH).print());
         }
         // output sorted

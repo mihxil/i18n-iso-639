@@ -11,7 +11,7 @@ import java.util.stream.Stream;
  *<p>
  * @see <a href="https://iso639-3.sil.org/code_tables/deprecated_codes/data">https://iso639-3.sil.org/code_tables/deprecated_codes/data</a>
  * <p>
- * The main goal of this class is to be used in {@link ISO_639_3_Code#getByPart3(String)}, which will return the unretired language code if possible.
+ * The main goal of this class is to be used in {@link ISO_639#getByPart3(String)}, which will return the unretired language code if possible.
  *
  */
 public class RetiredLanguageCode implements Serializable, LanguageCode {
@@ -104,13 +104,10 @@ public class RetiredLanguageCode implements Serializable, LanguageCode {
     public static Optional<RetiredLanguageCode> getByCode(String code) {
         return Optional.ofNullable(KNOWN.get(code));
     }
-
     
-
     public RetirementReason retReason() {
         return retReason;
     }
-
 
     /**
      * @return the language code to which this language was changed, or null if it doesn't exist
@@ -123,7 +120,7 @@ public class RetiredLanguageCode implements Serializable, LanguageCode {
         if (changeTo == null) {
             throw new RetirementException("Remedy for " + code + ": " + retRemedy);
         }
-        return LanguageCode.getByPart3(changeTo).orElseThrow();
+        return ISO_639.getByPart3(changeTo).orElseThrow();
     }
 
     public String retRemedy() {

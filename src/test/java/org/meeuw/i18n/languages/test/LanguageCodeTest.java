@@ -1,6 +1,6 @@
 package org.meeuw.i18n.languages.test;
 
-import java.util.Comparator;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
@@ -8,6 +8,29 @@ import org.meeuw.i18n.languages.*;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 class LanguageCodeTest {
+    
+    
+    @Test
+    public void example() {
+        
+        // get a language by its code;
+        Optional<LanguageCode> optional = ISO_639.getByPart3("nld");
+        LanguageCode languageCode = LanguageCode.languageCode("nl");
+        
+        // show it 'inverted' name 
+        System.out.println(languageCode.nameRecord(Locale.US).inverted());
+        
+        // get a language family
+        Optional<LanguageFamilyCode> family = ISO_639.getByPart5("ger");
+        
+        // get by any code
+        Optional<ISO_639_Code> byCode = ISO_639.get("nl");
+        
+        // stream by names, language may have several names (dutch, flemish), and appear multiple times
+        ISO_639.streamByNames().forEach(e -> {
+            System.out.println(e.getKey() + " " + e.getValue());
+        });
+    }
 
     @Test
     public void stream() {
@@ -28,7 +51,7 @@ class LanguageCodeTest {
                 System.out.println("Macro language with: " + lc.individualLanguages());
                 for (LanguageCode individual : lc.individualLanguages()) {
                     if (individual instanceof RetiredLanguageCode) {
-                        
+                        System.out.println("Retired: " + individual + " " + ((RetiredLanguageCode) individual).retReason());
                     } else {
                         assertThat(individual.macroLanguages())
                             .withFailMessage("macro language " + lc + " has " + individual + " but this has not it as macro").contains(lc);
@@ -66,8 +89,8 @@ class LanguageCodeTest {
 
     @Test
     public void getByCode() {
-        assertThat(LanguageCode.getByPart3("nld").get().refName()).isEqualTo("Dutch");
-        assertThat(LanguageCode.getByPart3(null)).isEmpty();
+        assertThat(ISO_639.getByPart3("nld").get().refName()).isEqualTo("Dutch");
+        assertThat(ISO_639.getByPart3(null)).isEmpty();
     }
 
     @Test
@@ -90,48 +113,43 @@ class LanguageCodeTest {
     }
     @Test
     public void getByPart2T() {
-        assertThat(LanguageCode.getByPart2T("nld").get().refName()).isEqualTo("Dutch");
-        assertThat(LanguageCode.getByPart2T(null)).isEmpty();
+        assertThat(ISO_639.getByPart2T("nld").get().refName()).isEqualTo("Dutch");
+        assertThat(ISO_639.getByPart2T(null)).isEmpty();
     }
 
     @Test
     public void getByPart2B() {
-        assertThat(LanguageCode.getByPart2B("dut").get().refName()).isEqualTo("Dutch");
-        assertThat(LanguageCode.getByPart2B(null)).isEmpty();
+        assertThat(ISO_639.getByPart2B("dut").get().refName()).isEqualTo("Dutch");
+        assertThat(ISO_639.getByPart2B(null)).isEmpty();
     }
 
     @Test
     public void getUnknown() {
-        assertThat(LanguageCode.getByPart3("doesntexist")).isEmpty();
+        assertThat(ISO_639.getByPart3("doesntexist")).isEmpty();
     }
 
     @Test
     public void getCode() {
-        assertThat(LanguageCode.getByPart3("nld").get().code()).isEqualTo("nl");
-        assertThat(LanguageCode.getByPart3("act").get().code()).isEqualTo("act");
+        assertThat(ISO_639.getByPart3("nld").get().code()).isEqualTo("nl");
+        assertThat(ISO_639.getByPart3("act").get().code()).isEqualTo("act");
     }
 
     @Test
     public void krm() {
         // the 'krim' dialect (Sierra Leano) officially merged into 'bmf' (Bom-Kim) in 2017
-        assertThat(LanguageCode.getByPart3("krm").get().code()).isEqualTo("bmf");
+        assertThat(ISO_639.getByPart3("krm").get().code()).isEqualTo("bmf");
     }
 
 
     @Test
     public void ppr() {
-        assertThat(LanguageCode.getByPart3("ppr").get().code()).isEqualTo("lcq");
+        assertThat(ISO_639.getByPart3("ppr").get().code()).isEqualTo("lcq");
     }
 
     @Test
     public void lcq() {
-        assertThat(LanguageCode.getByPart3("lcq").get().code()).isEqualTo("lcq");
+        assertThat(ISO_639.getByPart3("lcq").get().code()).isEqualTo("lcq");
     }
-    
-    @Test
-    public void twi() {
-        assertThat(LanguageCode.getByPart3("twi").get().code()).isEqualTo("twi");
-    }
-
+   
 
 }

@@ -20,17 +20,24 @@ This package has the tab seperated files provided by https://iso639-3.sil.org/, 
 
 [source,java]
 ----
-import org.meeuw.i18n.languages.ISO_639_Code;
-
-Optional<ISO_639_Code> languageCode = ISO_639_Code.getByPart3("nld");
-
-ISO_639_Code languageCode = ISO_639_Code.languageCode("nl");
-
-languageCode.getInvertedName();
-
-
-LanguageCode.stream()
-   .sorted();
+       import org.meeuw.i18n.languages.*;
+   // get a language by its code;
+        Optional<LanguageCode> optional = ISO_639.getByPart3("nld");
+        LanguageCode languageCode = LanguageCode.languageCode("nl");
+        
+        // show it 'inverted' name 
+        System.out.println(languageCode.nameRecord(Locale.US).inverted());
+        
+        // get a language family
+        Optional<LanguageFamilyCode> family = ISO_639.getByPart5("ger");
+        
+        // get by any code
+        Optional<ISO_639_Code> byCode = ISO_639.get("nl");
+        
+        // stream by names, language may have several names (dutch, flemish), and appear multiple times
+        ISO_639_Code.streamByNames().forEach(e -> {
+            System.out.println(e.getKey() + " " + e.getValue());
+        });
 
 ----
 

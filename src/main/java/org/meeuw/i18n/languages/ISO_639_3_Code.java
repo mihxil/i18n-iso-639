@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 /**
- * Implementation of {@link LanguageCode} that {@link #stream() produces} all ISO-639-3 codes.
+ * Implementation of {@link LanguageCode} that {@link ISO_639#stream() produces} all ISO-639-3 codes.
  * <p>
  * Normally it makes sense to just use {@link LanguageCode}. 
  
@@ -105,11 +105,14 @@ public class ISO_639_3_Code implements LanguageCode {
         MACRO = Collections.unmodifiableMap(tempMacro);
     }
     
-     /**
+    /**
      * A stream with all known {@link ISO_639_Code language codes}.
-     * 
+     * If the langauge has a 2 letter part 1 code, it will <em>not</em> be implicitly upgraded
+     * to an {@link ISO_639_1_Code
      *
-     * @return a stream of all known language codes.
+     * @see {@link LanguageCode#stream()} For a version that <em>does</em> upgrade
+     * @return a stream of all known language codes. 
+     * 
      */
      public static Stream<ISO_639_3_Code> stream() {
         return KNOWN.values()
@@ -139,7 +142,7 @@ public class ISO_639_3_Code implements LanguageCode {
     
     
     /**
-     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link #getByPart3(String, boolean)} ()}
+     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link ISO_639#getByPart3(String, boolean)} ()}
      * <p>
      * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
      *

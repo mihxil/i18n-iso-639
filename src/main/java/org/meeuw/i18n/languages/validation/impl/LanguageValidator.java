@@ -112,18 +112,18 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
             return iso3;
         }
         if (annotation.iso639_3()) {
-            Optional<LanguageCode> isoPart1 = LanguageCode.getByPart3(value, annotation.iso639_3_retired());
+            Optional<LanguageCode> isoPart1 = ISO_639.getByPart3(value, annotation.iso639_3_retired());
             if (isoPart1.isPresent()){
                 return isoPart1;
             }
         }
         if (annotation.iso639_2()) {
-            Optional<LanguageCode> isoPart2B = LanguageCode.getByPart2B(value);
+            Optional<LanguageCode> isoPart2B = ISO_639.getByPart2B(value);
             if (isoPart2B.isPresent()) {
                 return isoPart2B;
             }
             
-            Optional<LanguageCode> isoPart2T = LanguageCode.getByPart2T(value);
+            Optional<LanguageCode> isoPart2T = ISO_639.getByPart2T(value);
             if (isoPart2T.isPresent()) {
                 return isoPart2T;
             }

@@ -3,7 +3,8 @@ package org.meeuw.i18n.languages;
 /**
  * The 'scope' of the language as defined in ISO-639-3.
  * <p>
- * Or in the case of {@link #FAMILY} in it means that this code indicates a language family.
+ * Or in the case of {@link #FAMILY} in it means that this code indicates a language family of 
+ * ISO-639-5.
  */
 public enum Scope {
 

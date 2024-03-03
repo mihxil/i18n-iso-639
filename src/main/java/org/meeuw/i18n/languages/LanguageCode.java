@@ -7,7 +7,6 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.*;
 import java.util.stream.Stream;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
 
 /**
  * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if that exist.
@@ -29,8 +28,8 @@ public interface LanguageCode extends ISO_639_Code {
     static Stream<@NonNull LanguageCode> stream() {
         return ISO_639_3_Code
             .stream()
-            .sorted(Comparator.comparing(LanguageCode::code))
-            .map(LanguageCode::updateToEnum);
+            .map(LanguageCode::updateToEnum)
+            .sorted(Comparator.comparing(LanguageCode::code));
     }
     
     
@@ -39,7 +38,7 @@ public interface LanguageCode extends ISO_639_Code {
      * This means that the same language may occur more than once in this stream. For example Dutch will occur as both "Dutch" and as "Flemish".
      *
      * @param locale The locale to use for the names. Currently, must be english.
-     * @see #streamByNames()
+     * @see ISO_639#streamByNames()
      * @since 3.0
      */
     static Stream<? extends Map.Entry<String, ? extends LanguageCode>> streamByNames(Locale locale) {
@@ -71,12 +70,12 @@ public interface LanguageCode extends ISO_639_Code {
 
     
     /**
-         * Retrieves a {@link ISO_639_3_Code} by on of its three-letter identifiers {@link #getByPart3(String)}, {@link #getByPart2B(String)}, or {@link #getByPart2T(String)}  or its two letter identifier {@link #part1()}.
+         * Retrieves a {@link ISO_639_3_Code} by on of its three-letter identifiers {@link ISO_639#getByPart3(String)}, {@link ISO_639#getByPart2B(String)}, or {@link ISO_639#getByPart2T(String)}  or its two letter identifier {@link #part1()}.
      *
      * @param code A 2 or 3 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
      * @see #code()
-     * @see #getByPart1(String)
+     * @see ISO_639#getByPart1(String)
      * @see #getByCode(String)
      * @see #languageCode(String)
      * @since 0.2
@@ -85,15 +84,15 @@ public interface LanguageCode extends ISO_639_Code {
         if (code.length() == 2) {
             return getByPart1(code);
         } else {
-            Optional<LanguageCode> byPart3 = getByPart3(code, matchRetired);
+            Optional<LanguageCode> byPart3 = ISO_639.getByPart3(code, matchRetired);
             if (byPart3.isPresent()) {
                 return byPart3;
             } else {
-                Optional<LanguageCode> byPart2B = getByPart2B(code);
+                Optional<LanguageCode> byPart2B = ISO_639.getByPart2B(code);
                 if (byPart2B.isPresent()) {
                     return byPart2B;
                 } else {
-                    return getByPart2T(code);
+                    return ISO_639.getByPart2T(code);
                 }
             }
         }
@@ -104,7 +103,7 @@ public interface LanguageCode extends ISO_639_Code {
     }
 
     /**
-     * As {@link #get(String)}, but throws an {@link IllegalArgumentException} if not found.
+     * As {@link ISO_639#get(String)}, but throws an {@link IllegalArgumentException} if not found.
      *
      * @return The {@link LanguageCode} if found
      * @throws IllegalArgumentException if not found
@@ -116,39 +115,18 @@ public interface LanguageCode extends ISO_639_Code {
     }
 
 
-    /**
-     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link #getByPart3(String, boolean)} ()}
-     * <p>
-     * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
-     *
-     * @param code A 3 letter language code
-     * @return An optional containing the {@link ISO_639_3_Code} if found.
-     * @since 2.2
-     */
-    static Optional<LanguageCode> getByPart3(@Size(min = 3, max=3) String code, boolean matchRetired) {
-        
-        return ISO_639_3_Code.getByPart3(code, matchRetired)
-            .map(LanguageCode::updateToEnum)
-            ;
-    }
-
 
     /**
-     * Defaulting version of {@link #getByPart3(String, boolean)}, matching retired codes too.
+     * Defaulting version of {@link ISO_639#getByPart3(String, boolean)}, matching retired codes too.
      * @deprecated Confusing, since not matching like {@link #code()}
-     * @see #getByPart3(String) 
+     * @see ISO_639#getByPart3(String) 
      */
     @Deprecated
     static Optional<LanguageCode> getByCode(@Size(min = 3, max=3) String code) {
-        return getByPart3(code);
+        return ISO_639.getByPart3(code);
     }
     
-    /**
-     * Defaulting version of {@link #getByPart3(String, boolean)}, matching retired codes too.
-     */
-    static Optional<LanguageCode> getByPart3(@Size(min = 3, max=3) String code) {
-        return getByPart3(code, true);
-    }
+   
 
     
     /**
@@ -171,41 +149,6 @@ public interface LanguageCode extends ISO_639_Code {
         } else {
             return languageCode;
         }
-    }
-
-    /**
-     * Retrieves a {@link ISO_639_3_Code} by its Part2B  ('bibliographic') code {@link #part2B()}
-     *
-     * @param code A 3 letter language code
-     * @return An optional containing the {@link ISO_639_3_Code} if found.
-     */
-    static Optional<LanguageCode> getByPart2B(String code) {
-        if (code == null) {
-            return Optional.empty();
-        }
-        final String lowerCode = code.toLowerCase();
-        return stream()
-            .filter(i -> lowerCode.equals(i.part2B()))
-            .map(LanguageCode::updateToEnum)
-            .findFirst();
-    }
-
-
-    /**
-     * Retrieves a {@link ISO_639_3_Code} by its Part2T ('terminology') code {@link #part2T()}
-     *
-     * @param code A 3 letter language code
-     * @return An optional containing the {@link ISO_639_3_Code} if found.
-     */
-    static Optional<LanguageCode> getByPart2T(String code) {
-        if (code == null) {
-            return Optional.empty();
-        }
-        final String lowerCode = code.toLowerCase();
-        return KNOWN.values().stream()
-            .filter(i -> lowerCode.equals(i.part2T()))
-            .map(LanguageCode::updateToEnum)
-            .findFirst();
     }
 
     
@@ -280,11 +223,12 @@ public interface LanguageCode extends ISO_639_Code {
 
     /**
      * The macro language(s) of which this language is a part.
+     * @return a list of macro languages, or an empty list if this language is not known to be a part of a macro language.
      */
     List<LanguageCode> macroLanguages();
 
     /**
-     * If this is a {@link Scope#M macro language}, the individual languages which are part of this macro language.
+     * If this is a {@link Scope#M macro language}, the known individual languages which are part of this macro language.
      */
     List<LanguageCode> individualLanguages();
 

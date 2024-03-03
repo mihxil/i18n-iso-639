@@ -1,6 +1,10 @@
 package org.meeuw.i18n.languages;
 
 /**
+ * A 'print' and 'inverted' name collected in a record.
+ * <p>
+ * The 'inverted' version of a name can be used for alphabetic sorting. It implies that qualifiers like 'eastern' or 'southern' are postfixed.
+ * 
  * @since 3.1
  */
 public class NameRecord {
