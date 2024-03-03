@@ -235,8 +235,15 @@ public interface LanguageCode extends ISO_639_Code {
     @JsonValue
     @Override
     String code();
-        
-    
+
+
+    /**
+     * @deprecated use {@link #code()}
+     */
+    @Deprecated
+    default String getCode() {
+        return code();
+    }
     
     /**
      * The three-letter 639-3 identifier
