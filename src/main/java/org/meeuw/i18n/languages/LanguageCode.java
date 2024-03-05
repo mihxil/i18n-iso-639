@@ -1,13 +1,18 @@
 package org.meeuw.i18n.languages;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.*;
 import java.util.stream.Stream;
+
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
+import static org.meeuw.i18n.languages.ISO_639.LC_FALLBACKS;
 
 /**
  * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if that exist.
@@ -70,9 +75,22 @@ public interface LanguageCode extends ISO_639_Code {
 
     
 
+
+    static void registerFallback(String code, LanguageCode exemption) {
+        LC_FALLBACKS.get().put(code, exemption);
+    }
+
+    static Map<String, LanguageCode> getFallBacks() {
+        return LC_FALLBACKS.get();
+    }
+    
+    static void resetFallBacks() {
+        LC_FALLBACKS.remove();
+    }
+
     
     /**
-         * Retrieves a {@link ISO_639_3_Code} by on of its three-letter identifiers {@link ISO_639#getByPart3(String)}, {@link ISO_639#getByPart2B(String)}, or {@link ISO_639#getByPart2T(String)}  or its two letter identifier {@link #part1()}.
+     * Retrieves a {@link ISO_639_3_Code} by on of its three-letter identifiers {@link ISO_639#getByPart3(String)}, {@link ISO_639#getByPart2B(String)}, or {@link ISO_639#getByPart2T(String)}  or its two letter identifier {@link #part1()}.
      *
      * @param code A 2 or 3 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
@@ -83,20 +101,26 @@ public interface LanguageCode extends ISO_639_Code {
      * @since 0.2
      */
     static Optional<LanguageCode> get(String code, boolean matchRetired) {
+        Optional<LanguageCode> optional;
         if (code.length() == 2) {
-            return getByPart1(code);
+            optional =  getByPart1(code);
         } else {
             Optional<LanguageCode> byPart3 = ISO_639.getByPart3(code, matchRetired);
             if (byPart3.isPresent()) {
-                return byPart3;
+                optional =  byPart3;
             } else {
                 Optional<LanguageCode> byPart2B = ISO_639.getByPart2B(code);
                 if (byPart2B.isPresent()) {
-                    return byPart2B;
+                    optional = byPart2B;
                 } else {
-                    return ISO_639.getByPart2T(code);
+                    optional =  ISO_639.getByPart2T(code);
                 }
             }
+        }
+        if (optional.isPresent()) {
+            return optional;
+        } else {
+            return Optional.ofNullable(LC_FALLBACKS.get().get(code));
         }
     }
     

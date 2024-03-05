@@ -1,9 +1,12 @@
 package org.meeuw.i18n.languages;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import javax.validation.constraints.Size;
 import java.util.*;
 import java.util.stream.Stream;
+
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
 
 /**
@@ -118,6 +121,9 @@ public class ISO_639 {
 
 
     private static final ThreadLocal<Map<String, ISO_639_Code>> FALLBACKS = ThreadLocal.withInitial(HashMap::new);
+    
+    static final ThreadLocal<Map<String, LanguageCode>> LC_FALLBACKS = ThreadLocal.withInitial(HashMap::new);
+
 
     public static void registerFallback(String code, ISO_639_Code exemption) {
         FALLBACKS.get().put(code, exemption);
