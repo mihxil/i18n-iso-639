@@ -6,19 +6,19 @@
   <artifactId>i18n-iso-639-test-jackson</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
-  
+
   <properties>
     <maven.compiler.target>8</maven.compiler.target>
     <maven.compiler.source>8</maven.compiler.source>
     <main.class>org.meeuw.test.jackson.iso639</main.class>
   </properties>
-  
-  
+
+
   <dependencies>
     <dependency>
       <groupId>org.meeuw.i18n</groupId>
       <artifactId>i18n-iso-639</artifactId>
-      <version>3.1-SNAPSHOT</version>
+      <version>3.2-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
