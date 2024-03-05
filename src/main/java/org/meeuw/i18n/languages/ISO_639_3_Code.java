@@ -1,8 +1,5 @@
 package org.meeuw.i18n.languages;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -10,11 +7,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+
 /**
  * Implementation of {@link LanguageCode} that {@link ISO_639#stream() produces} all ISO-639-3 codes.
  * <p>
- * Normally it makes sense to just use {@link LanguageCode}. 
- 
+ * Normally it makes sense to just use {@link LanguageCode}.
+
  */
 public class ISO_639_3_Code implements LanguageCode {
 
@@ -22,10 +24,10 @@ public class ISO_639_3_Code implements LanguageCode {
 
 
     static final Map<String, ISO_639_3_Code> KNOWN;
-    
-    
+
+
     static final Map<LanguageCode, List<LanguageCode>> INDIVIDUAL_LANGUAGES;
-    
+
     static final Map<LanguageCode, List<LanguageCode>> MACRO;
 
 
@@ -74,7 +76,7 @@ public class ISO_639_3_Code implements LanguageCode {
             throw new ExceptionInInitializerError(e);
         }
         KNOWN = Collections.unmodifiableMap(temp);
-        
+
         Map<LanguageCode, List<LanguageCode>> tempIndividual = new HashMap<>();
         Map<LanguageCode, List<LanguageCode>> tempMacro = new HashMap<>();
         try (InputStream inputStream = ISO_639_3_Code.class.getResourceAsStream(DIR + "iso-639-3-macrolanguages.tab");
@@ -100,26 +102,26 @@ public class ISO_639_3_Code implements LanguageCode {
         }
         tempIndividual.replaceAll((k, v) -> Collections.unmodifiableList(v));
         tempMacro.replaceAll((k, v) -> Collections.unmodifiableList(v));
-        
+
         INDIVIDUAL_LANGUAGES = Collections.unmodifiableMap(tempIndividual);
         MACRO = Collections.unmodifiableMap(tempMacro);
     }
-    
+
     /**
      * A stream with all known {@link ISO_639_Code language codes}.
      * If the langauge has a 2 letter part 1 code, it will <em>not</em> be implicitly upgraded
      * to an {@link ISO_639_1_Code
      *
      * @see {@link LanguageCode#stream()} For a version that <em>does</em> upgrade
-     * @return a stream of all known language codes. 
-     * 
+     * @return a stream of all known language codes.
+     *
      */
      public static Stream<ISO_639_3_Code> stream() {
         return KNOWN.values()
             .stream()
             .sorted(Comparator.comparing(ISO_639_3_Code::code));
      }
-    
+
     private static final Map<String, String> RETIRED = new HashMap<>();
     static {
         RETIRED.put("jw", "jv"); // 'Javanese is rendered as "jw" in table 1, while it is correctly given as "jv" in the other tables
@@ -127,7 +129,8 @@ public class ISO_639_3_Code implements LanguageCode {
         RETIRED.put("in", "id"); // The identifier for Indonesian was changed from "in" to "id".
         RETIRED.put("ji", "yi"); // The identifier for Yiddish was changed from "ji" to "yi".
     }
-    
+
+
     static Optional<ISO_639_3_Code> getByPart1(String code) {
         if (code == null) {
             return Optional.empty();
@@ -139,8 +142,8 @@ public class ISO_639_3_Code implements LanguageCode {
             .filter(i -> finalCode.equals(i.part1()))
             .findFirst();
     }
-    
-    
+
+
     /**
      * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link ISO_639#getByPart3(String, boolean)} ()}
      * <p>
@@ -210,7 +213,7 @@ public class ISO_639_3_Code implements LanguageCode {
         this.names  = Collections.unmodifiableList(names);
     }
 
-  
+
     /**
      * The {@link #part1() ISO-639-1-code} if available, otherwise the {@link #part3() ISO-639-3 code}.
      *
@@ -229,7 +232,7 @@ public class ISO_639_3_Code implements LanguageCode {
     }
 
 
-    
+
     public String part3() {
         return part3;
     }
@@ -283,7 +286,7 @@ public class ISO_639_3_Code implements LanguageCode {
     public List<NameRecord> nameRecords() {
         return names;
     }
-    
+
     @Size
     public NameRecord nameRecord(Locale locale) {
         if (locale.getLanguage().equals("en")) {
@@ -306,5 +309,5 @@ public class ISO_639_3_Code implements LanguageCode {
     private Object readResolve() {
         return LanguageCode.get(part3()).orElse(this);
     }
-    
+
 }

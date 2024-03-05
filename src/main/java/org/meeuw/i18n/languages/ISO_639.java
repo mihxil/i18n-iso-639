@@ -1,18 +1,22 @@
 package org.meeuw.i18n.languages;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import jakarta.validation.constraints.Size;
 import java.util.*;
 import java.util.stream.Stream;
+
+import jakarta.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
 
 /**
  * A utility class for working with ISO 639 language codes.
- * 
+ *
  * @since 3.1
  */
+
 public class ISO_639 {
-    
+
     private ISO_639() {
     }
     /**
@@ -21,7 +25,7 @@ public class ISO_639 {
      * @param code A 2 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
      */
-    
+
     public static Optional<LanguageCode> getByPart1(String code) {
         return  ISO_639_3_Code
             .getByPart1(code)
@@ -72,7 +76,7 @@ public class ISO_639 {
      * @since 2.2
      */
     public static Optional<LanguageCode> getByPart3(@Size(min = 3, max = 3) String code, boolean matchRetired) {
-        
+
         return ISO_639_3_Code.getByPart3(code, matchRetired)
             .map(LanguageCode::updateToEnum)
             ;
@@ -86,18 +90,18 @@ public class ISO_639 {
     }
 
     /**
-     * Retrieves a language family code by its 3 letter code.
-     * 
-     * @see LanguageFamilyCode#get(String) 
+     * Retrieves a language family code by its 3-letter code.
+     *
+     * @see LanguageFamilyCode#get(String)
      */
     public static Optional<LanguageFamilyCode> getByPart5(@Size(min = 3, max = 3) String code) {
-        
+
         return LanguageFamilyCode.get(code);
     }
 
     /**
      * A stream with all known {@link ISO_639_Code language (or language family) codes} .
-     * 
+     *
      *
      * @return a stream of all known language codes.
      */
@@ -116,10 +120,21 @@ public class ISO_639 {
         );
     }
 
+
+    private static final Map<String, ISO_639_Code> FALLBACKS = new HashMap<>();
+
+    public static void registerFallback(String code, ISO_639_Code exemption) {
+        FALLBACKS.put(code, exemption);
+    }
+
+    public static Map<String, ISO_639_Code> getFallBacks() {
+        return FALLBACKS;
+    }
+
     /**
      * Obtains a language or language family by (one of their) code(s).
-     * 
-     * @see #get For a version that throws an exception if not found. 
+     *
+     * @see #get For a version that throws an exception if not found.
      */
     public static Optional<ISO_639_Code> get(String code) {
         ISO_639_Code lc = LanguageCode.get(code).orElse(null);
@@ -127,7 +142,7 @@ public class ISO_639 {
             try {
                 return Optional.of(LanguageFamilyCode.valueOf(code));
             } catch (IllegalArgumentException iae) {
-                return Optional.empty();
+                return Optional.ofNullable(FALLBACKS.get(code));
             }
         } else {
             return Optional.of(lc);
