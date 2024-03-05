@@ -116,6 +116,17 @@ public class ISO_639 {
         );
     }
 
+
+    private static final Map<String, ISO_639_Code> FALLBACKS = new HashMap<>();
+
+    public static void registerFallback(String code, ISO_639_Code exemption) {
+        FALLBACKS.put(code, exemption);
+    }
+
+    public static Map<String, ISO_639_Code> getFallBacks() {
+        return FALLBACKS;
+    }
+
     /**
      * Obtains a language or language family by (one of their) code(s).
      * 
