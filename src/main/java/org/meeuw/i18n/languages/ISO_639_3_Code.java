@@ -1,8 +1,8 @@
 package org.meeuw.i18n.languages;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;

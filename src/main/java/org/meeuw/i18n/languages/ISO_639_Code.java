@@ -2,7 +2,7 @@ package org.meeuw.i18n.languages;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.Locale;
 import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;

@@ -1,7 +1,7 @@
 package org.meeuw.i18n.languages;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import jakarta.validation.constraints.Size;
+import javax.validation.constraints.Size;
 import java.util.*;
 import java.util.stream.Stream;
 import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
