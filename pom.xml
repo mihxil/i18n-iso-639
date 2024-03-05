@@ -6,7 +6,7 @@
   <artifactId>i18n-iso-639-3</artifactId>
   <version>1.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-  <name>i18n-iso-639-3</name>
+  <name>i18n-iso-639</name>
   <description>Provides an enum with ISO 639-3 languages</description>
   <url>https://github.com/mihxil/i18n-iso-639-2</url>
 
@@ -40,6 +40,8 @@
     <codemodel.version>4.0.4</codemodel.version>
     <java.version>8</java.version>
     <assertj.version>3.24.2</assertj.version>
+    <checker.version>3.42.0</checker.version>
+
     <!-- just avoid some warnings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -96,6 +98,13 @@
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
       <version>2.16.1</version>
+      <optional>true</optional>
+    </dependency>
+    
+     <dependency>
+      <groupId>org.checkerframework</groupId>
+      <artifactId>checker-qual</artifactId>
+      <version>${checker.version}</version>
       <optional>true</optional>
     </dependency>
   </dependencies>

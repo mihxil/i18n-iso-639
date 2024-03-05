@@ -2,31 +2,44 @@ package org.meeuw.i18n.languages;
 
 
 /**
- * The 'type' of the language as defined in ISO-639-3
+ * The 'type' of the language as defined in ISO-639-3.
  */
 public enum Type {
     /**
-     * Ancient
+     * Ancient language
      */
-    A,
+    A("ancient"),
     /**
-     * Constructed
+     * Constructed language
      */
-    C,
+    C("constructed"),
     /**
-     * Extinct
+     * Extinct language
      */
-    E,
+    E("extinct"),
     /**
-     * Historical
+     * Historical language
      */
-    H,
+    H("historical"),
     /**
-     * Living
+     * Living language
      */
-    L,
+    L("living"),
     /**
-     * Special
+     * Special language
      */
-    S
+    S("special");
+
+  
+    private final String toString;
+
+    Type(String toString) {
+        this.toString = toString;
+    }
+
+    @Override
+    public String toString() {
+        return toString;
+    }
+    
 }

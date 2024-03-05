@@ -6,6 +6,9 @@ import org.meeuw.i18n.languages.LanguageCode;
 public class LanguageCodeAdapter extends XmlAdapter<String, LanguageCode> {
     @Override
     public LanguageCode unmarshal(String v) throws Exception {
+        if (v == null || v.isEmpty()) {
+            return null;
+        }
         return LanguageCode.get(v).orElseThrow(Exception::new);
     }
 
