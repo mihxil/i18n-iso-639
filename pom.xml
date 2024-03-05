@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.meeuw.i18n</groupId>
-  <artifactId>i18n-iso-639-3</artifactId>
+  <artifactId>i18n-iso-639</artifactId>
   <version>1.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>i18n-iso-639</name>
