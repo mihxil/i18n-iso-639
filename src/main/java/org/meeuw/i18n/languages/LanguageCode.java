@@ -72,9 +72,11 @@ public interface LanguageCode extends ISO_639_Code {
     static Stream<? extends Map.Entry<String, ? extends LanguageCode>> streamByNames() {
         return streamByNames(Locale.US);
     }
-
     
-
+    static void setFallback(Map<String, LanguageCode> exemptions) {
+        LC_FALLBACKS.set(Collections.unmodifiableMap(exemptions));
+    }
+    
 
     static void registerFallback(String code, LanguageCode exemption) {
         LC_FALLBACKS.get().put(code, exemption);
