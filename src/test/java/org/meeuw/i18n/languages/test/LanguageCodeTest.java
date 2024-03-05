@@ -2,6 +2,7 @@ package org.meeuw.i18n.languages.test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
+import org.meeuw.i18n.languages.ISO_639;
 import org.meeuw.i18n.languages.LanguageCode;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
@@ -55,14 +56,14 @@ class LanguageCodeTest {
     }
     @Test
     public void getByPart2T() {
-        assertThat(LanguageCode.getByPart2T("nld").get().getRefName()).isEqualTo("Dutch");
-        assertThat(LanguageCode.getByPart2T(null)).isEmpty();
+        assertThat(ISO_639.getByPart2T("nld").get().getRefName()).isEqualTo("Dutch");
+        assertThat(ISO_639.getByPart2T(null)).isEmpty();
     }
     
     @Test
     public void getByPart2B() {
-        assertThat(LanguageCode.getByPart2B("dut").get().getRefName()).isEqualTo("Dutch");
-        assertThat(LanguageCode.getByPart2B(null)).isEmpty();
+        assertThat(ISO_639.getByPart2B("dut").get().getRefName()).isEqualTo("Dutch");
+        assertThat(ISO_639.getByPart2B(null)).isEmpty();
     }
     
     @Test

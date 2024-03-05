@@ -199,13 +199,36 @@ public interface LanguageCode extends ISO_639_Code {
     String part1();
     
     Scope scope();
+    
+    @Deprecated
+    default Scope getScope() {
+        return scope();
+    }
 
     Type languageType();
+    
+    
+
+    @Deprecated
+    default Type getLanguageType() {
+        return languageType();
+    }
 
     String refName();
+    
+     @Deprecated
+    default String getRefName() {
+        return refName();
+    }
 
     String comment();
     
+    
+    @Deprecated
+    default String getComment() {
+        return comment();
+    }
+
     /**
      * @since 2.2
      */
@@ -222,6 +245,18 @@ public interface LanguageCode extends ISO_639_Code {
             throw new UnsupportedOperationException();
         }
     }
+    
+    @Deprecated
+    default String getName() {
+        return nameRecord(Locale.US).print();
+    }
+    
+       
+    @Deprecated
+    default String getInvertedName() {
+        return nameRecord(Locale.US).inverted();
+    }
+
 
     /**
      * The macro language(s) of which this language is a part.
