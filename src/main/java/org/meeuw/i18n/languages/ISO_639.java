@@ -121,14 +121,18 @@ public class ISO_639 {
     }
 
 
-    private static final Map<String, ISO_639_Code> FALLBACKS = new HashMap<>();
+   private static final ThreadLocal<Map<String, ISO_639_Code>> FALLBACKS = ThreadLocal.withInitial(HashMap::new);
 
     public static void registerFallback(String code, ISO_639_Code exemption) {
-        FALLBACKS.put(code, exemption);
+        FALLBACKS.get().put(code, exemption);
     }
 
     public static Map<String, ISO_639_Code> getFallBacks() {
-        return FALLBACKS;
+        return FALLBACKS.get();
+    }
+
+    public static void resetFallBacks() {
+        FALLBACKS.remove();
     }
 
     /**
@@ -142,7 +146,7 @@ public class ISO_639 {
             try {
                 return Optional.of(LanguageFamilyCode.valueOf(code));
             } catch (IllegalArgumentException iae) {
-                return Optional.ofNullable(FALLBACKS.get(code));
+                return Optional.ofNullable(FALLBACKS.get().get(code));
             }
         } else {
             return Optional.of(lc);
