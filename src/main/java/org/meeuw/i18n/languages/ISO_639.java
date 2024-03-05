@@ -123,9 +123,18 @@ public class ISO_639 {
 
    private static final ThreadLocal<Map<String, ISO_639_Code>> FALLBACKS = ThreadLocal.withInitial(HashMap::new);
 
+    static final ThreadLocal<Map<String, LanguageCode>> LC_FALLBACKS = ThreadLocal.withInitial(HashMap::new);
+
+
     public static void registerFallback(String code, ISO_639_Code exemption) {
         FALLBACKS.get().put(code, exemption);
     }
+
+
+    static void setFallback(Map<String, ISO_639_Code> exemptions) {
+        FALLBACKS.set(Collections.unmodifiableMap(exemptions));
+    }
+
 
     public static Map<String, ISO_639_Code> getFallBacks() {
         return FALLBACKS.get();
