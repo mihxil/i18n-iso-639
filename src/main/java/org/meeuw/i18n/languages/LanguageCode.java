@@ -128,21 +128,66 @@ public interface LanguageCode extends ISO_639_Code {
         return ISO_639.getByPart3(code);
     }
     
-   
-
     
     /**
      * Retrieves a {@link ISO_639_3_Code} by its Part1 code {@link #part1()}
      *
      * @param code A 2 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
+     * 
      */
-    
+    @Deprecated
     static Optional<LanguageCode> getByPart1(String code) {
-        return  ISO_639_3_Code
-            .getByPart1(code)
-            .map(LanguageCode::updateToEnum);
+        return ISO_639.getByPart1(code);
     }
+
+
+    /**
+     * Retrieves a {@link LanguageCode} by its Part2B  ('bibliographic') code {@link ISO_639_3_Code#part2B()}
+     *
+     * @param code A 2 or 3 letter language code
+     * @return An optional containing the {@link ISO_639_3_Code} if found.
+     * 
+     */ 
+    @Deprecated
+    static Optional<LanguageCode> getByPart2B(String code) {
+        return ISO_639.getByPart2B(code);
+    }
+
+    /**
+     * Retrieves a {@link ISO_639_3_Code} by its Part2T ('terminology') code {@link ISO_639_3_Code#part2T()}
+     *
+     * @param code A 2 or 3 letter language code
+     * @return An optional containing the {@link ISO_639_3_Code} if found.
+     */
+    @Deprecated
+    static Optional<LanguageCode> getByPart2T(String code) {
+        return ISO_639.getByPart2T(code);
+    }
+
+    /**
+     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link #getByPart3(String, boolean)} ()}
+     * <p>
+     * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
+     *
+     * @param code A 2 or 3 letter language code
+     * @return An optional containing the {@link ISO_639_3_Code} if found.
+     * @since 2.2
+     */
+    @Deprecated
+    static Optional<LanguageCode> getByPart3(@Size(min = 3, max = 3) String code, boolean matchRetired) {
+
+        return ISO_639.getByPart3(code, matchRetired);
+    }
+
+    /**
+     * Defaulting version of {@link #getByPart3(String, boolean)}, matching retired codes too.
+     */
+    @Deprecated
+    static Optional<LanguageCode> getByPart3(@Size(min = 3, max = 3) String code) {
+        return getByPart3(code, true);
+    }
+
     
     @NonNull
     static LanguageCode updateToEnum(@NonNull LanguageCode languageCode) {
