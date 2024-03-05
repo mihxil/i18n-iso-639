@@ -9,11 +9,14 @@ public class LanguageCodeAdapter extends XmlAdapter<String, LanguageCode> {
         if (v == null || v.isEmpty()) {
             return null;
         }
-        return LanguageCode.get(v).orElseThrow(Exception::new);
+        return LanguageCode.get(v).orElseThrow(() -> new IllegalStateException("No such language " + v));
     }
 
     @Override
     public String marshal(LanguageCode v) throws Exception {
+        if (v == null) {
+            return null;
+        }
         return v.getCode();
     }
 }
