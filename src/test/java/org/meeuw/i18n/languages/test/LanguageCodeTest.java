@@ -1,5 +1,6 @@
 package org.meeuw.i18n.languages.test;
 
+import java.util.Comparator;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 import org.meeuw.i18n.languages.ISO_639;
@@ -25,7 +26,8 @@ class LanguageCodeTest {
     
     @Test
     public void sort() {
-        LanguageCode.stream().sorted().forEach(lc -> {
+        LanguageCode.stream()
+            .sorted(Comparator.comparing(LanguageCode::code)).forEach(lc -> {
             System.out.println(lc.getCode() + "\t" + lc.getName() + (lc.getName().equals(lc.getInvertedName()) ? "" : (" (" + lc.getInvertedName() + ")")));
         });
     }
