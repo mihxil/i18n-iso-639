@@ -1,6 +1,7 @@
 package org.meeuw.i18n.languages;
 
 import java.util.*;
+import java.util.logging.Level;
 import java.util.stream.Stream;
 
 import jakarta.validation.constraints.Size;
@@ -14,7 +15,6 @@ import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
  *
  * @since 3.1
  */
-
 public class ISO_639 {
 
     private ISO_639() {
@@ -77,7 +77,7 @@ public class ISO_639 {
      */
     public static Optional<LanguageCode> getByPart3(@Size(min = 3, max = 3) String code, boolean matchRetired) {
 
-        return ISO_639_3_Code.getByPart3(code, matchRetired)
+        return ISO_639_3_Code.getByPart3(code, matchRetired, Level.WARNING)
             .map(LanguageCode::updateToEnum)
             ;
     }
@@ -90,7 +90,7 @@ public class ISO_639 {
     }
 
     /**
-     * Retrieves a language family code by its 3-letter code.
+     * Retrieves a language family code by its 3 letter code.
      *
      * @see LanguageFamilyCode#get(String)
      */
@@ -121,7 +121,7 @@ public class ISO_639 {
     }
 
 
-   private static final ThreadLocal<Map<String, ISO_639_Code>> FALLBACKS = ThreadLocal.withInitial(HashMap::new);
+    private static final ThreadLocal<Map<String, ISO_639_Code>> FALLBACKS = ThreadLocal.withInitial(HashMap::new);
 
     static final ThreadLocal<Map<String, LanguageCode>> LC_FALLBACKS = ThreadLocal.withInitial(HashMap::new);
 
