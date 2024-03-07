@@ -1,14 +1,16 @@
 package org.meeuw.i18n.languages;
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
  * Implementation of {@link LanguageCode} that {@link ISO_639#stream() produces} all ISO-639-3 codes.
@@ -86,12 +88,12 @@ public class ISO_639_3_Code implements LanguageCode {
                 String[] split = line.split("\t");
                 ISO_639_3_Code macro = KNOWN.get(split[0]);
                 List<LanguageCode> list = tempIndividual.computeIfAbsent(macro, (m) -> new ArrayList<>());
-                Optional<ISO_639_3_Code> individual = getByPart3(split[1], true);
+                Optional<ISO_639_3_Code> individual = getByPart3(split[1], true, Level.FINEST);
                 if (individual.isPresent()) {
                     list.add(LanguageCode.updateToEnum(individual.get()));
                     tempMacro.computeIfAbsent(individual.get(), (m) -> new ArrayList<>()).add(LanguageCode.updateToEnum(macro));
                 } else {
-                    System.out.println("Unknown individual language: " + split[1] + " for " + macro);
+                    LOGGER.log(Level.FINEST, "Unknown individual language: " + split[1] + " for " + macro);
                 }
                 line = inputStreamReader.readLine();
             }
@@ -150,7 +152,7 @@ public class ISO_639_3_Code implements LanguageCode {
      * @return An optional containing the {@link ISO_639_3_Code} if found.
      * @since 2.2
      */
-    static Optional<ISO_639_3_Code> getByPart3(@Size(min = 3, max=3) String code, boolean matchRetired) {
+    static Optional<ISO_639_3_Code> getByPart3(@Size(min = 3, max=3) String code, boolean matchRetired, Level level) {
         if (code == null) {
             return Optional.empty();
         }
@@ -161,7 +163,7 @@ public class ISO_639_3_Code implements LanguageCode {
                 try {
                     prop = KNOWN.get(retiredLanguageCode.get().changeTo().part3());
                 } catch (RetiredLanguageCode.RetirementException e) {
-                    LOGGER.log(Level.WARNING, "Could not find single replacement for " + code + " " + e.getMessage());
+                    LOGGER.log(level, "Could not find single replacement for " + code + " " + e.getMessage());
                 }
             }
         }

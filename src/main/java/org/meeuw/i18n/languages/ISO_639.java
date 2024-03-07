@@ -1,6 +1,7 @@
 package org.meeuw.i18n.languages;
 
 import java.util.*;
+import java.util.logging.Level;
 import java.util.stream.Stream;
 
 import javax.validation.constraints.Size;
@@ -76,7 +77,7 @@ public class ISO_639 {
      */
     public static Optional<LanguageCode> getByPart3(@Size(min = 3, max = 3) String code, boolean matchRetired) {
         
-        return ISO_639_3_Code.getByPart3(code, matchRetired)
+        return ISO_639_3_Code.getByPart3(code, matchRetired, Level.WARNING)
             .map(LanguageCode::updateToEnum)
             ;
     }
