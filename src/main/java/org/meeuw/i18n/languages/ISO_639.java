@@ -131,7 +131,7 @@ public class ISO_639 {
     }
 
 
-    static void setFallback(Map<String, ISO_639_Code> exemptions) {
+    static void setFallbacks(Map<String, ISO_639_Code> exemptions) {
         FALLBACKS.set(Collections.unmodifiableMap(exemptions));
     }
 

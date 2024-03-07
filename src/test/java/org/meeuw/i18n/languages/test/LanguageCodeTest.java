@@ -3,29 +3,30 @@ package org.meeuw.i18n.languages.test;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.junit.jupiter.api.Test;
 import org.meeuw.i18n.languages.*;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 class LanguageCodeTest {
-    
-    
+
+
     @Test
     public void example() {
-        
+
         // get a language by its code;
         Optional<LanguageCode> optional = ISO_639.getByPart3("nld");
         LanguageCode languageCode = LanguageCode.languageCode("nl");
-        
-        // show it 'inverted' name 
+
+        // show it 'inverted' name
         System.out.println(languageCode.nameRecord(Locale.US).inverted());
-        
+
         // get a language family
         Optional<LanguageFamilyCode> family = ISO_639.getByPart5("ger");
-        
+
         // get by any code
         Optional<ISO_639_Code> byCode = ISO_639.get("nl");
-        
+
         // stream by names, language may have several names (dutch, flemish), and appear multiple times
         ISO_639.streamByNames().forEach(e -> {
             System.out.println(e.getKey() + " " + e.getValue());
@@ -39,7 +40,7 @@ class LanguageCodeTest {
             assertThat(lc.code()).isNotNull();
             assertThat(lc.languageType()).isNotNull();
             assertThat(lc.scope()).isNotNull();
-            
+
             if (lc.part1() != null) {
                 assertThat(lc).isInstanceOf(ISO_639_1_Code.class);
             }
@@ -67,7 +68,7 @@ class LanguageCodeTest {
             }
         });
     }
-    
+
     @Test
     public void streamByName() {
         AtomicLong count = new AtomicLong();
@@ -107,8 +108,8 @@ class LanguageCodeTest {
 
     @Test
     public void getByPart1() {
-        assertThat(LanguageCode.getByPart1("nl").get().refName()).isEqualTo("Dutch");
-        assertThat(LanguageCode.getByPart1(null)).isEmpty();
+        assertThat(ISO_639.getByPart1("nl").get().refName()).isEqualTo("Dutch");
+        assertThat(ISO_639.getByPart1(null)).isEmpty();
 
     }
     @Test
@@ -150,6 +151,20 @@ class LanguageCodeTest {
     public void lcq() {
         assertThat(ISO_639.getByPart3("lcq").get().code()).isEqualTo("lcq");
     }
-   
+
+    @Test
+    public void XX() {
+        try {
+            assertThatThrownBy(() -> ISO_639.iso639("XX")).isInstanceOf(IllegalArgumentException.class);
+
+            LanguageCode.registerFallback("XX", LanguageCode.languageCode("zxx"));
+
+            assertThat(ISO_639.iso639("XX").code()).isEqualTo("zxx");
+        } finally {
+            LanguageCode.resetFallBacks();
+        }
+
+    }
+
 
 }

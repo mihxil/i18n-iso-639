@@ -24,16 +24,16 @@ This package has the tab seperated files provided by https://iso639-3.sil.org/, 
    // get a language by its code;
         Optional<LanguageCode> optional = ISO_639.getByPart3("nld");
         LanguageCode languageCode = LanguageCode.languageCode("nl");
-        
-        // show it 'inverted' name 
+
+        // show it 'inverted' name
         System.out.println(languageCode.nameRecord(Locale.US).inverted());
-        
+
         // get a language family
         Optional<LanguageFamilyCode> family = ISO_639.getByPart5("ger");
-        
+
         // get by any code
         Optional<ISO_639_Code> byCode = ISO_639.get("nl");
-        
+
         // stream by names, language may have several names (dutch, flemish), and appear multiple times
         ISO_639_Code.streamByNames().forEach(e -> {
             System.out.println(e.getKey() + " " + e.getValue());
@@ -55,12 +55,36 @@ include::src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[]
 // the 'krim' dialect (Sierra Leone) officially merged into 'bmf' (Bom-Kim) in 2017
 
  assertThat(LanguageCode.getByCode("krm").get().getCode()).isEqualTo("bmf");
+
 ----
+
+=== Fall backs
+
+Sometimes we have to deal with systems which have their own versions of the standards. In these cases it is possible to register 'fll backs'.
+
+E.g.
+[source, java]
+----
+ // Our partner uses the pseudo ISO-639-1 code 'XX' for 'no language'
+ //  fall back to a proper Part 3 code.
+ try {
+   LanguageCode.registerFallback("XX", LanguageCode.languageCode("zxx"));
+   assertThat(ISO_639.iso639("XX").code()).isEqualTo("zxx");
+ } finally {
+   LanguageCode.resetFallBacks();
+ }
+----
+
 
 == Support
 
 === JAXB
 The language code is annotated with a JAXB annotation. It will serialize and deserialize to and from the code. The dependency on the annotation is optional.
+
+=== JSON
+
+The needed classes are also annotated by Jackson annotations, so they can be serialized to and from JSON.
+
 
 === Serializable
 The `LanguageCode` is serializable, and ensures that on deserialization the same object for every language is returned. (And only the _code_ is non transient).
@@ -115,7 +139,7 @@ The default sort order of a `LanguageCode` used to  on 'Inverted Name'. There ma
 | 3.1
 | Refactoring
 | 2024-3
-| Support for ISO-639-5.    Dropped the -3 from the artifact id. 
+| Support for ISO-639-5.    Dropped the -3 from the artifact id.
 
 
 |===
