@@ -73,7 +73,7 @@ public interface LanguageCode extends ISO_639_Code {
         return streamByNames(Locale.US);
     }
     
-    static void setFallback(Map<String, LanguageCode> exemptions) {
+    static void setFallbacks(Map<String, LanguageCode> exemptions) {
         LC_FALLBACKS.set(Collections.unmodifiableMap(exemptions));
     }
     
