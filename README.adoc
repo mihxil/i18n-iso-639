@@ -60,7 +60,7 @@ include::src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[]
 
 === Fall backs
 
-Sometimes we have to deal with systems which have their own versions of the standards. In these cases it is possible to register 'fll backs'.
+Sometimes we have to deal with systems which have their own versions of the standards. In these cases it is possible to register 'fall backs'.
 
 E.g.
 [source, java]
@@ -71,8 +71,7 @@ E.g.
    LanguageCode.registerFallback("XX", LanguageCode.languageCode("zxx"));
    assertThat(ISO_639.iso639("XX").code()).isEqualTo("zxx");
  } finally {
-   LanguageCode.resetFallBacks();
- }
+   LanguageCode.resetFallBacks();}
 ----
 
 

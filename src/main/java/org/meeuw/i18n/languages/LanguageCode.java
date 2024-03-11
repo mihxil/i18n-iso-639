@@ -1,6 +1,7 @@
 package org.meeuw.i18n.languages;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import jakarta.validation.constraints.Size;
@@ -11,8 +12,6 @@ import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-
-import static org.meeuw.i18n.languages.ISO_639.LC_FALLBACKS;
 
 /**
  * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if that exist.
@@ -74,22 +73,66 @@ public interface LanguageCode extends ISO_639_Code {
     }
 
 
-
-    static void setFallbacks(Map<String, LanguageCode> exemptions) {
-        LC_FALLBACKS.set(Collections.unmodifiableMap(exemptions));
+    /**
+     * Registers a complete map of fallbacks for the current thread
+     * <p>
+     * This calls wraps {@link ISO_639#setFallbacks(Map)}, but accepts a map of {@link LanguageCode} instead of {@link ISO_639_Code}.
+     * @see #registerFallback(String, LanguageCode)
+     * @since 3.2
+     */
+    static void setFallbacks(final Map<String, LanguageCode> exemptions) {
+        ISO_639.setFallbacks(new AbstractMap<>() {
+            @Override
+            public Set<Entry<String, ISO_639_Code>> entrySet() {
+                return exemptions.entrySet()
+                    .stream()
+                    .map(e -> new AbstractMap.SimpleEntry<String, ISO_639_Code>(e.getKey(), e.getValue()))
+                    .collect(Collectors.toUnmodifiableSet());
+            }
+        });
     }
 
-
+    /**
+     * Registers a certain code as a fallback language code. This is only valid for the current thread,
+     * until {@link #resetFallBacks()} is called.
+     * <p>
+     * The effect is that {@link #get(String)} (or {@link #get(String, boolean)} will return the registered {@link LanguageCode fallback code} if no real code is found.
+     *
+     * @see #setFallbacks(Map) To replace all current fallbacks with a map of these.
+     * @see ISO_639#registerFallback(String, ISO_639_Code) For more generic fallbacks (also for language families)
+     * @since 3.2
+     */
     static void registerFallback(String code, LanguageCode exemption) {
-        LC_FALLBACKS.get().put(code, exemption);
+        ISO_639.registerFallback(code, exemption);
     }
 
+    /**
+     * Returns the currently registered fallbacks (as an unmodifiable map).
+     * @since 3.2
+     * @see #registerFallback
+     * @see #setFallbacks(Map)
+     * @see ISO_639#getFallBacks()
+     */
     static Map<String, LanguageCode> getFallBacks() {
-        return LC_FALLBACKS.get();
+        return ISO_639
+            .getFallBacks()
+            .entrySet()
+            .stream()
+            .filter(lc -> lc.getValue() instanceof LanguageCode)
+            .collect(
+                Collectors.toUnmodifiableMap(
+                    Map.Entry::getKey,
+                    e -> (LanguageCode) e.getValue()
+                )
+            );
     }
 
+    /**
+     * Resets the current fallbacks for the current thread. After this, no fallbacks will be effective anymore.
+     * @since 3.2
+     */
     static void resetFallBacks() {
-        LC_FALLBACKS.remove();
+        ISO_639.resetFallBacks();
     }
 
 
@@ -124,7 +167,12 @@ public interface LanguageCode extends ISO_639_Code {
         if (optional.isPresent()) {
             return optional;
         } else {
-            return Optional.ofNullable(LC_FALLBACKS.get().get(code));
+            ISO_639_Code fallback = ISO_639.getFallBacks().get(code);
+            if (fallback instanceof LanguageCode) {
+                return Optional.of((LanguageCode) fallback);
+            } else {
+                return Optional.empty();
+            }
         }
     }
 

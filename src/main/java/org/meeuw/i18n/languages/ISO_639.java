@@ -123,23 +123,47 @@ public class ISO_639 {
 
     private static final ThreadLocal<Map<String, ISO_639_Code>> FALLBACKS = ThreadLocal.withInitial(HashMap::new);
 
-    static final ThreadLocal<Map<String, LanguageCode>> LC_FALLBACKS = ThreadLocal.withInitial(HashMap::new);
-
-
+    /**
+     * Registers a certain code as a fallback language or language group code. This is only valid for the current thread, until {@link #resetFallBacks()} is called.
+     * <p>
+     * The effect is that {@link #get(String)}  will return the registered {@link ISO_639_3_Code fallback code} if no real code is found.
+     * <p>
+     * If the given argument is an instance of {@link LanguageCode} it will also be registered as {@link LanguageCode#registerFallback(String, LanguageCode)}
+     *
+     * @see #setFallbacks(Map) To replace all current fallbacks with a map of these.
+     * @see LanguageCode#registerFallback(String, LanguageCode)
+     * @since 3.2
+       */
     public static void registerFallback(String code, ISO_639_Code exemption) {
         FALLBACKS.get().put(code, exemption);
     }
 
 
+    /**
+     * Replaces all current fallbacks with a map of these. Note that this will not replace the fallbacks in {@link LanguageCode#getFallBacks()}.
+     *
+     * @see #registerFallback(String, ISO_639_Code)
+     * @since 3.2
+     */
     static void setFallbacks(Map<String, ISO_639_Code> exemptions) {
-        FALLBACKS.set(Collections.unmodifiableMap(exemptions));
+        FALLBACKS.set(exemptions);
     }
 
-
+    /**
+     * Returns the currently registered fallbacks (as an unmodifiable map).
+     * @since 3.2
+     * @see #registerFallback
+     * @see #setFallbacks(Map)
+     * @see LanguageCode#getFallBacks()
+     */
     public static Map<String, ISO_639_Code> getFallBacks() {
-        return FALLBACKS.get();
+        return Collections.unmodifiableMap(FALLBACKS.get());
     }
 
+    /**
+     * Resets the current fallbacks for the current thread. After this, no fallbacks will be effective anymore.
+     * @since 3.2
+     */
     public static void resetFallBacks() {
         FALLBACKS.remove();
     }
@@ -155,7 +179,8 @@ public class ISO_639 {
             try {
                 return Optional.of(LanguageFamilyCode.valueOf(code));
             } catch (IllegalArgumentException iae) {
-                return Optional.ofNullable(FALLBACKS.get().get(code));
+                ISO_639_Code o = FALLBACKS.get().get(code);
+                return Optional.ofNullable(o);
             }
         } else {
             return Optional.of(lc);
