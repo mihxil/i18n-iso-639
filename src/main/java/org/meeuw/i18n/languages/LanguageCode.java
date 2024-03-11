@@ -1,6 +1,7 @@
 package org.meeuw.i18n.languages;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.validation.constraints.Size;
@@ -12,12 +13,10 @@ import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-import static org.meeuw.i18n.languages.ISO_639.LC_FALLBACKS;
-
 /**
  * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if that exist.
  *<p>
- * Annotated with {@link XmlJavaTypeAdapter}, so it will automatically be marshalled and unmarshalled in XML's. 
+ * Annotated with {@link XmlJavaTypeAdapter}, so it will automatically be marshalled and unmarshalled in XML's.
  * <p>
  * Also annotated with jackson annotation, to be marshalled and unmarshalled in JSON as the code.
  *<p>
@@ -25,10 +24,10 @@ import static org.meeuw.i18n.languages.ISO_639.LC_FALLBACKS;
  */
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
 public interface LanguageCode extends ISO_639_Code {
-    
+
     /**
      * A stream with all known {@link ISO_639_Code language codes}.
-     * 
+     *
      *
      * @return a stream of all known language codes.
      */
@@ -38,8 +37,8 @@ public interface LanguageCode extends ISO_639_Code {
             .map(LanguageCode::updateToEnum)
             .sorted(Comparator.comparing(LanguageCode::code));
     }
-    
-    
+
+
     /**
      * A stream with {@link Map.Entry map entries} with all known language names. Combined with their {@link ISO_639_Code}
      * This means that the same language may occur more than once in this stream. For example Dutch will occur as both "Dutch" and as "Flemish".
@@ -57,11 +56,11 @@ public interface LanguageCode extends ISO_639_Code {
             .flatMap(l ->
                 l.nameRecords().stream()
                     .map(n -> new AbstractMap.SimpleEntry<>(
-                        n.inverted(), 
+                        n.inverted(),
                         LanguageCode.updateToEnum(l)
                         )
                     )
-            )             
+            )
             .sorted(Map.Entry.comparingByKey());
     }
 
@@ -72,25 +71,71 @@ public interface LanguageCode extends ISO_639_Code {
     static Stream<? extends Map.Entry<String, ? extends LanguageCode>> streamByNames() {
         return streamByNames(Locale.US);
     }
-    
-    static void setFallbacks(Map<String, LanguageCode> exemptions) {
-        LC_FALLBACKS.set(Collections.unmodifiableMap(exemptions));
-    }
-    
 
+
+    /**
+     * Registers a complete map of fallbacks for the current thread
+     * <p>
+     * This calls wraps {@link ISO_639#setFallbacks(Map)}, but accepts a map of {@link LanguageCode} instead of {@link ISO_639_Code}.
+     * @see #registerFallback(String, LanguageCode)
+     * @since 3.2
+     */
+    static void setFallbacks(final Map<String, LanguageCode> exemptions) {
+        ISO_639.setFallbacks(new AbstractMap<>() {
+            @Override
+            public Set<Entry<String, ISO_639_Code>> entrySet() {
+                return exemptions.entrySet()
+                    .stream()
+                    .map(e -> new AbstractMap.SimpleEntry<String, ISO_639_Code>(e.getKey(), e.getValue()))
+                    .collect(Collectors.toUnmodifiableSet());
+            }
+        });
+    }
+
+    /**
+     * Registers a certain code as a fallback language code. This is only valid for the current thread,
+     * until {@link #resetFallBacks()} is called.
+     * <p>
+     * The effect is that {@link #get(String)} (or {@link #get(String, boolean)} will return the registered {@link LanguageCode fallback code} if no real code is found.
+     *
+     * @see #setFallbacks(Map) To replace all current fallbacks with a map of these.
+     * @see ISO_639#registerFallback(String, ISO_639_Code) For more generic fallbacks (also for language families)
+     * @since 3.2
+     */
     static void registerFallback(String code, LanguageCode exemption) {
-        LC_FALLBACKS.get().put(code, exemption);
+        ISO_639.registerFallback(code, exemption);
     }
 
+    /**
+     * Returns the currently registered fallbacks (as an unmodifiable map).
+     * @since 3.2
+     * @see #registerFallback
+     * @see #setFallbacks(Map)
+     * @see ISO_639#getFallBacks()
+     */
     static Map<String, LanguageCode> getFallBacks() {
-        return LC_FALLBACKS.get();
-    }
-    
-    static void resetFallBacks() {
-        LC_FALLBACKS.remove();
+        return ISO_639
+            .getFallBacks()
+            .entrySet()
+            .stream()
+            .filter(lc -> lc.getValue() instanceof LanguageCode)
+            .collect(
+                Collectors.toUnmodifiableMap(
+                    Map.Entry::getKey,
+                    e -> (LanguageCode) e.getValue()
+                )
+            );
     }
 
-    
+    /**
+     * Resets the current fallbacks for the current thread. After this, no fallbacks will be effective anymore.
+     * @since 3.2
+     */
+    static void resetFallBacks() {
+        ISO_639.resetFallBacks();
+    }
+
+
     /**
      * Retrieves a {@link ISO_639_3_Code} by on of its three-letter identifiers {@link ISO_639#getByPart3(String)}, {@link ISO_639#getByPart2B(String)}, or {@link ISO_639#getByPart2T(String)}  or its two letter identifier {@link #part1()}.
      *
@@ -122,10 +167,16 @@ public interface LanguageCode extends ISO_639_Code {
         if (optional.isPresent()) {
             return optional;
         } else {
-            return Optional.ofNullable(LC_FALLBACKS.get().get(code));
+            ISO_639_Code fallback = ISO_639.getFallBacks().get(code);
+            if (fallback instanceof LanguageCode) {
+                return Optional.of((LanguageCode) fallback);
+            } else {
+                return Optional.empty();
+            }
         }
     }
-    
+
+
     static Optional<LanguageCode> get(String code) {
         return get(code, true);
     }
@@ -147,20 +198,22 @@ public interface LanguageCode extends ISO_639_Code {
     /**
      * Defaulting version of {@link ISO_639#getByPart3(String, boolean)}, matching retired codes too.
      * @deprecated Confusing, since not matching like {@link #code()}
-     * @see ISO_639#getByPart3(String) 
+     * @see ISO_639#getByPart3(String)
      */
     @Deprecated
     static Optional<LanguageCode> getByCode(@Size(min = 3, max=3) String code) {
         return ISO_639.getByPart3(code);
     }
-    
-    
+
+
+
+
     /**
      * Retrieves a {@link ISO_639_3_Code} by its Part1 code {@link #part1()}
      *
      * @param code A 2 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
-     * 
+     *
      */
     @Deprecated
     static Optional<LanguageCode> getByPart1(String code) {
@@ -173,8 +226,8 @@ public interface LanguageCode extends ISO_639_Code {
      *
      * @param code A 2 or 3 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
-     * 
-     */ 
+     *
+     */
     @Deprecated
     static Optional<LanguageCode> getByPart2B(String code) {
         return ISO_639.getByPart2B(code);
@@ -214,7 +267,8 @@ public interface LanguageCode extends ISO_639_Code {
         return getByPart3(code, true);
     }
 
-    
+
+
     @NonNull
     static LanguageCode updateToEnum(@NonNull LanguageCode languageCode) {
         if (! (languageCode instanceof ISO_639_1_Code) && languageCode.part1() != null) {
@@ -224,7 +278,7 @@ public interface LanguageCode extends ISO_639_Code {
         }
     }
 
-    
+
     /**
      * The {@link LanguageCode#part1() ISO-639-1-code} if available, otherwise the {@link LanguageCode#part3() ISO-639-3 code}.
      *
@@ -243,7 +297,7 @@ public interface LanguageCode extends ISO_639_Code {
     default String getCode() {
         return code();
     }
-    
+
     /**
      * The three-letter 639-3 identifier
      */
@@ -268,47 +322,24 @@ public interface LanguageCode extends ISO_639_Code {
      * @return 2 letter id or {@code null}
      */
     String part1();
-    
+
     Scope scope();
-    
-    @Deprecated
-    default Scope getScope() {
-        return scope();
-    }
 
     Type languageType();
-    
-    
-
-    @Deprecated
-    default Type getLanguageType() {
-        return languageType();
-    }
 
     String refName();
-    
-     @Deprecated
-    default String getRefName() {
-        return refName();
-    }
 
     String comment();
-    
-    
-    @Deprecated
-    default String getComment() {
-        return comment();
-    }
 
     /**
      * @since 2.2
      */
     List<NameRecord> nameRecords();
-    
+
     default Locale toLocale() {
         return new Locale(code());
     }
-    
+
     default NameRecord nameRecord(Locale locale) {
         if (locale.getLanguage().equals("en")) {
             return nameRecords().get(0);
@@ -316,18 +347,6 @@ public interface LanguageCode extends ISO_639_Code {
             throw new UnsupportedOperationException();
         }
     }
-    
-    @Deprecated
-    default String getName() {
-        return nameRecord(Locale.US).print();
-    }
-    
-       
-    @Deprecated
-    default String getInvertedName() {
-        return nameRecord(Locale.US).inverted();
-    }
-
 
     /**
      * The macro language(s) of which this language is a part.
@@ -339,6 +358,6 @@ public interface LanguageCode extends ISO_639_Code {
      * If this is a {@link Scope#M macro language}, the known individual languages which are part of this macro language.
      */
     List<LanguageCode> individualLanguages();
-         
+
 
 }

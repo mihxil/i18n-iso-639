@@ -1,11 +1,11 @@
-= JAVA ISO-639-3 support
+= JAVA ISO-639 support
 :toc:
 
-image:https://www.javadoc.io/badge/org.meeuw.i18n/i18n-iso-639-3.svg?color=blue[javadoc,link=https://www.javadoc.io/doc/org.meeuw.i18n/i18n-iso-639-3/latest]
-image:https://github.com/mihxil/i18n-iso-639-3/workflows/build/badge.svg?[Build Status,link=https://github.com/mihxil/i18n-iso-639-3/actions?query=workflow/build]
-image:https://img.shields.io/maven-central/v/org.meeuw.i18n/i18n-iso-639-3.svg?label=Maven%20Central[Maven Central,link=https://central.sonatype.com/search?namespace=org.meeuw.i18n&name=i18n-iso-639-3]
-image:https://img.shields.io/nexus/s/https/oss.sonatype.org/org.meeuw.i18n/i18n-iso-639-3.svg[snapshots,link=https://oss.sonatype.org/content/repositories/snapshots/org/meeuw/i18n/]
-image:https://codecov.io/gh/mihxil/i18n-iso-639-3/branch/main/graph/badge.svg[codecov,link=https://codecov.io/gh/mihxil/i18n-iso-639-3]
+image:https://www.javadoc.io/badge/org.meeuw.i18n/i18n-iso-639.svg?color=blue[javadoc,link=https://www.javadoc.io/doc/org.meeuw.i18n/i18n-iso-639/latest]
+image:https://github.com/mihxil/i18n-iso-639/workflows/build/badge.svg?[Build Status,link=https://github.com/mihxil/i18n-iso-639/actions?query=workflow/build]
+image:https://img.shields.io/maven-central/v/org.meeuw.i18n/i18n-iso-639.svg?label=Maven%20Central[Maven Central,link=https://central.sonatype.com/search?namespace=org.meeuw.i18n&name=i18n-iso-639]
+image:https://img.shields.io/nexus/s/https/oss.sonatype.org/org.meeuw.i18n/i18n-iso-639.svg[snapshots,link=https://oss.sonatype.org/content/repositories/snapshots/org/meeuw/i18n/]
+image:https://codecov.io/gh/mihxil/i18n-iso-639/branch/main/graph/badge.svg[codecov,link=https://codecov.io/gh/mihxil/i18n-iso-639]
 
 
 Codes for Languages of the World are covered by the https://en.wikipedia.org/wiki/ISO_639-3[ISO-639-3 standard]
@@ -18,19 +18,26 @@ This package has the tab seperated files provided by https://iso639-3.sil.org/, 
 
 == Usage
 
-[source, java]
+[source,java]
 ----
-import org.meeuw.i18n.languages.LanguageCode;
+       import org.meeuw.i18n.languages.*;
+   // get a language by its code;
+        Optional<LanguageCode> optional = ISO_639.getByPart3("nld");
+        LanguageCode languageCode = LanguageCode.languageCode("nl");
 
-Optional<LanguageCode> languageCode = LanguageCode.getByCode("nld");
+        // show it 'inverted' name
+        System.out.println(languageCode.nameRecord(Locale.US).inverted());
 
-LanguageCode languageCode = LanguageCode.languageCode("nl");
+        // get a language family
+        Optional<LanguageFamilyCode> family = ISO_639.getByPart5("ger");
 
-languageCode.getInvertedName();
+        // get by any code
+        Optional<ISO_639_Code> byCode = ISO_639.get("nl");
 
-
-LanguageCode.stream()
-   .sorted();
+        // stream by names, language may have several names (dutch, flemish), and appear multiple times
+        ISO_639_Code.streamByNames().forEach(e -> {
+            System.out.println(e.getKey() + " " + e.getValue());
+        });
 
 ----
 
@@ -40,38 +47,100 @@ See also the https://github.com/mihxil/i18n-iso-639-3/blob/main/src/test/java/or
 include::src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[]
 ----
 
+=== Retired codes
+`LanguageCode#getByCode` will also support retired codes if possible. This means that the code of the returned object may be different:
+
+[source, java]
+----
+// the 'krim' dialect (Sierra Leone) officially merged into 'bmf' (Bom-Kim) in 2017
+
+ assertThat(LanguageCode.getByCode("krm").get().getCode()).isEqualTo("bmf");
+
+----
+
+=== Fall backs
+
+Sometimes we have to deal with systems which have their own versions of the standards. In these cases it is possible to register 'fall backs'.
+
+E.g.
+[source, java]
+----
+ // Our partner uses the pseudo ISO-639-1 code 'XX' for 'no language'
+ //  fall back to a proper Part 3 code.
+ try {
+   LanguageCode.registerFallback("XX", LanguageCode.languageCode("zxx"));
+   assertThat(ISO_639.iso639("XX").code()).isEqualTo("zxx");
+ } finally {
+   LanguageCode.resetFallBacks();}
+----
+
+
 == Support
 
 === JAXB
 The language code is annotated with a JAXB annotation. It will serialize and deserialize to and from the code. The dependency on the annotation is optional.
+
+=== JSON
+
+The needed classes are also annotated by Jackson annotations, so they can be serialized to and from JSON.
+
 
 === Serializable
 The `LanguageCode` is serializable, and ensures that on deserialization the same object for every language is returned. (And only the _code_ is non transient).
 
 === Sortable
 
-The default sort order of a `LanguageCode` is on 'Inverted Name'.
+The default sort order of a `LanguageCode` used to  on 'Inverted Name'. There may be more than one (inverted) name though (E.g. Dutch and Flemish). Since 3.0 LanguageCode is not Sortable anymore. LanguageCode#stream() is sorted by ISO-639-3 code.
 
-=== Versions
 
-[cols="1,1,1"]
+== Versions
+
+[cols="1,1,1,1"]
 |===
-|<1 
+|<1
 |developing/testing
 |2023
+|
 
 |1.x
 |compabible with java 8, javax.xml, module-info java 11
+|
 |
 
 | 1.0
 |
 | 2023-11-30
+|
 
 
 |2.x
 |java 11, jakarta.xml
-|2024?
+|2024-01-28
+|jakarta mostly applies to the optional jaxb support (and to some - also optional - validation annotations)
+
+|2.1
+|support for retired codes
+|2024-02-11
+|
+
+|2.2
+|migrated support for language code validation from i18n-regions
+|2024-?
+|
+
+| 3.0
+| Refactoring
+| 2024-3
+|  Added enum for ISO-639-1 codes,
+   Made syntax forward compabible with records. So, getters like `getPart1()`) are dropped in favor of `part1()`. `LanguageCode` itself is now an interface. This may be backported to 1.2 for javax compatibility.
+
+
+| 3.1
+| Refactoring
+| 2024-3
+| Support for ISO-639-5.    Dropped the -3 from the artifact id.
+
+
 |===
 
 

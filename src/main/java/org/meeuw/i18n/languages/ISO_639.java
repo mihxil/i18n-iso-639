@@ -12,11 +12,11 @@ import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
 
 /**
  * A utility class for working with ISO 639 language codes.
- * 
+ *
  * @since 3.1
  */
 public class ISO_639 {
-    
+
     private ISO_639() {
     }
     /**
@@ -25,7 +25,7 @@ public class ISO_639 {
      * @param code A 2 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
      */
-    
+
     public static Optional<LanguageCode> getByPart1(String code) {
         return  ISO_639_3_Code
             .getByPart1(code)
@@ -76,7 +76,7 @@ public class ISO_639 {
      * @since 2.2
      */
     public static Optional<LanguageCode> getByPart3(@Size(min = 3, max = 3) String code, boolean matchRetired) {
-        
+
         return ISO_639_3_Code.getByPart3(code, matchRetired, Level.WARNING)
             .map(LanguageCode::updateToEnum)
             ;
@@ -91,17 +91,17 @@ public class ISO_639 {
 
     /**
      * Retrieves a language family code by its 3 letter code.
-     * 
-     * @see LanguageFamilyCode#get(String) 
+     *
+     * @see LanguageFamilyCode#get(String)
      */
     public static Optional<LanguageFamilyCode> getByPart5(@Size(min = 3, max = 3) String code) {
-        
+
         return LanguageFamilyCode.get(code);
     }
 
     /**
      * A stream with all known {@link ISO_639_Code language (or language family) codes} .
-     * 
+     *
      *
      * @return a stream of all known language codes.
      */
@@ -122,26 +122,56 @@ public class ISO_639 {
 
 
     private static final ThreadLocal<Map<String, ISO_639_Code>> FALLBACKS = ThreadLocal.withInitial(HashMap::new);
-    
-    static final ThreadLocal<Map<String, LanguageCode>> LC_FALLBACKS = ThreadLocal.withInitial(HashMap::new);
 
-
+    /**
+     * Registers a certain code as a fallback language or language group code. This is only valid for the current thread, until {@link #resetFallBacks()} is called.
+     * <p>
+     * The effect is that {@link #get(String)}  will return the registered {@link ISO_639_3_Code fallback code} if no real code is found.
+     * <p>
+     * If the given argument is an instance of {@link LanguageCode} it will also be registered as {@link LanguageCode#registerFallback(String, LanguageCode)}
+     *
+     * @see #setFallbacks(Map) To replace all current fallbacks with a map of these.
+     * @see LanguageCode#registerFallback(String, LanguageCode)
+     * @since 3.2
+       */
     public static void registerFallback(String code, ISO_639_Code exemption) {
         FALLBACKS.get().put(code, exemption);
     }
 
-    public static Map<String, ISO_639_Code> getFallBacks() {
-        return FALLBACKS.get();
+
+    /**
+     * Replaces all current fallbacks with a map of these. Note that this will not replace the fallbacks in {@link LanguageCode#getFallBacks()}.
+     *
+     * @see #registerFallback(String, ISO_639_Code)
+     * @since 3.2
+     */
+    static void setFallbacks(Map<String, ISO_639_Code> exemptions) {
+        FALLBACKS.set(exemptions);
     }
-    
+
+    /**
+     * Returns the currently registered fallbacks (as an unmodifiable map).
+     * @since 3.2
+     * @see #registerFallback
+     * @see #setFallbacks(Map)
+     * @see LanguageCode#getFallBacks()
+     */
+    public static Map<String, ISO_639_Code> getFallBacks() {
+        return Collections.unmodifiableMap(FALLBACKS.get());
+    }
+
+    /**
+     * Resets the current fallbacks for the current thread. After this, no fallbacks will be effective anymore.
+     * @since 3.2
+     */
     public static void resetFallBacks() {
         FALLBACKS.remove();
     }
 
     /**
      * Obtains a language or language family by (one of their) code(s).
-     * 
-     * @see #get For a version that throws an exception if not found. 
+     *
+     * @see #get For a version that throws an exception if not found.
      */
     public static Optional<ISO_639_Code> get(String code) {
         ISO_639_Code lc = LanguageCode.get(code).orElse(null);
@@ -149,7 +179,8 @@ public class ISO_639 {
             try {
                 return Optional.of(LanguageFamilyCode.valueOf(code));
             } catch (IllegalArgumentException iae) {
-                return Optional.ofNullable(FALLBACKS.get().get(code));
+                ISO_639_Code o = FALLBACKS.get().get(code);
+                return Optional.ofNullable(o);
             }
         } else {
             return Optional.of(lc);
