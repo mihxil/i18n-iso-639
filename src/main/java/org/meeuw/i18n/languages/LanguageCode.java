@@ -81,7 +81,7 @@ public interface LanguageCode extends ISO_639_Code {
      * @since 3.2
      */
     static void setFallbacks(final Map<String, LanguageCode> exemptions) {
-        ISO_639.setFallbacks(new AbstractMap<>() {
+        ISO_639.setFallbacks(new AbstractMap<String, ISO_639_Code>() {
             @Override
             public Set<Entry<String, ISO_639_Code>> entrySet() {
                 return exemptions.entrySet()
