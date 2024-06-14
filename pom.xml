@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
@@ -39,10 +39,11 @@
   <properties>
     <junit.version>5.10.2</junit.version>
     <groovy.version>4.0.16</groovy.version>
-    <codemodel.version>4.0.4</codemodel.version>
+    <codemodel.version>4.0.5</codemodel.version>
     <java.version>8</java.version>
-    <assertj.version>3.25.3</assertj.version>
-    <checker.version>3.42.0</checker.version>
+    <assertj.version>3.26.0</assertj.version>
+    <checker.version>3.44.0</checker.version>
+    <jackson.version>2.17.1</jackson.version>
 
     <!-- just avoid some warnings -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -123,14 +124,14 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.16.1</version>
+      <version>${jackson.version}</version>
       <optional>true</optional>
     </dependency>
 
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.16.1</version>
+      <version>${jackson.version}</version>
       <optional>true</optional>
     </dependency>
 
