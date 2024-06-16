@@ -83,6 +83,7 @@ public interface LanguageCode extends ISO_639_Code {
     static void setFallbacks(final Map<String, LanguageCode> exemptions) {
         ISO_639.setFallbacks(new AbstractMap<>() {
             @Override
+            @NonNull
             public Set<Entry<String, ISO_639_Code>> entrySet() {
                 return exemptions.entrySet()
                     .stream()
@@ -150,7 +151,7 @@ public interface LanguageCode extends ISO_639_Code {
     static Optional<LanguageCode> get(String code, boolean matchRetired) {
         Optional<LanguageCode> optional;
         if (code.length() == 2) {
-            optional =  getByPart1(code);
+            optional =   ISO_639.getByPart1(code);
         } else {
             Optional<LanguageCode> byPart3 = ISO_639.getByPart3(code, matchRetired);
             if (byPart3.isPresent()) {

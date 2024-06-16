@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Normally it makes sense to just use {@link LanguageCode}.
 
  */
+@SuppressWarnings("DataFlowIssue")
 public class ISO_639_3_Code implements LanguageCode {
 
     final static Logger LOGGER = Logger.getLogger(LanguageCode.class.getName());
@@ -36,7 +37,7 @@ public class ISO_639_3_Code implements LanguageCode {
     static {
         Map<String, List<NameRecord>> namesMap = new HashMap<>();
         try (InputStream inputStream = ISO_639_3_Code.class.getResourceAsStream(DIR + "iso-639-3_Name_Index.tab");
-             BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+             BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))
         ) {
             String line = inputStreamReader.readLine();
             while (line != null) {
@@ -51,7 +52,7 @@ public class ISO_639_3_Code implements LanguageCode {
 
         Map<String, ISO_639_3_Code> temp = new HashMap<>();
         try (InputStream inputStream = ISO_639_3_Code.class.getResourceAsStream(DIR + "iso-639-3.tab");
-             BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+             BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))
         ) {
             inputStreamReader.readLine(); // skipheader;
             String line = inputStreamReader.readLine();
@@ -60,9 +61,9 @@ public class ISO_639_3_Code implements LanguageCode {
                 List<NameRecord> names = namesMap.get(split[0]);
                 ISO_639_3_Code found = new ISO_639_3_Code(
                     split[0],
-                    split[1].length() > 0 ? split[1] : null,
-                    split[2].length() > 0 ? split[2] : null,
-                    split[3].length() > 0 ? split[3] : null,
+                    !split[1].isEmpty() ? split[1] : null,
+                    !split[2].isEmpty() ? split[2] : null,
+                    !split[3].isEmpty() ? split[3] : null,
                     Scope.valueOf(split[4]),
                     Type.valueOf(split[5]),
                     split[6],
@@ -80,7 +81,7 @@ public class ISO_639_3_Code implements LanguageCode {
         Map<LanguageCode, List<LanguageCode>> tempIndividual = new HashMap<>();
         Map<LanguageCode, List<LanguageCode>> tempMacro = new HashMap<>();
         try (InputStream inputStream = ISO_639_3_Code.class.getResourceAsStream(DIR + "iso-639-3-macrolanguages.tab");
-             BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+             BufferedReader inputStreamReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))
         ) {
             inputStreamReader.readLine(); // skipheader;
             String line = inputStreamReader.readLine();

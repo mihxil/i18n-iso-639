@@ -1,9 +1,11 @@
 package org.meeuw.i18n.languages.validation.impl;
 
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
 import java.util.*;
 import java.util.logging.Logger;
+
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
+
 import org.checkerframework.checker.nullness.qual.*;
 import org.meeuw.i18n.languages.*;
 import org.meeuw.i18n.languages.validation.Language;
@@ -20,7 +22,7 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
 
     public static final String[] LEGACY = {"jw"}; // javanese?
 
-   
+
     @MonotonicNonNull
     Language annotation;
 
@@ -44,11 +46,11 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
         if (language instanceof Locale) {
             return isValid(annotation, ((Locale) language).getLanguage());
         }
-        
+
         if (language instanceof  CharSequence) {
             return isValid(annotation, ((CharSequence) language));
         }
-        
+
         if (language instanceof  Iterable) {
             boolean valid = true;
             for (Object o : (Collection<?>) language) {
@@ -68,10 +70,10 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
         String splitter = annotation.forXml() ? "-" : "[_-]";
         String[] components = value.split(splitter, 3);
 
-        if (!annotation.mayContainCountry() && components.length > 1 && components[1].length() > 0) {
+        if (!annotation.mayContainCountry() && components.length > 1 && !components[1].isEmpty()) {
             return false;
         }
-        if (!annotation.mayContainVariant() && components.length > 2 && components[2].length() > 0) {
+        if (!annotation.mayContainVariant() && components.length > 2 && !components[2].isEmpty()) {
             return false;
         }
 
@@ -85,7 +87,7 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
         if (annotation.forXml()) {
             value = Locale.forLanguageTag(value).getLanguage();
         }
-        
+
         Optional<? extends ISO_639_Code> languageCode = getLanguage(annotation, value);
         if (languageCode.isPresent()) {
             ISO_639_Code lc = languageCode.get();
@@ -103,11 +105,11 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
 
 
     }
-    
+
     private static Optional<? extends ISO_639_Code> getLanguage(LanguageValidationInfo annotation, String value) {
-      
-        
-        Optional<LanguageCode> iso3 = LanguageCode.getByPart1(value);
+
+
+        Optional<LanguageCode> iso3 = ISO_639.getByPart1(value);
         if (iso3.isPresent()) {
             return iso3;
         }
@@ -122,7 +124,7 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
             if (isoPart2B.isPresent()) {
                 return isoPart2B;
             }
-            
+
             Optional<LanguageCode> isoPart2T = ISO_639.getByPart2T(value);
             if (isoPart2T.isPresent()) {
                 return isoPart2T;
@@ -134,7 +136,7 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
                 return isoPart5;
             }
         }
-        
+
         if (annotation.lenient()) {
             String displayLanguage = new Locale(value).getDisplayLanguage();
             if (!value.equals(displayLanguage)) { // last fall back is iso code itself.
@@ -145,5 +147,5 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
         }
         return Optional.empty();
     }
-    
+
 }

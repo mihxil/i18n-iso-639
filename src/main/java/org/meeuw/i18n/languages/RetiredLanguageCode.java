@@ -14,6 +14,7 @@ import java.util.stream.Stream;
  * The main goal of this class is to be used in {@link ISO_639#getByPart3(String)}, which will return the unretired language code if possible.
  *
  */
+@SuppressWarnings("DataFlowIssue")
 public class RetiredLanguageCode implements Serializable, LanguageCode {
 
     static final Map<String, RetiredLanguageCode> KNOWN;
@@ -104,7 +105,7 @@ public class RetiredLanguageCode implements Serializable, LanguageCode {
     public static Optional<RetiredLanguageCode> getByCode(String code) {
         return Optional.ofNullable(KNOWN.get(code));
     }
-    
+
     public RetirementReason retReason() {
         return retReason;
     }
@@ -140,7 +141,7 @@ public class RetiredLanguageCode implements Serializable, LanguageCode {
         if (changeTo != null) {
             try {
                 joiner.add("changeTo='" + changeTo().code() + "'");
-            } catch (RetirementException e) {
+            } catch (RetirementException ignored) {
 
             }
         }

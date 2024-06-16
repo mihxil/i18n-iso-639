@@ -2,10 +2,12 @@ package org.meeuw.i18n.languages.test;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.jupiter.api.Test;
 import org.meeuw.i18n.languages.*;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 class LanguageCodeTest {
@@ -18,7 +20,7 @@ class LanguageCodeTest {
         Optional<LanguageCode> optional = ISO_639.getByPart3("nld");
         LanguageCode languageCode = LanguageCode.languageCode("nl");
 
-        // show it 'inverted' name
+        // show its 'inverted' name
         System.out.println(languageCode.nameRecord(Locale.US).inverted());
 
         // get a language family
