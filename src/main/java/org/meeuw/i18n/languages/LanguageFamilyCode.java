@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import javax.annotation.processing.Generated;
 
 
 /**
@@ -15,6 +16,7 @@ import java.util.Optional;
  * 
  */
 @SuppressWarnings("ALL")
+@Generated("org.meeuw.i18n.languages.test.GenerateEnumsTest")
 public enum LanguageFamilyCode
     implements ISO_639_Code
 {

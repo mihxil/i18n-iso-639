@@ -112,8 +112,8 @@ class LanguageCodeTest {
     public void getByPart1() {
         assertThat(ISO_639.getByPart1("nl").get().refName()).isEqualTo("Dutch");
         assertThat(ISO_639.getByPart1(null)).isEmpty();
-
     }
+
     @Test
     public void getByPart2T() {
         assertThat(ISO_639.getByPart2T("nld").get().refName()).isEqualTo("Dutch");
@@ -143,7 +143,6 @@ class LanguageCodeTest {
         assertThat(ISO_639.getByPart3("krm").get().code()).isEqualTo("bmf");
     }
 
-
     @Test
     public void ppr() {
         assertThat(ISO_639.getByPart3("ppr").get().code()).isEqualTo("lcq");
@@ -165,8 +164,6 @@ class LanguageCodeTest {
         } finally {
             LanguageCode.resetFallBacks();
         }
-
     }
-
 
 }
