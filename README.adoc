@@ -10,7 +10,7 @@ image:https://codecov.io/gh/mihxil/i18n-iso-639/branch/main/graph/badge.svg[code
 
 Codes for Languages (and language groups) of the World are covered by the https://en.wikipedia.org/wiki/ISO_639[ISO-639 standard]
 
-These standards provides letter codes for each language. E.g. ISO-639-3 provides a three letter code for all living languages.
+These standards provide letter codes for each language. E.g. ISO-639-3 provides a three-letter code for all living languages.
 
 There are too many such codes to be contained in a java-enum (e.g. https://github.com/TakahikoKawasaki/nv-i18n/blob/master/src/main/java/com/neovisionaries/i18n/LanguageAlpha3Code.java is just not complete)
 
@@ -20,24 +20,24 @@ This package has the tab seperated files provided by https://iso639-3.sil.org/, 
 
 [source,java]
 ----
-       import org.meeuw.i18n.languages.*;
-   // get a language by its code;
-        Optional<LanguageCode> optional = ISO_639.getByPart3("nld");
-        LanguageCode languageCode = LanguageCode.languageCode("nl");
+import org.meeuw.i18n.languages.*;
+// get a language by its code;
+Optional<LanguageCode> optional = ISO_639.getByPart3("nld");
+LanguageCode languageCode = LanguageCode.languageCode("nl");
 
-        // show it 'inverted' name
-        System.out.println(languageCode.nameRecord(Locale.US).inverted());
+// show its 'inverted' name
+System.out.println(languageCode.nameRecord(Locale.US).inverted());
 
-        // get a language family
-        Optional<LanguageFamilyCode> family = ISO_639.getByPart5("ger");
+// get a language family
+Optional<LanguageFamilyCode> family = ISO_639.getByPart5("ger");
 
-        // get by any code
-        Optional<ISO_639_Code> byCode = ISO_639.get("nl");
+// get by any code
+Optional<ISO_639_Code> byCode = ISO_639.get("nl");
 
-        // stream by names, language may have several names (dutch, flemish), and appear multiple times
-        ISO_639_Code.streamByNames().forEach(e -> {
-            System.out.println(e.getKey() + " " + e.getValue());
-        });
+// stream by names, language may have several names (dutch, flemish), and appear multiple times
+ISO_639_Code.streamByNames().forEach(e -> {
+	System.out.println(e.getKey() + " " + e.getValue());
+});
 
 ----
 
@@ -71,7 +71,8 @@ E.g.
    LanguageCode.registerFallback("XX", LanguageCode.languageCode("zxx"));
    assertThat(ISO_639.iso639("XX").code()).isEqualTo("zxx");
  } finally {
-   LanguageCode.resetFallBacks();}
+   LanguageCode.resetFallBacks();
+ }
 ----
 
 
@@ -86,11 +87,11 @@ The needed classes are also annotated by Jackson annotations, so they can be ser
 
 
 === Serializable
-The `LanguageCode` is serializable, and ensures that on deserialization the same object for every language is returned. (And only the _code_ is non transient).
+`LanguageCode` is serializable too, and ensures that on deserialization the same object for every language is returned. (And only the _code_ is non-transient).
 
 === Sortable
 
-The default sort order of a `LanguageCode` used to  on 'Inverted Name'. There may be more than one (inverted) name though (E.g. Dutch and Flemish). Since 3.0 LanguageCode is not Sortable anymore. LanguageCode#stream() is sorted by ISO-639-3 code.
+The default sort order of a `LanguageCode` used to be on 'Inverted Name'. There may be more than one (inverted) name though (E.g. Dutch and Flemish). Since 3.0 LanguageCode is not Sortable anymore. LanguageCode#stream() is sorted by ISO-639-3 code.
 
 
 == Versions
