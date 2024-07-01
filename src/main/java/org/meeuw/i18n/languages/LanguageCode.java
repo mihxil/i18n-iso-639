@@ -208,7 +208,7 @@ public interface LanguageCode extends ISO_639_Code {
 
     /**
      * Defaulting version of {@link ISO_639#getByPart3(String, boolean)}, matching retired codes too.
-     * @deprecated Confusing, since not matching like {@link #code()}
+     * @deprecated Confusing, since not matching like {@link #code()}, use {@link ISO_639#getByPart3(String)}
      * @see ISO_639#getByPart3(String)
      */
     @Deprecated
@@ -221,7 +221,7 @@ public interface LanguageCode extends ISO_639_Code {
      *
      * @param code A 2 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
-     *
+     * @deprecated Use {@link ISO_639#getByPart1(String)}
      */
     @Deprecated
     static Optional<LanguageCode> getByPart1(String code) {
@@ -233,7 +233,7 @@ public interface LanguageCode extends ISO_639_Code {
      *
      * @param code A 2 or 3 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
-     *
+     * @deprecated Use {@link ISO_639#getByPart2B(String)}
      */
     @Deprecated
     static Optional<LanguageCode> getByPart2B(String code) {
@@ -245,6 +245,7 @@ public interface LanguageCode extends ISO_639_Code {
      *
      * @param code A 2 or 3 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
+     * @deprecated Use {@link ISO_639#getByPart2T(String)}
      */
     @Deprecated
     static Optional<LanguageCode> getByPart2T(String code) {
@@ -259,6 +260,7 @@ public interface LanguageCode extends ISO_639_Code {
      * @param code A 2 or 3 letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
      * @since 2.2
+     * @deprecated Use {@link ISO_639#getByPart3(String, boolean)}
      */
     @Deprecated
     static Optional<LanguageCode> getByPart3(@Size(min = 3, max = 3) String code, boolean matchRetired) {
@@ -267,6 +269,7 @@ public interface LanguageCode extends ISO_639_Code {
 
     /**
      * Defaulting version of {@link #getByPart3(String, boolean)}, matching retired codes too.
+     * @deprecated Use {@link ISO_639#getByPart3(String)}
      */
     @Deprecated
     static Optional<LanguageCode> getByPart3(@Size(min = 3, max = 3) String code) {

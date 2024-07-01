@@ -191,4 +191,14 @@ class LanguageCodeTest {
         }
     }
 
+
+    @SuppressWarnings("deprecation")
+    @Test
+    public void deprecated() {
+        assertThat(LanguageCode.getByCode("nld")).contains((LanguageCode) ISO_639.get("nl").get());
+        assertThat(LanguageCode.getByPart1("nl")).contains((LanguageCode) ISO_639.get("nl").get());
+        assertThat(LanguageCode.getByPart2B("dut")).contains((LanguageCode) ISO_639.get("nl").get());
+        assertThat(LanguageCode.getByPart2T("nld")).contains((LanguageCode) ISO_639.get("nl").get());
+        assertThat(LanguageCode.getByPart3("nld")).contains((LanguageCode) ISO_639.get("nl").get());
+    }
 }
