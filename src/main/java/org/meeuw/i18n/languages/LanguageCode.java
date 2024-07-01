@@ -191,7 +191,7 @@ public interface LanguageCode extends ISO_639_Code {
      */
     static LanguageCode languageCode(String code) {
         return get(code)
-            .orElseThrow(() -> new IllegalArgumentException("Unknown language code " + code));
+            .orElseThrow(() -> new IllegalArgumentException("Unknown language code '" + code + "'"));
     }
 
 

@@ -197,7 +197,7 @@ public class ISO_639 {
      */
     public static ISO_639_Code iso639(String code) {
         return get(code)
-            .orElseThrow(() -> new IllegalArgumentException("Unknown language code " + code));
+            .orElseThrow(() -> new IllegalArgumentException("Unknown language code '" + code + "'"));
     }
 
 

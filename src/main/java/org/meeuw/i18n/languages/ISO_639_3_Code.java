@@ -94,7 +94,7 @@ public class ISO_639_3_Code implements LanguageCode {
                     list.add(LanguageCode.updateToEnum(individual.get()));
                     tempMacro.computeIfAbsent(individual.get(), (m) -> new ArrayList<>()).add(LanguageCode.updateToEnum(macro));
                 } else {
-                    LOGGER.log(Level.FINEST, "Unknown individual language: " + split[1] + " for " + macro);
+                    LOGGER.log(Level.FINEST, "Unknown individual language: '" + split[1] + "' for " + macro);
                 }
                 line = inputStreamReader.readLine();
             }
