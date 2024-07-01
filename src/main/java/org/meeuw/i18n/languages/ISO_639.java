@@ -206,7 +206,7 @@ public class ISO_639 {
      * @since 3.3
      */
     @JsonCreator
-    static @PolyNull ISO_639_Code lenientIso639(@PolyNull String code) {
+    public static @PolyNull ISO_639_Code lenientIso639(@PolyNull String code) {
         if (code == null || code.isEmpty()) {
             return null;
         }
