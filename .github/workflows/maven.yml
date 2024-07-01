@@ -41,7 +41,9 @@ jobs:
           echo "Making sure it is usable without any further deps"
           (cd test/simple ; mvn -B -q -Dexec.args=-; mvn -B dependency:tree)
           (cd test/jackson; mvn -B -q ; mvn -B dependency:tree)
-      - uses: codecov/codecov-action@v3.1.5
+      - uses: codecov/codecov-action@v4.5.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
       - name: Publish Unit Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2.12.0
         with:
