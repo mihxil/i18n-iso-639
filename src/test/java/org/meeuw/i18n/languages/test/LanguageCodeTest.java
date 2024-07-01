@@ -23,6 +23,9 @@ class LanguageCodeTest {
         // show its 'inverted' name
         System.out.println(languageCode.nameRecord(Locale.US).inverted());
 
+        assertThatThrownBy(() -> languageCode.nameRecord(Locale.CHINESE)).isInstanceOf(UnsupportedOperationException.class);
+
+
         // get a language family
         Optional<LanguageFamilyCode> family = ISO_639.getByPart5("ger");
 
@@ -33,6 +36,8 @@ class LanguageCodeTest {
         ISO_639.streamByNames().forEach(e -> {
             System.out.println(e.getKey() + " " + e.getValue());
         });
+
+        assertThat(languageCode.toLocale()).isEqualTo(new Locale("nl"));
     }
 
     @Test
@@ -154,7 +159,7 @@ class LanguageCodeTest {
     }
 
     @Test
-    public void XX() {
+    public void XXFallBack() {
         try {
             assertThatThrownBy(() -> ISO_639.iso639("XX")).isInstanceOf(IllegalArgumentException.class);
 
@@ -163,6 +168,26 @@ class LanguageCodeTest {
             assertThat(ISO_639.iso639("XX").code()).isEqualTo("zxx");
         } finally {
             LanguageCode.resetFallBacks();
+        }
+    }
+
+    @Test
+    public void XXYYFallBack() {
+        try {
+            assertThatThrownBy(() -> ISO_639.iso639("XX")).isInstanceOf(IllegalArgumentException.class);
+            assertThatThrownBy(() -> ISO_639.iso639("YY")).isInstanceOf(IllegalArgumentException.class);
+
+            LanguageCode.setFallbacks(Map.of(
+                "XX", LanguageCode.languageCode("zxx"),
+                "YY", LanguageCode.languageCode("nl"))
+            );
+            assertThat(LanguageCode.getFallBacks()).hasSize(2);
+
+            assertThat(ISO_639.iso639("XX").code()).isEqualTo("zxx");
+            assertThat(ISO_639.iso639("YY").code()).isEqualTo("nl");
+        } finally {
+            LanguageCode.resetFallBacks();
+            assertThat(LanguageCode.getFallBacks()).isEmpty();
         }
     }
 

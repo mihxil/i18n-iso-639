@@ -142,9 +142,10 @@ public class ISO_639 {
 
 
     /**
-     * Replaces all current fallbacks with a map of these. Note that this will not replace the fallbacks in {@link LanguageCode#getFallBacks()}.
+     * Replaces all current (i.e. {@link ThreadLocal thread local}) fallbacks with a map of these.
      *
      * @see #registerFallback(String, ISO_639_Code)
+     * @see #resetFallBacks()
      * @since 3.2
      */
     static void setFallbacks(Map<String, ISO_639_Code> exemptions) {
@@ -152,18 +153,19 @@ public class ISO_639 {
     }
 
     /**
-     * Returns the currently registered fallbacks (as an unmodifiable map).
+     * Returns the currently (i.e. {@link ThreadLocal thread local}) registered fallbacks (as an unmodifiable map).
      * @since 3.2
      * @see #registerFallback
      * @see #setFallbacks(Map)
      * @see LanguageCode#getFallBacks()
+     * @see #resetFallBacks()
      */
     public static Map<String, ISO_639_Code> getFallBacks() {
         return Collections.unmodifiableMap(FALLBACKS.get());
     }
 
     /**
-     * Resets the current fallbacks for the current thread. After this, no fallbacks will be effective anymore.
+     * Resets the fallbacks for the current thread. After this, no fallbacks will be effective anymore.
      * @since 3.2
      */
     public static void resetFallBacks() {
