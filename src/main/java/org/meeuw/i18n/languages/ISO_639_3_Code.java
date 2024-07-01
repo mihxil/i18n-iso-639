@@ -110,7 +110,7 @@ public class ISO_639_3_Code implements LanguageCode {
 
     /**
      * A stream with all known {@link ISO_639_Code language codes}.
-     * If the langauge has a 2 letter part 1 code, it will <em>not</em> be implicitly upgraded
+     * If the language has a 2 letter part 1 code, it will <em>not</em> be implicitly upgraded
      * to an {@link ISO_639_1_Code
      *
      * @see {@link LanguageCode#stream()} For a version that <em>does</em> upgrade

@@ -194,7 +194,6 @@ public interface LanguageCode extends ISO_639_Code {
             .orElseThrow(() -> new IllegalArgumentException("Unknown language code '" + code + "'"));
     }
 
-
     /**
      * Ase {@link #languageCode(String)}, but  it returns {@code null} if the argument is {@code null} or the empty string
      * @since 3.3
@@ -207,7 +206,6 @@ public interface LanguageCode extends ISO_639_Code {
         return languageCode(code);
     }
 
-
     /**
      * Defaulting version of {@link ISO_639#getByPart3(String, boolean)}, matching retired codes too.
      * @deprecated Confusing, since not matching like {@link #code()}
@@ -217,9 +215,6 @@ public interface LanguageCode extends ISO_639_Code {
     static Optional<LanguageCode> getByCode(@Size(min = 3, max=3) String code) {
         return ISO_639.getByPart3(code);
     }
-
-
-
 
     /**
      * Retrieves a {@link ISO_639_3_Code} by its Part1 code {@link #part1()}
@@ -232,7 +227,6 @@ public interface LanguageCode extends ISO_639_Code {
     static Optional<LanguageCode> getByPart1(String code) {
         return ISO_639.getByPart1(code);
     }
-
 
     /**
      * Retrieves a {@link LanguageCode} by its Part2B  ('bibliographic') code {@link ISO_639_3_Code#part2B()}
@@ -268,7 +262,6 @@ public interface LanguageCode extends ISO_639_Code {
      */
     @Deprecated
     static Optional<LanguageCode> getByPart3(@Size(min = 3, max = 3) String code, boolean matchRetired) {
-
         return ISO_639.getByPart3(code, matchRetired);
     }
 
@@ -280,8 +273,6 @@ public interface LanguageCode extends ISO_639_Code {
         return getByPart3(code, true);
     }
 
-
-
     @NonNull
     static LanguageCode updateToEnum(@NonNull LanguageCode languageCode) {
         if (! (languageCode instanceof ISO_639_1_Code) && languageCode.part1() != null) {
@@ -290,7 +281,6 @@ public interface LanguageCode extends ISO_639_Code {
             return languageCode;
         }
     }
-
 
     /**
      * The {@link LanguageCode#part1() ISO-639-1-code} if available, otherwise the {@link LanguageCode#part3() ISO-639-3 code}.
