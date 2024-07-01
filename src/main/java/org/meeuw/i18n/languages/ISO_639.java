@@ -6,6 +6,8 @@ import java.util.stream.Stream;
 
 import jakarta.validation.constraints.Size;
 
+import org.checkerframework.checker.nullness.qual.PolyNull;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
@@ -193,9 +195,22 @@ public class ISO_639 {
      * @return The {@link ISO_639_3_Code} if found
      * @throws IllegalArgumentException if not found
      */
-    @JsonCreator
     public static ISO_639_Code iso639(String code) {
         return get(code)
             .orElseThrow(() -> new IllegalArgumentException("Unknown language code " + code));
     }
+
+
+    /**
+     * As {@link #iso639(String)}, but  it returns {@code null} if the argument is {@code null} or the empty string
+     * @since 3.3
+     */
+    @JsonCreator
+    static @PolyNull ISO_639_Code lenientIso639(@PolyNull String code) {
+        if (code == null || code.isEmpty()) {
+            return null;
+        }
+        return iso639(code);
+    }
+
 }

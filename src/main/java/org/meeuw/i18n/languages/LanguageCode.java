@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.PolyNull;
 import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -185,15 +186,26 @@ public interface LanguageCode extends ISO_639_Code {
     /**
      * As {@link ISO_639#get(String)}, but throws an {@link IllegalArgumentException} if not found.
      *
-     * @return The {@link LanguageCode} if found
+     * @return The {@link LanguageCode} if found.
      * @throws IllegalArgumentException if not found
      */
-    @JsonCreator
     static LanguageCode languageCode(String code) {
         return get(code)
             .orElseThrow(() -> new IllegalArgumentException("Unknown language code " + code));
     }
 
+
+    /**
+     * Ase {@link #languageCode(String)}, but  it returns {@code null} if the argument is {@code null} or the empty string
+     * @since 3.3
+     */
+    @JsonCreator
+    static @PolyNull LanguageCode lenientLanguageCode(@PolyNull String code) {
+        if (code == null || code.isEmpty()) {
+            return null;
+        }
+        return languageCode(code);
+    }
 
 
     /**
