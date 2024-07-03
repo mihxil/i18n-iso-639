@@ -38,7 +38,7 @@ public interface ISO_639_Code extends Serializable {
     }
 
     default NameRecord nameRecord(Locale locale) {
-        return new NameRecord(toString());
+        return nameRecord();
     }
 
     default NameRecord nameRecord() {

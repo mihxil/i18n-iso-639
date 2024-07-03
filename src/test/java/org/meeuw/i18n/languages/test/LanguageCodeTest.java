@@ -47,6 +47,10 @@ class LanguageCodeTest {
             assertThat(lc.code()).isNotNull();
             assertThat(lc.languageType()).isNotNull();
             assertThat(lc.scope()).isNotNull();
+            assertThat(lc.nameRecords()).hasSizeGreaterThanOrEqualTo(1);
+            assertThat(lc.nameRecord(Locale.US)).isNotNull();
+            assertThat(lc.nameRecord()).isNotNull();
+            assertThat(lc.refName()).isNotNull();
 
             if (lc.part1() != null) {
                 assertThat(lc).isInstanceOf(ISO_639_1_Code.class);
@@ -91,7 +95,10 @@ class LanguageCodeTest {
         LanguageCode.stream()
             .sorted(Comparator.comparing(LanguageCode::refName))
             .forEach(lc -> {
-            System.out.println(lc.code() + "\t" + lc.refName() + " " + lc.nameRecord());
+            System.out.println(
+                lc.code() + "\t" +
+                    lc.refName() + " " +
+                    lc.nameRecord(Locale.US));
         });
     }
 
