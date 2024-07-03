@@ -192,8 +192,8 @@ class LanguageCodeTest {
     }
 
 
-    @SuppressWarnings("deprecation")
     @Test
+    @Deprecated
     public void deprecated() {
         assertThat(LanguageCode.getByCode("nld")).contains((LanguageCode) ISO_639.get("nl").get());
         assertThat(LanguageCode.getByPart1("nl")).contains((LanguageCode) ISO_639.get("nl").get());

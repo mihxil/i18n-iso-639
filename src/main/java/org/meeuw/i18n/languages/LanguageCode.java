@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
- * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2 letter codes if that exist.
+ * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2-letter codes if that exists.
  *<p>
  * Annotated with {@link XmlJavaTypeAdapter}, so it will automatically be marshalled and unmarshalled in XML's.
  * <p>
@@ -253,7 +253,7 @@ public interface LanguageCode extends ISO_639_Code {
     }
 
     /**
-     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link #getByPart3(String, boolean)} ()}
+     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link ISO_639_3_Code#part3()}
      * <p>
      * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
      *

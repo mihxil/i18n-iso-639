@@ -69,7 +69,7 @@ public class ISO_639 {
     }
 
     /**
-     * Retrieves a {@link ISO_639_3_Code} by its three-letter identifier {@link #getByPart3(String, boolean)} ()}
+     * Retrieves a {@link ISO_639_3_Code} by  {@link ISO_639_3_Code#part3() its three-letter identifier}
      * <p>
      * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
      *
