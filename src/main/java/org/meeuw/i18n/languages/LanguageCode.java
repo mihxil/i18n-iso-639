@@ -65,6 +65,11 @@ public interface LanguageCode extends ISO_639_Code {
             .sorted(Map.Entry.comparingByKey());
     }
 
+    static Stream<? extends Map.Entry<String, ? extends LanguageCode>> streamByNames(LanguageCode locale) {
+        return streamByNames(locale.toLocale());
+    }
+
+
     /**
      * Defaulting version of {@link #streamByNames(Locale)}, using {@link Locale#US}.
      * @since 3.0

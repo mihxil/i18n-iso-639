@@ -41,6 +41,10 @@ public interface ISO_639_Code extends Serializable {
         return nameRecord();
     }
 
+     default NameRecord nameRecord(LanguageCode locale) {
+        return nameRecord(locale.toLocale());
+    }
+
     default NameRecord nameRecord() {
         return new NameRecord(toString());
     }
