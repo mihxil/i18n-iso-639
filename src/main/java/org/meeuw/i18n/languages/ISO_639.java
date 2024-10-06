@@ -19,6 +19,16 @@ import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
  */
 public class ISO_639 {
 
+    static ThreadLocal<Boolean> ignoreNotFound = ThreadLocal.withInitial(() -> Boolean.FALSE);
+
+    public static void setIgnoreNotFound() {
+        ignoreNotFound.set(Boolean.TRUE);
+    }
+
+    public static void removeIgnoreNotFound() {
+        ignoreNotFound.remove();
+    }
+
     private ISO_639() {
     }
     /**
@@ -198,8 +208,12 @@ public class ISO_639 {
      * @throws IllegalArgumentException if not found
      */
     public static ISO_639_Code iso639(String code) {
-        return get(code)
-            .orElseThrow(() -> new IllegalArgumentException("Unknown language code '" + code + "'"));
+        if (ignoreNotFound.get()) {
+            return get(code).orElse(LanguageCode.NOTFOUND);
+        } else {
+            return get(code)
+                .orElseThrow(() -> new IllegalArgumentException("Unknown language code '" + code + "'"));
+        }
     }
 
 

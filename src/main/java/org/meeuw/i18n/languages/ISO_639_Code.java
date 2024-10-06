@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
 public interface ISO_639_Code extends Serializable {
 
+
     /**
      * The code associated with this language or language family.
      *

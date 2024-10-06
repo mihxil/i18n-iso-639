@@ -288,7 +288,7 @@ public class ISO_639_3_Code implements LanguageCode {
     }
 
     @Size
-    public NameRecord nameRecord(Locale locale) {
+    public NameRecord name(Locale locale) {
         if (locale.getLanguage().equals("en")) {
             return names.get(0);
         } else {

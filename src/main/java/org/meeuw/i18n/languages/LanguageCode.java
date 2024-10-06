@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 /**
  * A language with a ISO 639-3 language code (of three letters). Also, aware of the ISO-630-1 2-letter codes if that exists.
  *<p>
- * Annotated with {@link XmlJavaTypeAdapter}, so it will automatically be marshalled and unmarshalled in XML's.
+ * Annotated with {@link XmlJavaTypeAdapter}, so it will automatically be marshalled and unmarshalled in XMLs.
  * <p>
  * Also annotated with jackson annotation, to be marshalled and unmarshalled in JSON as the code.
  *<p>
@@ -25,6 +25,11 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
 public interface LanguageCode extends ISO_639_Code {
+
+    UserDefinedLanguage UNKNOWN = new UserDefinedLanguage("UNKNOWN", null, "unknown language", "the language for some reason is unknown or unrecognized");
+
+    UserDefinedLanguage NOTFOUND = new UserDefinedLanguage("NOTFOUND", null, "language not found", "the language is not found");
+
 
     /**
      * A stream with all known {@link ISO_639_Code language codes}.
@@ -195,8 +200,12 @@ public interface LanguageCode extends ISO_639_Code {
      * @throws IllegalArgumentException if not found
      */
     static LanguageCode languageCode(String code) {
-        return get(code)
-            .orElseThrow(() -> new IllegalArgumentException("Unknown language code '" + code + "'"));
+        if (ISO_639.ignoreNotFound.get()) {
+            return get(code).orElse(NOTFOUND);
+        } else {
+            return get(code)
+                .orElseThrow(() -> new IllegalArgumentException("Unknown language code '" + code + "'"));
+        }
     }
 
     /**
@@ -351,7 +360,7 @@ public interface LanguageCode extends ISO_639_Code {
         return new Locale(code());
     }
 
-    default NameRecord nameRecord(Locale locale) {
+    default NameRecord name(Locale locale) {
         if (locale.getLanguage().equals("en")) {
             return nameRecords().get(0);
         } else {
