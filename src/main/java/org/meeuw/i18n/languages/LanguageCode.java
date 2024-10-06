@@ -349,10 +349,13 @@ public interface LanguageCode extends ISO_639_Code {
      */
     String part1();
 
+    @Override
     Scope scope();
 
+    @Override
     Type languageType();
 
+    @Override
     String refName();
 
     String comment();
@@ -366,7 +369,8 @@ public interface LanguageCode extends ISO_639_Code {
         return new Locale(code());
     }
 
-    default NameRecord name(Locale locale) {
+    @Override
+    default NameRecord nameRecord(Locale locale) {
         if (locale.getLanguage().equals("en")) {
             return nameRecords().get(0);
         } else {

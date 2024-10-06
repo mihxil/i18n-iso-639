@@ -220,6 +220,7 @@ public class ISO_639_3_Code implements LanguageCode {
      * @return A 2 or 3 letter language code
      * @since 0.2
      */
+    @Override
     @JsonValue
     public String code() {
         return part1 != null ? part1 : part3;
@@ -233,6 +234,7 @@ public class ISO_639_3_Code implements LanguageCode {
 
 
 
+    @Override
     public String part3() {
         return part3;
     }
@@ -242,6 +244,7 @@ public class ISO_639_3_Code implements LanguageCode {
      * code set, if there is one
      * @return bibliographic id or {@code null}
      */
+    @Override
     public String part2B() {
         return part2B;
     }
@@ -251,6 +254,7 @@ public class ISO_639_3_Code implements LanguageCode {
      * set, if there is one
      * @return terminology id or {@code null}
      */
+    @Override
     public String part2T() {
         return part2T;
     }
@@ -259,22 +263,27 @@ public class ISO_639_3_Code implements LanguageCode {
      * Equivalent 639-1 identifier, if there is one
      * @return 2 letter id or {@code null}
      */
+    @Override
     public String part1() {
         return part1;
     }
 
+    @Override
     public Scope scope() {
         return scope;
     }
 
+    @Override
     public Type languageType() {
         return languageType;
     }
 
+    @Override
     public String refName() {
         return refName;
     }
 
+    @Override
     public String comment() {
         return comment;
     }

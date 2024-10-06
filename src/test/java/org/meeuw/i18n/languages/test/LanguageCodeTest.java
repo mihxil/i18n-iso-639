@@ -3,6 +3,7 @@ package org.meeuw.i18n.languages.test;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.meeuw.i18n.languages.*;
 
@@ -207,5 +208,13 @@ class LanguageCodeTest {
         assertThat(LanguageCode.getByPart2B("dut")).contains((LanguageCode) ISO_639.get("nl").get());
         assertThat(LanguageCode.getByPart2T("nld")).contains((LanguageCode) ISO_639.get("nl").get());
         assertThat(LanguageCode.getByPart3("nld")).contains((LanguageCode) ISO_639.get("nl").get());
+    }
+
+
+    // TODO
+    @Disabled
+    @Test
+    public void hashCodeStable() {
+        assertThat(ISO_639.iso639("NL").hashCode()).isEqualTo(320304382);
     }
 }
