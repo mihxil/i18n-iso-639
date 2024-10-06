@@ -56,10 +56,15 @@ public interface ISO_639_Code extends Serializable {
         return ISO_639.iso639(code);
     }
 
+    ResourceBundle DEFAULT = ResourceBundle.getBundle("org.meeuw.i18n.languages.DisplayNames", Locale.US);
 
     default String getDisplayName(Locale locale) {
         ResourceBundle bundle =  ResourceBundle.getBundle("org.meeuw.i18n.languages.DisplayNames", locale);
-        return bundle.getString(code());
+        if (bundle.containsKey(code())) {
+            return bundle.getString(code());
+        } else {
+            return DEFAULT.getString(code());
+        }
 
     }
 

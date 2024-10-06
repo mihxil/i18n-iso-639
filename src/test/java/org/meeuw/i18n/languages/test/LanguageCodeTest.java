@@ -46,7 +46,7 @@ class LanguageCodeTest {
     @Test
     public void stream() {
         LanguageCode.stream().forEach(lc -> {
-            System.out.println(lc + " (" + lc.scope() + ")");
+            System.out.println(lc + " (" + lc.scope() + ")" + " " + lc.getDisplayName(Locale.ENGLISH) + " " + lc.getDisplayName(new Locale("nl")));
             assertThat(lc.code()).isNotNull();
             assertThat(lc.languageType()).isNotNull();
             assertThat(lc.scope()).isNotNull();
@@ -54,6 +54,11 @@ class LanguageCodeTest {
             assertThat(lc.nameRecord(Locale.US)).isNotNull();
             assertThat(lc.nameRecord()).isNotNull();
             assertThat(lc.refName()).isNotNull();
+
+            if (lc instanceof ISO_639_1_Code) {
+                assertThat(lc.getDisplayName(new Locale("nl"))).isEqualTo(
+                    new Locale(lc.code()).getDisplayName(new Locale("nl")));
+            }
 
             if (lc.part1() != null) {
                 assertThat(lc).isInstanceOf(ISO_639_1_Code.class);
