@@ -85,6 +85,17 @@ public class GenerateEnumsTest {
                     }
                 }
             );
+        JMethod getDisplayName = iso639_1.method(JMod.PUBLIC, String.class, "getDisplayName");
+        getDisplayName.param(Locale.class, "locale");
+        getDisplayName.annotate(Override.class);
+        getDisplayName.body()
+            .directStatement(
+        "String result = new Locale(code()).getDisplayName(locale);\n" +
+        "        if (code().equals(result)) {\n" +
+        "            return LanguageCode.super.getDisplayName(locale);\n" +
+        "        } else {\n" +
+        "            return result;\n" +
+        "        }");
         model.build(new FileCodeWriter(new File(absolutePath), false));
     }
     @Test
