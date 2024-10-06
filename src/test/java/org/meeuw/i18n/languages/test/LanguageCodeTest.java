@@ -212,10 +212,9 @@ class LanguageCodeTest {
         assertThat(LanguageCode.getByPart3("nld")).contains((LanguageCode) ISO_639.get("nl").get());
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = {"dse"})
-    public void signLanguage(String code) {
-        LanguageCode l = LanguageCode.get(code).orElseThrow();
+    @Test
+    public void dutchSignLanguage() {
+        LanguageCode l = LanguageCode.get("sse").orElseThrow();
 
         assertThat(l.refName()).isEqualTo("Dutch Sign Language");
         assertThat(l.nameRecord().print()).isEqualTo("dse (Dutch Sign Language)");
@@ -224,6 +223,26 @@ class LanguageCodeTest {
         assertThat(l.getDisplayName(Locale.US)).isEqualTo("Dutch Sign Language");
 
         assertThat(l.getDisplayName(new Locale("nl"))).isEqualTo("Nederlandse Gebarentaal");
+    }
+    @ParameterizedTest
+    @ValueSource(strings = {"dse", "vgt","ase","bfi",
+        "csl",
+        "gsg",
+        "tsm",
+        "dsl",
+        "inl",
+        "ise",
+        "rsl"})
+    public void signLanguage(String code) {
+        LanguageCode l = LanguageCode.get(code).orElseThrow();
+
+
+        System.out.println(l.code() + "\t" +
+            l.refName() + "\t" +
+            l.getDisplayName(Locale.US) + "\t" +
+            l.getDisplayName(new Locale("nl")) + "\t" +
+            l.getDisplayName(new Locale("eo"))
+        );
     }
 
 
