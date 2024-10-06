@@ -2,6 +2,7 @@ package org.meeuw.i18n.languages;
 
 import java.io.Serializable;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -55,5 +56,11 @@ public interface ISO_639_Code extends Serializable {
         return ISO_639.iso639(code);
     }
 
+
+    default String getDisplayName(Locale locale) {
+        ResourceBundle bundle =  ResourceBundle.getBundle("org.meeuw.i18n.languages.DisplayNames", locale);
+        return bundle.getString(code());
+
+    }
 
 }

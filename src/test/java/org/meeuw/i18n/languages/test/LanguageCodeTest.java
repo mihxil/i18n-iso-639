@@ -5,6 +5,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.meeuw.i18n.languages.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -208,6 +210,20 @@ class LanguageCodeTest {
         assertThat(LanguageCode.getByPart2B("dut")).contains((LanguageCode) ISO_639.get("nl").get());
         assertThat(LanguageCode.getByPart2T("nld")).contains((LanguageCode) ISO_639.get("nl").get());
         assertThat(LanguageCode.getByPart3("nld")).contains((LanguageCode) ISO_639.get("nl").get());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"dse"})
+    public void signLanguage(String code) {
+        LanguageCode l = LanguageCode.get(code).orElseThrow();
+
+        assertThat(l.refName()).isEqualTo("Dutch Sign Language");
+        assertThat(l.nameRecord().print()).isEqualTo("dse (Dutch Sign Language)");
+        assertThat(new Locale(l.code()).getDisplayName(Locale.US)).isEqualTo("dse");
+
+        assertThat(l.getDisplayName(Locale.US)).isEqualTo("Dutch Sign Language");
+
+        assertThat(l.getDisplayName(new Locale("nl"))).isEqualTo("Nederlandse Gebarentaal");
     }
 
 
