@@ -2,7 +2,7 @@ package org.meeuw.i18n.languages;
 
 import java.util.stream.Stream;
 
-public class DisplayNames_en extends java.util.ListResourceBundle {
+public class DisplayNames extends java.util.ListResourceBundle {
     @Override
     protected Object[][] getContents() {
         return Stream.concat(

@@ -219,7 +219,7 @@ class LanguageCodeTest {
 
     @Test
     public void dutchSignLanguage() {
-        LanguageCode l = LanguageCode.get("sse").orElseThrow();
+        LanguageCode l = LanguageCode.get("dse").orElseThrow();
 
         assertThat(l.refName()).isEqualTo("Dutch Sign Language");
         assertThat(l.nameRecord().print()).isEqualTo("dse (Dutch Sign Language)");
