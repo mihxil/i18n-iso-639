@@ -26,8 +26,14 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
 public interface LanguageCode extends ISO_639_Code {
 
+    /**
+     * @since 3.4
+     */
     UserDefinedLanguage UNKNOWN = new UserDefinedLanguage("UNKNOWN", null, "unknown language", "the language for some reason is unknown or unrecognized");
 
+    /**
+     * @since 3.4
+     */
     UserDefinedLanguage NOTFOUND = new UserDefinedLanguage("NOTFOUND", null, "language not found", "the language is not found");
 
 
