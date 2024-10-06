@@ -1,12 +1,11 @@
 package org.meeuw.i18n.languages;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * @since 3.4
+ */
 public class UserDefinedLanguage implements LanguageCode {
-
-    private static final Map<String, UserDefinedLanguage> registered = new ConcurrentHashMap<>();
 
     private final String code;
     private final Type type;
