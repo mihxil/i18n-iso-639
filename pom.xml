@@ -6,7 +6,7 @@
   <artifactId>i18n-iso-639</artifactId>
   <packaging>jar</packaging>
 
-  <version>3.6-SNAPSHOT</version>
+  <version>3.7-SNAPSHOT</version>
 
   <name>i18n-iso-639</name>
   <description>Provides a class with one instance of every of the ISO 639 languages</description>
