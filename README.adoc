@@ -166,6 +166,12 @@ assertThat(LanguageCode.languageCode("dse").getDisplayName(new Locale("nl"))).is
 | 2024-3
 | Support for ISO-639-5.    Dropped the -3 from the artifact id.
 
+| 3.6
+| Support for #getDisplayName
+| 2024-8
+|
+
+
 
 |===
 
