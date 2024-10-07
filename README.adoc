@@ -94,6 +94,30 @@ The needed classes are also annotated by Jackson annotations, so they can be ser
 
 The default sort order of a `LanguageCode` used to be on 'Inverted Name'. There may be more than one (inverted) name though (E.g. Dutch and Flemish). Since 3.0 LanguageCode is not Sortable anymore. LanguageCode#stream() is sorted by ISO-639-3 code.
 
+=== Internationalization of language names
+
+The files of `sil.org` only provide names of languages and language families in English. Java's `java.util.Locale` can provide the name of a lot of languages (I presume the language with a ISO-639-1 code) in a lot of other languages.
+
+E.g.
+[source, java]
+----
+ new Locale("en").getDisplayName(new Locale("nl"));
+----
+will give the name of the language 'English' in Dutch ('Engels').
+
+To make this available in a generic way the base interface `ISO_639` just has
+[source, java]
+----
+String getDisplayName(Locale locale)
+----
+For `ISO_639_1` this will first try to use the above way with `java.util.Locale`. For other codes, and as a fallback in `ISO_639_1` will use the resource bundle `org.meeuw.i18n.languages.DisplayNames`, where the default and english names are provided by the `sil.org` files.
+
+Noticeably, for example for sign languages this is the way to have proper names available
+
+[source, java]
+----
+assertThat(LanguageCode.languageCode("dse").getDisplayName(new Locale("nl"))).isEqualTo("Nederlandse Gebarentaal");
+----
 
 == Versions
 
@@ -105,7 +129,7 @@ The default sort order of a `LanguageCode` used to be on 'Inverted Name'. There 
 |
 
 |1.x
-|compabible with java 8, javax.xml, module-info java 11
+|compatible with java 8, javax.xml, module-info java 11
 |
 |
 
