@@ -6,7 +6,7 @@
   <artifactId>i18n-iso-639</artifactId>
   <packaging>jar</packaging>
 
-  <version>3.7-SNAPSHOT</version>
+  <version>3.7</version>
 
   <name>i18n-iso-639</name>
   <description>Provides a class with one instance of every of the ISO 639 languages</description>
@@ -54,7 +54,7 @@
     <connection>scm:git:${project.scm.url}.git</connection>
     <developerConnection>scm:git:${project.scm.url}.git</developerConnection>
     <url>https://github.com/mihxil/i18n-iso-639</url>
-    <tag>HEAD</tag>
+    <tag>3.7</tag>
   </scm>
 
   <dependencies>
