@@ -1,14 +1,15 @@
 package org.meeuw.test.jackson;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.meeuw.i18n.languages.LanguageCode;
 import org.meeuw.i18n.languages.ISO_639_Code;
+import org.meeuw.i18n.languages.LanguageCode;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class iso639 {
-    
+
     static class Container {
         ISO_639_Code language;
-        
+
         public Container(ISO_639_Code language) {
             this.language = language;
         }
@@ -16,7 +17,7 @@ public class iso639 {
             return language;
         }
     }
-    
+
     public static void main(String[] args) {
         String code;
         if (args.length == 0) {
@@ -28,8 +29,9 @@ public class iso639 {
         }
         Container languageContainer = LanguageCode.get(code).map(Container::new).orElseThrow();
         System.out.println(
-            code + " -> " + languageContainer.language  + 
-            "\n" + new ObjectMapper().valueToTree(languageContainer));
+            code + " -> " + languageContainer.language  +
+            "\n" + new ObjectMapper().valueToTree(languageContainer)
+        );
     }
 }
 

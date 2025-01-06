@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.meeuw.i18n.languages.*;
 
 public class iso639 {
-    
+
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Usage: iso639 [<code>|-|" + Arrays.stream(Scope.values()).map(Enum::name).collect(Collectors.joining("|")) + "]");
@@ -30,12 +30,12 @@ public class iso639 {
                 print(language);
             }
         }
-        
-      
 
-        
+
+
+
     }
-    
+
     private static void print(ISO_639_Code language) {
         System.out.println(language.code() + " -> " + language);
     }
