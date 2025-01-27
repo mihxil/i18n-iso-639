@@ -43,8 +43,8 @@
     <groovy.version>4.0.16</groovy.version>
     <codemodel.version>4.0.5</codemodel.version>
     <java.version>8</java.version>
-    <assertj.version>3.27.1</assertj.version>
-    <checker.version>3.48.3</checker.version>
+    <assertj.version>3.27.3</assertj.version>
+    <checker.version>3.48.4</checker.version>
     <jackson.version>2.18.2</jackson.version>
 
     <!-- just avoid some warnings -->
