@@ -202,17 +202,17 @@ public interface LanguageCode extends ISO_639_Code {
     }
 
     /**
-     * As {@link ISO_639#get(String)}, but throws an {@link IllegalArgumentException} if not found.
+     * As {@link ISO_639#get(String)}, but throws an {@link LanguageNotFoundException} if not found.
      *
      * @return The {@link LanguageCode} if found.
-     * @throws IllegalArgumentException if not found
+     * @throws LanguageNotFoundException if not found
      */
     static LanguageCode languageCode(String code) {
         if (ISO_639.ignoreNotFound.get()) {
             return get(code).orElse(NOTFOUND);
         } else {
             return get(code)
-                .orElseThrow(() -> new IllegalArgumentException("Unknown language code '" + code + "'"));
+                .orElseThrow(() -> new LanguageNotFoundException(code));
         }
     }
 

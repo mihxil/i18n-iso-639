@@ -756,7 +756,7 @@ public enum LanguageFamilyCode
     public static Optional<LanguageFamilyCode> get(String code) {
         try {
             return Optional.of(LanguageFamilyCode.valueOf(code));
-        } catch (IllegalArgumentException _x) {
+        } catch (LanguageNotFoundException _x) {
             return Optional.empty();
         }
     }

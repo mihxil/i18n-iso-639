@@ -30,10 +30,6 @@ public class iso639 {
                 print(language);
             }
         }
-
-
-
-
     }
 
     private static void print(ISO_639_Code language) {

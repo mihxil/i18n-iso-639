@@ -1,6 +1,7 @@
 package org.meeuw.i18n.languages;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.stream.Stream;
 
@@ -11,6 +12,7 @@ import org.checkerframework.checker.nullness.qual.PolyNull;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
+import static org.meeuw.i18n.languages.LanguageCode.NOTFOUND;
 
 /**
  * A utility class for working with ISO 639 language codes.
@@ -20,13 +22,28 @@ import static org.meeuw.i18n.languages.ISO_639_3_Code.KNOWN;
 public class ISO_639 {
 
     static ThreadLocal<Boolean> ignoreNotFound = ThreadLocal.withInitial(() -> Boolean.FALSE);
+    static ThreadLocal<Function<String, ISO_639_Code>> notFoundFallback = ThreadLocal.withInitial(() -> c -> NOTFOUND);
 
-    public static void setIgnoreNotFound() {
-        ignoreNotFound.set(Boolean.TRUE);
+    public static RemoveIgnoreNotFound setIgnoreNotFound() {
+        return setIgnoreNotFound(null);
     }
+
+    public static RemoveIgnoreNotFound setIgnoreNotFound(Function<String, ISO_639_Code> fallback) {
+        ignoreNotFound.set(Boolean.TRUE);
+        notFoundFallback.set(fallback);
+        return RemoveIgnoreNotFound.INSTANCE;
+    }
+
+    public static RemoveIgnoreNotFound implicitUserDefine() {
+        ignoreNotFound.set(true);
+        notFoundFallback.set(c -> new UserDefinedLanguage(c, null, c, "not found"));
+        return RemoveIgnoreNotFound.INSTANCE;
+    }
+
 
     public static void removeIgnoreNotFound() {
         ignoreNotFound.remove();
+        notFoundFallback.remove();
     }
 
     private ISO_639() {
@@ -208,18 +225,18 @@ public class ISO_639 {
     }
 
     /**
-     * As {@link #get(String)}, but throws an {@link IllegalArgumentException} if not found.
+     * As {@link #get(String)}, but throws an {@link LanguageNotFoundException} if not found.
      *
      * @return The {@link ISO_639_3_Code} if found
      * @param code ISO-639 code to find
-     * @throws IllegalArgumentException if not found
+     * @throws LanguageNotFoundException if not found, unless {@link ISO_639#setIgnoreNotFound()} was set, in which case {@link LanguageCode#NOTFOUND}
      */
     public static ISO_639_Code iso639(String code) {
         if (ignoreNotFound.get()) {
-            return get(code).orElse(LanguageCode.NOTFOUND);
+            return get(code).orElseGet(() -> notFoundFallback.get().apply(code));
         } else {
             return get(code)
-                .orElseThrow(() -> new IllegalArgumentException("Unknown language code '" + code + "'"));
+                .orElseThrow(() -> new LanguageNotFoundException(code));
         }
     }
 
@@ -235,6 +252,18 @@ public class ISO_639 {
             return null;
         }
         return iso639(code);
+    }
+
+    public static class  RemoveIgnoreNotFound implements AutoCloseable {
+
+        public static final RemoveIgnoreNotFound INSTANCE = new RemoveIgnoreNotFound();
+        private RemoveIgnoreNotFound() {
+
+        }
+        @Override
+        public void close() {
+            removeIgnoreNotFound();
+        }
     }
 
 }

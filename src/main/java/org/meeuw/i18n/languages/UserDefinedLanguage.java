@@ -88,4 +88,8 @@ public class UserDefinedLanguage implements LanguageCode {
     public List<LanguageCode> individualLanguages() {
         return List.of();
     }
+    @Override
+    public String toString() {
+        return code() + " (" + refName + ")";
+    }
 }
