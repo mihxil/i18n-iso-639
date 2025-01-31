@@ -2,6 +2,7 @@ package org.meeuw.i18n.languages.validation;
 
 import org.meeuw.i18n.languages.Scope;
 import org.meeuw.i18n.languages.Type;
+import org.meeuw.i18n.languages.validation.impl.LanguageValidator;
 
 
 /**
@@ -9,6 +10,9 @@ import org.meeuw.i18n.languages.Type;
  * It is used to pass the information from the annotation to the validation code.
  * <p>
  * Like a {@code record}, it will be simple to convert, if we drop java 11 support.
+ * <p>
+ *  I can be created using {@link #of(Language)}, and then
+ * </p>
  */
 public class LanguageValidationInfo {
     private final  boolean lenient;
@@ -23,7 +27,7 @@ public class LanguageValidationInfo {
     private final boolean mayContainCountry;
     private final boolean mayContainVariant;
 
-    public LanguageValidationInfo(
+    private LanguageValidationInfo(
         boolean lenient,
         Type[] type,
         Scope[] scope,
@@ -112,5 +116,9 @@ public class LanguageValidationInfo {
 
     public boolean mayContainVariant() {
         return mayContainVariant;
+    }
+
+    public boolean isValid(Object object){
+        return LanguageValidator.isValid(this, object);
     }
 }
