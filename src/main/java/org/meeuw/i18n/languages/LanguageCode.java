@@ -7,8 +7,7 @@ import java.util.stream.Stream;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.PolyNull;
+import org.checkerframework.checker.nullness.qual.*;
 import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -52,7 +51,7 @@ public interface LanguageCode extends ISO_639_Code {
 
 
     /**
-     * A stream with {@link Map.Entry map entries} with all known language names. Combined with their {@link ISO_639_Code}
+     * @return A stream with {@link Map.Entry map entries} with all known language names. Combined with their {@link ISO_639_Code}
      * This means that the same language may occur more than once in this stream. For example Dutch will occur as both "Dutch" and as "Flemish".
      *
      * @param locale The locale to use for the names. Currently, must be english.
@@ -83,6 +82,7 @@ public interface LanguageCode extends ISO_639_Code {
 
     /**
      * Defaulting version of {@link #streamByNames(Locale)}, using {@link Locale#US}.
+     * @return A stream with {@link Map.Entry map entries}
      * @since 3.0
      */
     static Stream<? extends Map.Entry<String, ? extends LanguageCode>> streamByNames() {
@@ -116,6 +116,8 @@ public interface LanguageCode extends ISO_639_Code {
      * <p>
      * The effect is that {@link #get(String)} (or {@link #get(String, boolean)} will return the registered {@link LanguageCode fallback code} if no real code is found.
      *
+     * @param code The code to (temporary) recognize
+     * @param exemption What it should fall back too
      * @see #setFallbacks(Map) To replace all current fallbacks with a map of these.
      * @see ISO_639#registerFallback(String, ISO_639_Code) For more generic fallbacks (also for language families)
      * @since 3.2
@@ -358,6 +360,7 @@ public interface LanguageCode extends ISO_639_Code {
     @Override
     String refName();
 
+    @Nullable
     String comment();
 
     /**

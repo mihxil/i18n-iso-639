@@ -7,8 +7,8 @@ import org.meeuw.i18n.languages.Type;
 /**
  * This class is used to pass the validation information from the Language annotation to the validation code.
  * It is used to pass the information from the annotation to the validation code.
- * 
- * lIke a record, it will be simple to convert.
+ * <p>
+ * Like a {@code record}, it will be simple to convert, if we drop java 11 support.
  */
 public class LanguageValidationInfo {
     private final  boolean lenient;
@@ -24,16 +24,16 @@ public class LanguageValidationInfo {
     private final boolean mayContainVariant;
 
     public LanguageValidationInfo(
-        boolean lenient, 
-        Type[] type, 
-        Scope[] scope, 
-        boolean iso6393, 
-        boolean iso6393Retired, 
+        boolean lenient,
+        Type[] type,
+        Scope[] scope,
+        boolean iso6393,
+        boolean iso6393Retired,
         boolean iso6392,
         boolean iso6395,
-        boolean requireLowerCase, 
-        boolean forXml, 
-        boolean mayContainCountry, 
+        boolean requireLowerCase,
+        boolean forXml,
+        boolean mayContainCountry,
         boolean mayContainVariant) {
         this.lenient = lenient;
         this.type = type;
@@ -47,11 +47,11 @@ public class LanguageValidationInfo {
         this.mayContainCountry = mayContainCountry;
         this.mayContainVariant = mayContainVariant;
     }
-    
+
     public static LanguageValidationInfo of(Language annotation) {
         return new LanguageValidationInfo(
-            annotation.lenient(), 
-            annotation.type(), 
+            annotation.lenient(),
+            annotation.type(),
             annotation.scope(),
             annotation.iso639_3(),
             annotation.iso639_3_retired(),
@@ -66,8 +66,8 @@ public class LanguageValidationInfo {
 
 
     public boolean lenient()  {
-      return lenient;  
-    } 
+      return lenient;
+    }
 
 
     public Type[] type() {
@@ -86,11 +86,11 @@ public class LanguageValidationInfo {
         return iso639_3_retired;
     }
 
-    
+
     public boolean iso639_2()  {
         return iso639_2;
     }
-    
+
     public boolean iso639_5()  {
         return iso639_5;
     }
@@ -98,15 +98,18 @@ public class LanguageValidationInfo {
     public boolean requireLowerCase() {
         return requireLowerCase;
     }
-    
+
+    /**
+     * Whether the language code should be suitable for {@code xml:lang} attributes.
+     */
     public boolean forXml() {
         return forXml;
     }
-    
+
     public boolean mayContainCountry() {
         return mayContainCountry;
     }
-    
+
     public boolean mayContainVariant() {
         return mayContainVariant;
     }

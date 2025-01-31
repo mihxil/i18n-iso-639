@@ -84,6 +84,7 @@ public class ISO_639 {
      * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
      *
      * @param code A 2 or 3 letter language code
+     * @param matchRetired Whether a {@link RetiredLanguageCode} result should be acceptable
      * @return An optional containing the {@link ISO_639_3_Code} if found.
      * @since 2.2
      */
@@ -96,24 +97,26 @@ public class ISO_639 {
 
     /**
      * Defaulting version of {@link #getByPart3(String, boolean)}, matching retired codes too.
+     * @param code A 2 or 3 letter language code
+     * @return An optional containing the {@link ISO_639_3_Code} if found.
      */
     public static Optional<LanguageCode> getByPart3(@Size(min = 3, max = 3) String code) {
         return getByPart3(code, true);
     }
 
     /**
-     * Retrieves a language family code by its 3 letter code.
+     * Retrieves a language family code by its 3-letter code.
      *
+     * @param code A 3 letter language family code (according to ISO-639-5)
+     * @return An optional containing the {@link LanguageFamilyCode} if found
      * @see LanguageFamilyCode#get(String)
      */
     public static Optional<LanguageFamilyCode> getByPart5(@Size(min = 3, max = 3) String code) {
-
         return LanguageFamilyCode.get(code);
     }
 
     /**
      * A stream with all known {@link ISO_639_Code language (or language family) codes} .
-     *
      *
      * @return a stream of all known language codes.
      */
@@ -142,6 +145,8 @@ public class ISO_639 {
      * <p>
      * If the given argument is an instance of {@link LanguageCode} it will also be registered as {@link LanguageCode#registerFallback(String, LanguageCode)}
      *
+     * @param code The code to (temporary) recognize
+     * @param exemption What it should fall back to
      * @see #setFallbacks(Map) To replace all current fallbacks with a map of these.
      * @see LanguageCode#registerFallback(String, LanguageCode)
      * @since 3.2
@@ -169,6 +174,7 @@ public class ISO_639 {
      * @see #setFallbacks(Map)
      * @see LanguageCode#getFallBacks()
      * @see #resetFallBacks()
+     * @return Unmodifiable map of registered fallbacks
      */
     public static Map<String, ISO_639_Code> getFallBacks() {
         return Collections.unmodifiableMap(FALLBACKS.get());
@@ -183,8 +189,8 @@ public class ISO_639 {
     }
 
     /**
-     * Obtains a language or language family by (one of their) code(s).
-     *
+     * @return A language or language family by (one of their) code(s)
+     * @param code The code
      * @see #get For a version that throws an exception if not found.
      */
     public static Optional<ISO_639_Code> get(String code) {
@@ -205,6 +211,7 @@ public class ISO_639 {
      * As {@link #get(String)}, but throws an {@link IllegalArgumentException} if not found.
      *
      * @return The {@link ISO_639_3_Code} if found
+     * @param code ISO-639 code to find
      * @throws IllegalArgumentException if not found
      */
     public static ISO_639_Code iso639(String code) {
@@ -218,7 +225,8 @@ public class ISO_639 {
 
 
     /**
-     * As {@link #iso639(String)}, but  it returns {@code null} if the argument is {@code null} or the empty string
+     * @return As {@link #iso639(String)}, but  it returns {@code null} if the argument is {@code null} or the empty string
+     * @param code ISO-639 code
      * @since 3.3
      */
     @JsonCreator

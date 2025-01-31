@@ -2,6 +2,8 @@ package org.meeuw.i18n.languages;
 
 import java.util.List;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 /**
  * @since 3.4
  */
@@ -12,7 +14,14 @@ public class UserDefinedLanguage implements LanguageCode {
     private final String refName;
     private final String comment;
 
-    public UserDefinedLanguage(String code, Type type, String refName, String comment) {
+    /**
+     * Constructor for user defined languages
+     * @param code     A code, which not be assigned yet
+     * @param type     The type of the language
+     * @param refName
+     * @param comment
+     */
+    public UserDefinedLanguage(String code, Type type, String refName, @Nullable String comment) {
         this.code = code;
         this.type = type;
         this.refName = refName;

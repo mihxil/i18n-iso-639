@@ -8,8 +8,8 @@ import java.util.stream.Stream;
 
 /**
  * This class represents a language code that has been retired.
- *<p>
- * @see <a href="https://iso639-3.sil.org/code_tables/deprecated_codes/data">https://iso639-3.sil.org/code_tables/deprecated_codes/data</a>
+ * <p>
+ * See <a href="https://iso639-3.sil.org/code_tables/deprecated_codes/data">https://iso639-3.sil.org/code_tables/deprecated_codes/data</a>
  * <p>
  * The main goal of this class is to be used in {@link ISO_639#getByPart3(String)}, which will return the unretired language code if possible.
  *
@@ -46,6 +46,7 @@ public class RetiredLanguageCode implements Serializable, LanguageCode {
         KNOWN = Collections.unmodifiableMap(map);
     }
 
+
     private final String code;
 
     private transient final String refName;
@@ -77,6 +78,10 @@ public class RetiredLanguageCode implements Serializable, LanguageCode {
         return KNOWN.values().stream();
     }
 
+
+    /**
+     * The ISO-639-5 code
+     */
     @Override
     public String code() {
         return code;

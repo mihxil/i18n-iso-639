@@ -43,8 +43,8 @@
     <groovy.version>4.0.16</groovy.version>
     <codemodel.version>4.0.5</codemodel.version>
     <java.version>8</java.version>
-    <assertj.version>3.27.1</assertj.version>
-    <checker.version>3.48.3</checker.version>
+    <assertj.version>3.27.3</assertj.version>
+    <checker.version>3.48.4</checker.version>
     <jackson.version>2.18.2</jackson.version>
 
     <!-- just avoid some warnings -->
@@ -150,7 +150,7 @@
     <plugins>
       <plugin>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.12.1</version>
+        <version>3.13.0</version>
         <configuration>
           <target>11</target>
           <source>11</source>
@@ -159,7 +159,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>3.4.2</version>
         <configuration>
           <archive>
             <manifestEntries>
@@ -170,7 +170,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-release-plugin</artifactId>
-        <version>3.0.1</version>
+        <version>3.1.1</version>
         <configuration>
           <branchName>${project.version}</branchName>
           <tagNameFormat>@{project.version}</tagNameFormat>
@@ -178,7 +178,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.2.5</version>
+        <version>3.5.2</version>
         <configuration>
           <useModulePath>false</useModulePath>
         </configuration>
@@ -186,7 +186,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.11</version>
+        <version>0.8.12</version>
         <executions>
           <execution>
             <id>agent</id>
@@ -215,7 +215,7 @@
           <plugin>
             <groupId>org.sonatype.plugins</groupId>
             <artifactId>nexus-staging-maven-plugin</artifactId>
-            <version>1.6.13</version>
+            <version>1.7.0</version>
             <extensions>true</extensions>
             <configuration>
               <serverId>ossrh</serverId>
@@ -225,7 +225,7 @@
           </plugin>
           <plugin>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>3.1.0</version>
+            <version>3.2.7</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -238,7 +238,7 @@
           </plugin>
           <plugin>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.3.0</version>
+            <version>3.3.1</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
@@ -250,7 +250,7 @@
           </plugin>
           <plugin>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.6.2</version>
+            <version>3.11.2</version>
             <configuration>
               <failOnError>false</failOnError>
               <show>public</show>
