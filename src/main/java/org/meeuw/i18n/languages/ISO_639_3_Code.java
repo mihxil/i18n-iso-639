@@ -33,7 +33,7 @@ public class ISO_639_3_Code implements LanguageCode {
 
 
 
-    static final String DIR = "/iso-639-3_Code_Tables_20241010/";
+    static final String DIR = "/iso-639-3_Code_Tables/";
     static {
         Map<String, List<NameRecord>> namesMap = new HashMap<>();
         try (InputStream inputStream = ISO_639_3_Code.class.getResourceAsStream(DIR + "iso-639-3_Name_Index.tab");
