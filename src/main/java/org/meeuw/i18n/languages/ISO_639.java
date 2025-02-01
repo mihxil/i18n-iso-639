@@ -25,15 +25,19 @@ public class ISO_639 {
     static ThreadLocal<Function<String, ISO_639_Code>> notFoundFallback = ThreadLocal.withInitial(() -> c -> NOTFOUND);
 
     /**
-     * If a code is not found in {@link #iso639(String)}, to throw {@link LanguageNotFoundException}, but return {@code null}
+     * If a code is not found in {@link #iso639(String)}, do not throw {@link LanguageNotFoundException}, but return {@link LanguageCode#NOTFOUND}
+     * @see #implicitUserDefine()
      */
     public static RemoveIgnoreNotFound setIgnoreNotFound() {
-        return setIgnoreNotFound(null);
+        ignoreNotFound.set(Boolean.TRUE);
+        notFoundFallback.remove();
+        return RemoveIgnoreNotFound.INSTANCE;
     }
 
     /**
-     * If a code is not found in {@link #iso639(String)}, to throw {@link LanguageNotFoundException}, but produce use given function
+     * If a code is not found in {@link #iso639(String)}, do not throw {@link LanguageNotFoundException}, but produce use given function
      * @param fallback What to produce in those cases
+     * @since 3.8
      */
     public static RemoveIgnoreNotFound setIgnoreNotFound(Function<String, ISO_639_Code> fallback) {
         ignoreNotFound.set(Boolean.TRUE);
@@ -41,6 +45,10 @@ public class ISO_639 {
         return RemoveIgnoreNotFound.INSTANCE;
     }
 
+    /**
+     * If a code is not found in {@link #iso639(String)}, do not throw {@link LanguageNotFoundException}, but create {@link UserDefinedLanguage}
+     * @since 3.8
+     */
     public static RemoveIgnoreNotFound implicitUserDefine() {
         ignoreNotFound.set(true);
         notFoundFallback.set(c -> new UserDefinedLanguage(c, null, c, "not found"));
@@ -239,6 +247,7 @@ public class ISO_639 {
      * @throws LanguageNotFoundException if not found, unless {@link ISO_639#setIgnoreNotFound()} was set, in which case {@link LanguageCode#NOTFOUND}
      * @see #setIgnoreNotFound()
      * @see #setIgnoreNotFound(Function)
+     * @see #implicitUserDefine()
      */
     public static ISO_639_Code iso639(String code) {
         if (ignoreNotFound.get()) {
