@@ -24,10 +24,17 @@ public class ISO_639 {
     static ThreadLocal<Boolean> ignoreNotFound = ThreadLocal.withInitial(() -> Boolean.FALSE);
     static ThreadLocal<Function<String, ISO_639_Code>> notFoundFallback = ThreadLocal.withInitial(() -> c -> NOTFOUND);
 
+    /**
+     * If a code is not found in {@link #iso639(String)}, to throw {@link LanguageNotFoundException}, but return {@code null}
+     */
     public static RemoveIgnoreNotFound setIgnoreNotFound() {
         return setIgnoreNotFound(null);
     }
 
+    /**
+     * If a code is not found in {@link #iso639(String)}, to throw {@link LanguageNotFoundException}, but produce use given function
+     * @param fallback What to produce in those cases
+     */
     public static RemoveIgnoreNotFound setIgnoreNotFound(Function<String, ISO_639_Code> fallback) {
         ignoreNotFound.set(Boolean.TRUE);
         notFoundFallback.set(fallback);
@@ -230,6 +237,8 @@ public class ISO_639 {
      * @return The {@link ISO_639_3_Code} if found
      * @param code ISO-639 code to find
      * @throws LanguageNotFoundException if not found, unless {@link ISO_639#setIgnoreNotFound()} was set, in which case {@link LanguageCode#NOTFOUND}
+     * @see #setIgnoreNotFound()
+     * @see #setIgnoreNotFound(Function)
      */
     public static ISO_639_Code iso639(String code) {
         if (ignoreNotFound.get()) {

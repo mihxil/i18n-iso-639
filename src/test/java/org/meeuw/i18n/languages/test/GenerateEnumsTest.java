@@ -185,7 +185,7 @@ public class GenerateEnumsTest {
                     iso639_5.staticInvoke( "valueOf").arg(code)
                 ));
             jTryBlock
-                ._catch(model.ref(LanguageNotFoundException.class))
+                ._catch(model.ref(IllegalArgumentException.class))
                 .body()
                 ._return(model.ref(Optional.class).staticInvoke("empty"));
 

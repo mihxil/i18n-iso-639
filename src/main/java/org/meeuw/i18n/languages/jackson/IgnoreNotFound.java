@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
 
 /**
  * Can be registered in Jackson to ignore {@link LanguageNotFoundException}
+ * Could also be accomplished by {@link ISO_639#setIgnoreNotFound()}
  */
 public class IgnoreNotFound extends DeserializationProblemHandler {
 
