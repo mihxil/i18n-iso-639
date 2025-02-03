@@ -172,6 +172,11 @@ assertThat(LanguageCode.languageCode("dse").getDisplayName(new Locale("nl"))).is
 |
 
 
+| 3.8
+| Better support for fallbacks. Updated tables
+| 2025-1
+|
+
 
 |===
 
