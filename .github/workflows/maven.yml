@@ -8,6 +8,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,16 +27,16 @@ jobs:
           java-version: 17
           distribution: 'temurin'
           cache: 'maven'
-          server-id: ossrh
-          server-username: SONATYPE_USERNAME
-          server-password: SONATYPE_PASSWORD
+          server-id: central
+          server-username: CENTRAL_USERNAME
+          server-password: CENTRAL_PASSWORD
           gpg-private-key: ${{ secrets.GPG_SECRET_KEY }}
           gpg-passphrase: GPG_SECRET_KEY_PASSPHRASE
       - name: Build with Maven
         run: mvn -B deploy
         env:
-          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
-          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
           GPG_SECRET_KEY_PASSPHRASE: ${{ secrets.GPG_SECRET_KEY_PASSPHRASE }}
       - name: Make sure not changed (test case generates code, but should not change it)
         run: git diff --exit-code
