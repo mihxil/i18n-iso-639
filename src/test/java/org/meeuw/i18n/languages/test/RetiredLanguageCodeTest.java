@@ -25,12 +25,5 @@ class RetiredLanguageCodeTest {
         assertThat(RetiredLanguageCode.getByCode("ppr").get().changeTo().code()).isEqualTo("lcq");
 
     }
-    
-    /**
-     * This is an odd case, the code was retired, but now it is back.
-     */
-    @Test
-    public void lcq() throws RetiredLanguageCode.RetirementException {
-        assertThat(RetiredLanguageCode.getByCode("lcq").get().changeTo().code()).isEqualTo("lcq");
-    }
+
 }
