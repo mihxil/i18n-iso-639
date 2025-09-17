@@ -44,7 +44,8 @@ jobs:
           echo "Making sure it is usable without any further deps"
           (cd test/simple ; mvn -B -q -Dexec.args=-; mvn -B dependency:tree)
           (cd test/jackson; mvn -B -q ; mvn -B dependency:tree)
-      - uses: codecov/codecov-action@v4
+      - uses: mmprogrami/after-maven-action@v2
+      - uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Publish Unit Test Results
