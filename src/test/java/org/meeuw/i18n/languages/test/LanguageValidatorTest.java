@@ -1,15 +1,18 @@
 package org.meeuw.i18n.languages.test;
 
-import jakarta.validation.*;
 import java.util.*;
 import java.util.stream.Collectors;
-import static org.assertj.core.api.Assertions.assertThat;
+
+import jakarta.validation.*;
+
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.meeuw.i18n.languages.ISO_639;
 import org.meeuw.i18n.languages.ISO_639_Code;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Michiel Meeuwissen
@@ -36,9 +39,9 @@ public class LanguageValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-        "nl", 
-        "zxx", 
-        "jw", // should be jv, but wrong in specs on one palce
+        "nl",
+        "zxx",
+        "jw", // should be jv, but wrong in specs on one place
         "iw", // was changed to he
         "id", // was changed to in
         "ji", // was changed to yi
@@ -51,10 +54,10 @@ public class LanguageValidatorTest {
         a.language = lang;
         String displayName = new Locale(lang).getDisplayLanguage();
         System.out.println(lang + ":" + ISO_639.get(a.language).get() + "  (" + displayName + ")");
-        
+
         assertThat(VALIDATOR.validate(a)).isEmpty();
     }
-   
+
 
 
 
@@ -187,16 +190,16 @@ public class LanguageValidatorTest {
                 + nl + "|" + self + "|");
         }
     }
- 
-   
+
+
 
     @ParameterizedTest
     @ValueSource(strings = {"nl", "nl-NL", "nl-A"})
     void validField(String lang) {
         assertThat(VALIDATOR.validate(new WithLanguageFields(lang))).isEmpty();
     }
-    
-    
+
+
     @ParameterizedTest
     @ValueSource(strings = {"nl", "nl-NL", "nl-A", "hok"})
     void validLanguageOrFamilyField(String lang) {
@@ -204,7 +207,7 @@ public class LanguageValidatorTest {
         withLanguageFields.livingLanguageOrFamily = lang;
         assertThat(VALIDATOR.validate(withLanguageFields)).isEmpty();
     }
-    
+
     @ParameterizedTest
     @ValueSource(strings = {"hok"})
     void validFamilyField(String lang) {
@@ -212,7 +215,7 @@ public class LanguageValidatorTest {
         withLanguageFields.family = lang;
         assertThat(VALIDATOR.validate(withLanguageFields)).isEmpty();
     }
-    
+
     @ParameterizedTest
     @ValueSource(strings = {"nl", "nl-NL", "nl-A"})
     void invalidFamilyField(String lang) {
@@ -223,15 +226,15 @@ public class LanguageValidatorTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-        "NL", // uppercase 
+        "NL", // uppercase
         "bl", // not a code
-        "bl-A", // not a code 
+        "bl-A", // not a code
         "hok" // a family, not a language
     })
     void invalidFieldValues(String lang) {
         assertThat(VALIDATOR.validate(new WithLanguageFields(lang))).hasSize(1);
     }
-    
+
     @ParameterizedTest
     @ValueSource(strings = {"bl", "bl-A"})
     void invalidLocale(String lang) {
@@ -239,7 +242,7 @@ public class LanguageValidatorTest {
         a.object = Locale.forLanguageTag(lang);
         assertThat(VALIDATOR.validate(a)).hasSize(1);
     }
-    
+
     @ParameterizedTest
     @ValueSource(strings = {"nl", "NL", "nld-A"})
     void validLocale(String lang) {
@@ -247,7 +250,7 @@ public class LanguageValidatorTest {
         a.object = Locale.forLanguageTag(lang);
         assertThat(VALIDATOR.validate(a)).hasSize(0);
     }
- 
- 
- 
+
+
+
 }
