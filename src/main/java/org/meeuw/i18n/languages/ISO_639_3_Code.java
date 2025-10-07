@@ -117,11 +117,11 @@ public class ISO_639_3_Code implements LanguageCode {
      * @return a stream of all known language codes.
      *
      */
-     public static Stream<ISO_639_3_Code> stream() {
+    public static Stream<ISO_639_3_Code> stream() {
         return KNOWN.values()
             .stream()
             .sorted(Comparator.comparing(ISO_639_3_Code::code));
-     }
+    }
 
     private static final Map<String, String> RETIRED = new HashMap<>();
     static {

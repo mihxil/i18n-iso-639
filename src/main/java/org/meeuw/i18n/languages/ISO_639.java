@@ -1,6 +1,7 @@
 package org.meeuw.i18n.languages;
 
 import java.util.*;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.stream.Stream;
@@ -22,7 +23,7 @@ import static org.meeuw.i18n.languages.LanguageCode.NOTFOUND;
 public class ISO_639 {
 
     static ThreadLocal<Boolean> ignoreNotFound = ThreadLocal.withInitial(() -> Boolean.FALSE);
-    static ThreadLocal<Function<String, ISO_639_Code>> notFoundFallback = ThreadLocal.withInitial(() -> c -> NOTFOUND);
+    static ThreadLocal<BiFunction<String, Class<? extends ISO_639_Code>,  ISO_639_Code>> notFoundFallback = ThreadLocal.withInitial(() -> (s, c) -> NOTFOUND);
 
     /**
      * If a code is not found in {@link #iso639(String)}, do not throw {@link LanguageNotFoundException}, but return {@link LanguageCode#NOTFOUND}
@@ -40,10 +41,19 @@ public class ISO_639 {
      * @since 3.8
      */
     public static RemoveIgnoreNotFound setIgnoreNotFound(Function<String, ISO_639_Code> fallback) {
+
+        return setIgnoreNotFound((code, clazz) -> fallback.apply(code));
+    }
+
+    /**
+     * @since 3.11
+     */
+    public static RemoveIgnoreNotFound setIgnoreNotFound(BiFunction<String, Class<? extends ISO_639_Code>, ISO_639_Code> fallback) {
         ignoreNotFound.set(Boolean.TRUE);
         notFoundFallback.set(fallback);
         return RemoveIgnoreNotFound.INSTANCE;
     }
+
 
     /**
      * If a code is not found in {@link #iso639(String)}, do not throw {@link LanguageNotFoundException}, but create {@link UserDefinedLanguage}
@@ -51,7 +61,7 @@ public class ISO_639 {
      */
     public static RemoveIgnoreNotFound implicitUserDefine() {
         ignoreNotFound.set(true);
-        notFoundFallback.set(c -> new UserDefinedLanguage(c, null, c, "not found"));
+        notFoundFallback.set((c, clazz) -> new UserDefinedLanguage(c, null, c, "not found"));
         return RemoveIgnoreNotFound.INSTANCE;
     }
 
@@ -224,20 +234,35 @@ public class ISO_639 {
      * @return A language or language family by (one of their) code(s)
      * @param code The code
      * @see #get For a version that throws an exception if not found.
+     * @since 3.11
      */
-    public static Optional<ISO_639_Code> get(String code) {
-        ISO_639_Code lc = LanguageCode.get(code).orElse(null);
-        if (lc == null) {
-            try {
-                return Optional.of(LanguageFamilyCode.valueOf(code));
-            } catch (IllegalArgumentException iae) {
-                ISO_639_Code o = FALLBACKS.get().get(code);
-                return Optional.ofNullable(o);
+    @SuppressWarnings("unchecked")
+    public static <L extends ISO_639_Code> Optional<L> get(String code, Class<L> clazz) {
+        if (clazz.isAssignableFrom(LanguageCode.class)) {
+            LanguageCode lc = LanguageCode.get(code).orElse(null);
+            if (lc != null) {
+                return Optional.of((L) lc);
             }
-        } else {
-            return Optional.of(lc);
         }
+        if (clazz.isAssignableFrom(LanguageFamilyCode.class)) {
+            try {
+                LanguageFamilyCode lc = LanguageFamilyCode.valueOf(code);
+                return Optional.of((L) lc);
+            } catch (IllegalArgumentException ignore) {
+                // ignore
+            }
+        }
+        ISO_639_Code o = FALLBACKS.get().get(code);
+        if (clazz.isInstance(o)) {
+            return Optional.of((L) o);
+        }
+        return Optional.empty();
     }
+
+    public static Optional<ISO_639_Code> get(String code) {
+        return get(code, ISO_639_Code.class);
+    }
+
 
     /**
      * As {@link #get(String)}, but throws an {@link LanguageNotFoundException} if not found.
@@ -250,13 +275,20 @@ public class ISO_639 {
      * @see #implicitUserDefine()
      */
     public static ISO_639_Code iso639(String code) {
+        return iso639(code, ISO_639_Code.class);
+    }
+
+    /**
+     * @since 3.11
+     */
+    public static <L extends ISO_639_Code> L iso639(String code, Class<L> clazz) {
         if (ignoreNotFound.get()) {
-            return get(code).orElseGet(() -> notFoundFallback.get().apply(code));
+            return get(code, clazz).orElseGet(() -> (L) notFoundFallback.get().apply(code, clazz));
         } else {
-            return get(code)
-                .orElseThrow(() -> new LanguageNotFoundException(code));
+            return get(code, clazz).orElseThrow(() -> new LanguageNotFoundException(code));
         }
     }
+
 
 
     /**

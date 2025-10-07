@@ -1,0 +1,166 @@
+= JAVA ISO-639 support
+:toc:
+
+image:https://github.com/mihxil/i18n-iso-639/actions/workflows/maven.yml/badge.svg?[Build Status,link=https://github.com/mihxil/i18n-iso-639/actions/workflows/maven.yml]
+//image:https://img.shields.io/nexus/s/https/oss.sonatype.org/org.meeuw.i18n/i18n-iso-639.svg[snapshots,link=https://oss.sonatype.org/content/repositories/snapshots/org/meeuw/i18n/]
+image:https://codecov.io/gh/mihxil/i18n-iso-639/branch/main/graph/badge.svg[codecov,link=https://codecov.io/gh/mihxil/i18n-iso-639]
+image:https://www.javadoc.io/badge/org.meeuw.i18n/i18n-iso-639.svg?color=blue[javadoc,link=https://www.javadoc.io/doc/org.meeuw.i18n/i18n-iso-639/latest]
+image:https://img.shields.io/maven-central/v/org.meeuw.i18n/i18n-iso-639.svg?label=maven%20central[Maven Central,link=https://central.sonatype.com/search?namespace=org.meeuw.i18n&name=i18n-iso-639]
+
+
+Codes for Languages (and language groups) of the World are covered by the https://en.wikipedia.org/wiki/ISO_639[ISO-639 standard]
+
+These standards provide letter codes for each language. E.g. ISO-639-3 provides a three-letter code for all living languages.
+
+There are too many such codes to be contained in a java-enum (e.g. https://github.com/TakahikoKawasaki/nv-i18n/blob/master/src/main/java/com/neovisionaries/i18n/LanguageAlpha3Code.java is just not complete)
+
+This package has the tab separated files provided by https://iso639-3.sil.org/, and java classes to read this, and provide all language codes as java objects, with getters.
+
+== Usage
+
+[source,java]
+----
+include::src/test/java/org/meeuw/i18n/languages/test/ExamplesTest.java[]
+----
+
+See also the https://github.com/mihxil/i18n-iso-639-3/blob/main/src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[test cases]
+[source, java]
+----
+include::src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[]
+----
+
+=== Retired codes
+`LanguageCode#getByCode` will also support retired codes if possible. This means that the code of the returned object may be different:
+
+[source, java]
+----
+// the 'krim' dialect (Sierra Leone) officially merged into 'bmf' (Bom-Kim) in 2017
+
+ assertThat(LanguageCode.getByCode("krm").get().getCode()).isEqualTo("bmf");
+
+----
+
+=== Fall backs
+
+Sometimes we have to deal with systems which have their own versions of the standards. In these cases it is possible to register 'fall backs'.
+
+E.g.
+[source, java]
+----
+ // Our partner uses the pseudo ISO-639-1 code 'XX' for 'no language'
+ //  fall back to a proper Part 3 code.
+ try {
+   LanguageCode.registerFallback("XX", LanguageCode.languageCode("zxx"));
+   assertThat(ISO_639.iso639("XX").code()).isEqualTo("zxx");
+ } finally {
+   LanguageCode.resetFallBacks();
+ }
+----
+
+
+== Support
+
+=== JAXB
+The language code is annotated with a JAXB annotation. It will serialize and deserialize to and from the code. The dependency on the annotation is optional.
+
+=== JSON
+
+The needed classes are also annotated by Jackson annotations, so they can be serialized to and from JSON.
+
+
+=== Serializable
+`LanguageCode` is serializable too, and ensures that on deserialization the same object for every language is returned. (And only the _code_ is non-transient).
+
+=== Sortable
+
+The default sort order of a `LanguageCode` used to be on 'Inverted Name'. There may be more than one (inverted) name though (E.g. Dutch and Flemish). Since 3.0 LanguageCode is not Sortable anymore. LanguageCode#stream() is sorted by ISO-639-3 code.
+
+=== Internationalization of language names
+
+The files of `sil.org` only provide names of languages and language families in English. Java's `java.util.Locale` can provide the name of a lot of languages (I presume the language with a ISO-639-1 code) in a lot of other languages.
+
+E.g.
+[source, java]
+----
+ new Locale("en").getDisplayName(new Locale("nl"));
+----
+will give the name of the language 'English' in Dutch ('Engels').
+
+To make this available in a generic way the base interface `ISO_639` just has
+[source, java]
+----
+String getDisplayName(Locale locale)
+----
+For `ISO_639_1` this will first try to use the above way with `java.util.Locale`. For other codes, and as a fallback in `ISO_639_1` will use the resource bundle `org.meeuw.i18n.languages.DisplayNames`, where the default and english names are provided by the `sil.org` files.
+
+Noticeably, for example for sign languages this is the way to have proper names available
+
+[source, java]
+----
+assertThat(LanguageCode.languageCode("dse").getDisplayName(new Locale("nl"))).isEqualTo("Nederlandse Gebarentaal");
+----
+
+== Versions
+
+[cols="1,1,1,1"]
+|===
+|<1
+|developing/testing
+|2023
+|
+
+|1.x
+|compatible with java 8, javax.xml, module-info java 11
+|
+|
+
+| 1.0
+|
+| 2023-11-30
+|
+
+
+|2.x
+|java 11, jakarta.xml
+|2024-01-28
+|jakarta mostly applies to the optional jaxb support (and to some - also optional - validation annotations)
+
+|2.1
+|support for retired codes
+|2024-02-11
+|
+
+|2.2
+|migrated support for language code validation from i18n-regions
+|2024-?
+|
+
+| 3.0
+| Refactoring
+| 2024-3
+|  Added enum for ISO-639-1 codes,
+   Made syntax forward compabible with records. So, getters like `getPart1()`) are dropped in favor of `part1()`. `LanguageCode` itself is now an interface. This may be backported to 1.2 for javax compatibility.
+
+
+| 3.1
+| Refactoring
+| 2024-3
+| Support for ISO-639-5.    Dropped the -3 from the artifact id.
+
+| 3.6
+| Support for #getDisplayName
+| 2024-8
+|
+
+
+| 3.8
+| Better support for fallbacks. Updated tables
+| 2025-1
+|
+
+
+|===
+
+
+
+
