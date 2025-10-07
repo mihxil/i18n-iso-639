@@ -16,6 +16,8 @@ There are too many such codes to be contained in a java-enum (e.g. https://githu
 
 This package has the tab separated files provided by https://iso639-3.sil.org/, and java classes to read this, and provide all language codes as java objects, with getters.
 
+Major language and language families are contained in enums though, so can be addressed as constants.
+
 == Usage
 
 [source,java]
