@@ -3,6 +3,7 @@ package org.meeuw.i18n.languages.jackson;
 import java.io.IOException;
 
 import org.meeuw.i18n.languages.*;
+import org.meeuw.i18n.languages.ISO_639;
 
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.DeserializationProblemHandler;

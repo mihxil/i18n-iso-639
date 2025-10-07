@@ -21,7 +21,6 @@ import static org.meeuw.i18n.languages.LanguageCode.UNKNOWN;
 
 
 public class SerializationTest {
-
     /**
      * Test serializing/deserializing to XML
      */
@@ -63,16 +62,10 @@ public class SerializationTest {
         } finally {
             ISO_639.resetFallBacks();
         }
-
-
-
-
     }
 
-
-
      /**
-     * Test serializing/deserializing to XML
+     * Test serializing/deserializing to JSON
      */
     @ParameterizedTest
     @ValueSource(strings = {"nld", "gem"})
@@ -118,11 +111,6 @@ public class SerializationTest {
             ISO_639.resetFallBacks();
         }
     }
-
-
-
-
-
 
     /**
      * Test java serializing/deserializing

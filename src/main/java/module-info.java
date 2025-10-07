@@ -20,6 +20,7 @@ module org.meeuw.i18n.languages {
     // jackson json binding (optional annotation)
     requires static com.fasterxml.jackson.databind;
     requires static java.compiler;
+    requires org.meeuw.i18n.languages;
 
     // but if used, these are needed too
     opens org.meeuw.i18n.languages to com.fasterxml.jackson.databind;
