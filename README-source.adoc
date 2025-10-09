@@ -22,24 +22,31 @@ Major language and language families are contained in enums though, so can be ad
 
 [source,java]
 ----
-include::src/test/java/org/meeuw/i18n/languages/test/ExamplesTest.java[]
+include::src/test/java/org/meeuw/i18n/languages/test/ExamplesTest.java[tag=import]
+...
+include::src/test/java/org/meeuw/i18n/languages/test/ExamplesTest.java[tag=dutch, indent=0]
 ----
 
-See also the https://github.com/mihxil/i18n-iso-639-3/blob/main/src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[test cases]
+See also the
+
+[%collapsible, title=test cases]
+====
+https://github.com/mihxil/i18n-iso-639-3/blob/main/src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[link]
+
 [source, java]
 ----
 include::src/test/java/org/meeuw/i18n/languages/test/LanguageCodeTest.java[]
 ----
+====
 
 === Retired codes
 `LanguageCode#getByCode` will also support retired codes if possible. This means that the code of the returned object may be different:
 
 [source, java]
 ----
-// the 'krim' dialect (Sierra Leone) officially merged into 'bmf' (Bom-Kim) in 2017
-
- assertThat(LanguageCode.getByCode("krm").get().getCode()).isEqualTo("bmf");
-
+include::src/test/java/org/meeuw/i18n/languages/test/ExamplesTest.java[tag=import]
+...
+include::src/test/java/org/meeuw/i18n/languages/test/ExamplesTest.java[tag=krim, indent=0]
 ----
 
 === Fall backs
@@ -49,14 +56,9 @@ Sometimes we have to deal with systems which have their own versions of the stan
 E.g.
 [source, java]
 ----
- // Our partner uses the pseudo ISO-639-1 code 'XX' for 'no language'
- //  fall back to a proper Part 3 code.
- try {
-   LanguageCode.registerFallback("XX", LanguageCode.languageCode("zxx"));
-   assertThat(ISO_639.iso639("XX").code()).isEqualTo("zxx");
- } finally {
-   LanguageCode.resetFallBacks();
- }
+include::src/test/java/org/meeuw/i18n/languages/test/ExamplesTest.java[tag=import]
+...
+include::src/test/java/org/meeuw/i18n/languages/test/ExamplesTest.java[tag=fallback, indent=0]
 ----
 
 
@@ -99,7 +101,8 @@ Noticeably, for example for sign languages this is the way to have proper names 
 
 [source, java]
 ----
-assertThat(LanguageCode.languageCode("dse").getDisplayName(new Locale("nl"))).isEqualTo("Nederlandse Gebarentaal");
+include::src/test/java/org/meeuw/i18n/languages/test/ExamplesTest.java[tag=dse, indent=0]
+
 ----
 
 == Versions
