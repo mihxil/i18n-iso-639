@@ -13,7 +13,7 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * A validator for language codes (or {@link java.util.Locale}s (which also is a container for language codes)
+ * A validator for language codes (or for {@link java.util.Locale}s, which are also containers for language codes)
  *
  * @author Michiel Meeuwissen
  * @since 2.2
