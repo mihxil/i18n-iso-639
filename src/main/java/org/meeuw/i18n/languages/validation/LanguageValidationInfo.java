@@ -7,11 +7,10 @@ import org.meeuw.i18n.languages.validation.impl.LanguageValidator;
 
 /**
  * This class is used to pass the validation information from the Language annotation to the validation code.
- * It is used to pass the information from the annotation to the validation code.
  * <p>
- * Like a {@code record}, it will be simple to convert, if we drop java 11 support.
+ * Looks like a {@code record}, so it will be simple to convert, if we drop java 11 support.
  * <p>
- *  I can be created using {@link #of(Language)}, and then
+ * It can be created using {@link #of(Language)}.
  * </p>
  */
 public class LanguageValidationInfo {
