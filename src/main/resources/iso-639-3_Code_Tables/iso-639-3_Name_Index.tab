@@ -5275,6 +5275,7 @@ okv	Orokaiva	Orokaiva
 okx	Okpe (Northwestern Edo)	Okpe (Northwestern Edo)
 okz	Old Khmer	Khmer, Old
 ola	Walungge	Walungge
+olb	Oli-Bodiman	Oli-Bodiman
 old	Mochi	Mochi
 ole	Olekha	Olekha
 olk	Olkol	Olkol
@@ -5347,10 +5348,16 @@ ory	Oriya (individual language)	Oriya (individual language)
 orz	Ormu	Ormu
 osa	Osage	Osage
 osc	Oscan	Oscan
+osd	Digor	Digor
+osd	Digor Ossetian	Ossetian, Digor
+osd	Digor Ossetic	Ossetic, Digor
 osi	Osing	Osing
 osn	Old Sundanese	Sundanese, Old
 oso	Ososo	Ososo
 osp	Old Spanish	Spanish, Old
+oss	Iron	Iron
+oss	Iron Ossetian	Ossetian, Iron
+oss	Iron Ossetic	Ossetic, Iron
 oss	Ossetian	Ossetian
 oss	Ossetic	Ossetic
 ost	Osatu	Osatu
@@ -6052,6 +6059,7 @@ scu	Shumcho	Shumcho
 scv	Sheni	Sheni
 scw	Sha	Sha
 scx	Sicel	Sicel
+scz	Shaetlan	Shaetlan
 sda	Toraja-Sa'dan	Toraja-Sa'dan
 sdb	Shabak	Shabak
 sdc	Sassarese Sardinian	Sardinian, Sassarese
@@ -8026,7 +8034,6 @@ yob	Yoba	Yoba
 yog	Yogad	Yogad
 yoi	Yonaguni	Yonaguni
 yok	Yokuts	Yokuts
-yol	Yola	Yola
 yom	Yombe	Yombe
 yon	Yongkom	Yongkom
 yor	Yoruba	Yoruba
