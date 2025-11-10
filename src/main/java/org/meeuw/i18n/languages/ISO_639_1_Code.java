@@ -1259,7 +1259,7 @@ public enum ISO_639_1_Code
     or,
 
     /**
-     * {@link ISO_639_3_Code iso 639 3 code}: oss Ossetian, Ossetic
+     * {@link ISO_639_3_Code iso 639 3 code}: oss Iron, Iron Ossetian, Iron Ossetic, Ossetian, Ossetic
      * <p>
      * scope: individual
      * <p>
