@@ -22,6 +22,12 @@ import static org.meeuw.i18n.languages.LanguageCode.NOTFOUND;
  */
 public class ISO_639 {
 
+    /**
+     * A constant representing the 'undefined' language.
+     * @since 3.12
+     */
+    public static final ISO_639_Code UND = ISO_639.iso639("und");
+
     static ThreadLocal<Boolean> ignoreNotFound = ThreadLocal.withInitial(() -> Boolean.FALSE);
     static ThreadLocal<BiFunction<String, Class<? extends ISO_639_Code>,  ISO_639_Code>> notFoundFallback = ThreadLocal.withInitial(() -> (s, c) -> NOTFOUND);
 
