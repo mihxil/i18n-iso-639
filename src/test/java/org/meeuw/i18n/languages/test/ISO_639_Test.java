@@ -23,4 +23,10 @@ public class ISO_639_Test {
 
         });
     }
+
+    @Test
+    public void undefined() {
+        ISO_639_Code und = ISO_639.iso639("und");
+        assertThat(und).isNotNull();
+    }
 }

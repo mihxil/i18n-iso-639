@@ -315,6 +315,7 @@ public class ISO_639_3_Code implements LanguageCode {
         return INDIVIDUAL_LANGUAGES.getOrDefault(this, Collections.emptyList());
     }
 
+    @Serial
     private Object readResolve() {
         return LanguageCode.get(part3()).orElse(this);
     }
