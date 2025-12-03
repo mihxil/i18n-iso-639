@@ -27,13 +27,23 @@ public interface LanguageCode extends ISO_639_Code {
 
     /**
      * @since 3.4
+     * @deprecated This seems to be the same thing as {@link #UND}?
      */
+    @Deprecated
     UserDefinedLanguage UNKNOWN = new UserDefinedLanguage("UNKNOWN", null, "unknown language", "the language for some reason is unknown or unrecognized");
 
     /**
      * @since 3.4
      */
     UserDefinedLanguage NOTFOUND = new UserDefinedLanguage("NOTFOUND", null, "language not found", "the language is not found");
+
+    /**
+     * A constant representing the 'undefined' language (which has a ISO-639-3 code)
+     * @since 4.0
+     * @see LanguageCode#NOTFOUND
+     * @see LanguageCode#UNKNOWN
+     */
+    ISO_639_3_Code UND = ISO_639_3_Code.KNOWN.get("und");
 
 
     /**
