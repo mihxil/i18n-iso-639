@@ -3,14 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.meeuw.i18n</groupId>
-  <artifactId>i18n-iso-639-test-jackson</artifactId>
+  <artifactId>i18n-iso-639-test-jackson3</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <properties>
     <maven.compiler.target>11</maven.compiler.target>
     <maven.compiler.source>11</maven.compiler.source>
-    <main.class>org.meeuw.test.jackson.iso639</main.class>
+    <main.class>org.meeuw.test.jackson3.ISO639Test</main.class>
   </properties>
 
 
@@ -21,9 +21,9 @@
       <version>4.0-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
+      <groupId>tools.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>2.20.1</version>
+      <version>3.0.2</version>
     </dependency>
   </dependencies>
   <build>
