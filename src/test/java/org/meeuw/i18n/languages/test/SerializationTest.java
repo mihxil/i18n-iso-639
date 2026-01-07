@@ -47,12 +47,9 @@ public class SerializationTest {
 
             assertThat(a.languageCode).isNull();
         }
-        try {
-            ISO_639.setIgnoreNotFound();
+        try (var clear = ISO_639.setIgnoreNotFound();) {
              A a = JAXB.unmarshal(new StringReader("<a languageCode='zz' />"), A.class);
             assertThat(a.languageCode).isEqualTo(NOTFOUND);
-        } finally {
-            ISO_639.removeIgnoreNotFound();
         }
 
         try {
@@ -96,12 +93,9 @@ public class SerializationTest {
             A a = objectMapper.readValue("{\"languageCode\": \"" + code + "\"}", A.class);
         }).isInstanceOf(ValueInstantiationException.class);
 
-        try {
-            ISO_639.setIgnoreNotFound();
+        try (var clear = ISO_639.setIgnoreNotFound()) {
             A a = objectMapper.readValue("{\"languageCode\": \"" + code + "\"}", A.class);
             assertThat(a.languageCode).isEqualTo(NOTFOUND);
-        } finally {
-            ISO_639.removeIgnoreNotFound();
         }
         try {
             ISO_639.registerFallback("zz", UNKNOWN);

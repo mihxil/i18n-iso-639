@@ -15,4 +15,5 @@ open module org.meeuw.i18n.languages.test {
     requires com.fasterxml.jackson.databind;
     requires com.sun.codemodel;
     requires java.compiler;
+    requires tools.jackson.databind;
 }
