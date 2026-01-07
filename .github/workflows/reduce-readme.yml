@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
+
   asciidoctor:
     runs-on: ubuntu-latest
     permissions:
