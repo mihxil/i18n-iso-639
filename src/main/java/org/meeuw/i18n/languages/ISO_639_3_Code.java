@@ -25,6 +25,7 @@ public class ISO_639_3_Code implements LanguageCode {
 
 
     static final Map<String, ISO_639_3_Code> KNOWN;
+    static final ISO_639_3_Code UND;
 
 
     static final Map<LanguageCode, List<LanguageCode>> INDIVIDUAL_LANGUAGES;
@@ -77,6 +78,7 @@ public class ISO_639_3_Code implements LanguageCode {
             throw new ExceptionInInitializerError(e);
         }
         KNOWN = Collections.unmodifiableMap(temp);
+        UND = KNOWN.get("und");
 
         Map<LanguageCode, List<LanguageCode>> tempIndividual = new HashMap<>();
         Map<LanguageCode, List<LanguageCode>> tempMacro = new HashMap<>();

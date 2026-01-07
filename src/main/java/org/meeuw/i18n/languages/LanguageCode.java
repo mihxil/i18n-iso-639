@@ -43,7 +43,7 @@ public interface LanguageCode extends ISO_639_Code {
      * @see LanguageCode#NOTFOUND
      * @see LanguageCode#UNKNOWN
      */
-    ISO_639_3_Code UND = ISO_639_3_Code.KNOWN.get("und");
+    ISO_639_3_Code UND = ISO_639_3_Code.UND;
 
 
     /**
