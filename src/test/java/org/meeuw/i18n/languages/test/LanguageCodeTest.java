@@ -64,22 +64,22 @@ class LanguageCodeTest {
                 assertThat(lc).isInstanceOf(ISO_639_1_Code.class);
             }
             if (lc.comment() != null) {
-                System.out.println("Comment: " + lc.comment());
+                System.out.println("\tComment: " + lc.comment());
             }
             if (lc.scope() == Scope.M) {
                 assertThat(lc.individualLanguages()).isNotEmpty();
-                System.out.println("Macro language with: " + lc.individualLanguages());
+                System.out.println("\tMacro language with: " + lc.individualLanguages());
                 for (LanguageCode individual : lc.individualLanguages()) {
                     if (individual instanceof RetiredLanguageCode) {
-                        System.out.println("Retired: " + individual + " " + ((RetiredLanguageCode) individual).retReason());
+                        System.out.println("\t\tRetired: " + individual + " " + ((RetiredLanguageCode) individual).retReason());
                     } else {
                         assertThat(individual.macroLanguages())
-                            .withFailMessage("macro language " + lc + " has " + individual + " but this has not it as macro").contains(lc);
+                            .withFailMessage("\t\tmacro language " + lc + " has " + individual + " but this has not it as macro").contains(lc);
                     }
                 }
             }
             if (! lc.macroLanguages().isEmpty()) {
-                System.out.println("Macro language for " + lc + " :" + lc.macroLanguages());
+                System.out.println("\tMacro language for " + lc + " :" + lc.macroLanguages());
                 for (LanguageCode macro : lc.macroLanguages()) {
                     assertThat(macro.individualLanguages()).contains(lc);
                     assertThat(macro.scope()).isEqualTo(Scope.M);

@@ -8,7 +8,7 @@ import org.meeuw.i18n.languages.ISO_639_Code;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ISO_639_Test {
+public class ISO_639Test {
 
     @Test
     public void codesUnique() {

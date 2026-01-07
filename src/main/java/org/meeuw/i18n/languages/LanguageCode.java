@@ -30,12 +30,12 @@ public interface LanguageCode extends ISO_639_Code {
      * @deprecated This seems to be the same thing as {@link #UND}?
      */
     @Deprecated
-    UserDefinedLanguage UNKNOWN = new UserDefinedLanguage("UNKNOWN", null, "unknown language", "the language for some reason is unknown or unrecognized");
+    UserDefinedLanguage UNKNOWN = new UserDefinedLanguage("UNKNOWN", Type.S, "unknown language", "the language for some reason is unknown or unrecognized");
 
     /**
      * @since 3.4
      */
-    UserDefinedLanguage NOTFOUND = new UserDefinedLanguage("NOTFOUND", null, "language not found", "the language is not found");
+    UserDefinedLanguage NOTFOUND = new UserDefinedLanguage("NOTFOUND", Type.S, "language not found", "the language is not found");
 
     /**
      * A constant representing the 'undefined' language (which has a ISO-639-3 code)
@@ -47,16 +47,18 @@ public interface LanguageCode extends ISO_639_Code {
 
 
     /**
-     * A stream with all known {@link ISO_639_Code language codes}.
+     * A stream with all known {@link LanguageCode language codes}.
      *
      *
      * @return a stream of all known language codes.
      */
     static Stream<@NonNull LanguageCode> stream() {
-        return ISO_639_3_Code
-            .stream()
-            .map(LanguageCode::updateToEnum)
-            .sorted(Comparator.comparing(LanguageCode::code));
+        return Stream.concat(ISO_639_3_Code
+                    .stream()
+                    .map(LanguageCode::updateToEnum),
+                UserDefinedLanguage.stream()
+            )
+            .sorted(Comparator.comparing(l -> l.code().toLowerCase()));
     }
 
 

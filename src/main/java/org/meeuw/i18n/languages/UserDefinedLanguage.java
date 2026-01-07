@@ -1,7 +1,12 @@
 package org.meeuw.i18n.languages;
 
-import java.util.List;
+import java.util.*;
 
+import java.util.concurrent.ConcurrentHashMap;
+
+import java.util.stream.Stream;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
@@ -9,8 +14,12 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public class UserDefinedLanguage implements LanguageCode {
 
+    static final Map<String, UserDefinedLanguage> KNOWN = new ConcurrentHashMap<>();
+
+
     private final String code;
     private final Type type;
+    private final Scope scope;
     private final String refName;
     private final String comment;
 
@@ -21,13 +30,27 @@ public class UserDefinedLanguage implements LanguageCode {
      * @param refName
      * @param comment
      */
-    public UserDefinedLanguage(String code, Type type, String refName, @Nullable String comment) {
+    public UserDefinedLanguage(String code, @NonNull Type type, Scope scope, String refName, @Nullable String comment) {
         this.code = code;
         this.type = type;
+        this.scope = scope;
         this.refName = refName;
         this.comment = comment;
+        KNOWN.put(this.code, this);
     }
 
+    public UserDefinedLanguage(String code, @NonNull Type type, String refName, @Nullable String comment) {
+        this(code, type, Scope.S, refName, comment);
+    }
+
+
+        /**
+         * @since 4.0
+         * @return
+         */
+    public static Stream<UserDefinedLanguage> stream() {
+        return KNOWN.values().stream();
+    }
 
     @Override
     public String code() {
@@ -56,7 +79,7 @@ public class UserDefinedLanguage implements LanguageCode {
 
     @Override
     public Scope scope() {
-        return null;
+        return scope;
     }
 
     @Override
@@ -76,7 +99,7 @@ public class UserDefinedLanguage implements LanguageCode {
 
     @Override
     public List<NameRecord> nameRecords() {
-        return List.of();
+        return List.of(new NameRecord(refName, refName));
     }
 
     @Override

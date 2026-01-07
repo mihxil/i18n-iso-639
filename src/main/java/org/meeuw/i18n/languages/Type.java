@@ -28,9 +28,11 @@ public enum Type {
     /**
      * Special language
      */
-    S("special");
+    S("special")
 
-  
+    ;
+
+
     private final String toString;
 
     Type(String toString) {
@@ -41,5 +43,5 @@ public enum Type {
     public String toString() {
         return toString;
     }
-    
+
 }

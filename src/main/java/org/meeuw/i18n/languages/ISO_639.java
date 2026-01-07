@@ -63,7 +63,7 @@ public class ISO_639 {
      */
     public static RemoveIgnoreNotFound implicitUserDefine() {
         ignoreNotFound.set(true);
-        notFoundFallback.set((c, clazz) -> new UserDefinedLanguage(c, null, c, "not found"));
+        notFoundFallback.set((c, clazz) -> new UserDefinedLanguage(c, Type.S, c, "not found"));
         return RemoveIgnoreNotFound.INSTANCE;
     }
 
