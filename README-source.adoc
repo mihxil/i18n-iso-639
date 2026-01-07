@@ -166,7 +166,7 @@ include::src/test/java/org/meeuw/i18n/languages/test/ExamplesTest.java[tag=dse, 
 
 | 4.0
 | support for jackson3, java 17
-| 2025-12
+| 2026-01
 |
 
 
