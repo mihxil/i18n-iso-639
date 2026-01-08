@@ -21,11 +21,18 @@ import com.fasterxml.jackson.annotation.JsonValue;
 @SuppressWarnings("DataFlowIssue")
 public class ISO_639_3_Code implements LanguageCode {
 
+    /**
+     * A constant representing the 'undefined' language (which has a ISO-639-3 code)
+     * @since 4.1
+     * @see LanguageCode#NOTFOUND
+     * @see LanguageCode#UNKNOWN
+     */
+    public static final ISO_639_3_Code UND;
+
     final static Logger LOGGER = Logger.getLogger(LanguageCode.class.getName());
 
 
     static final Map<String, ISO_639_3_Code> KNOWN;
-    public static final ISO_639_3_Code UND;
 
 
     static final Map<LanguageCode, List<LanguageCode>> INDIVIDUAL_LANGUAGES;
