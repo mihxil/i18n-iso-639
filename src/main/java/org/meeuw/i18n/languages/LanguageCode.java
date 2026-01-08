@@ -37,14 +37,6 @@ public interface LanguageCode extends ISO_639_Code {
      */
     UserDefinedLanguage NOTFOUND = new UserDefinedLanguage("NOTFOUND", Type.S, "language not found", "the language is not found");
 
-    /**
-     * A constant representing the 'undefined' language (which has a ISO-639-3 code)
-     * @since 4.0
-     * @see LanguageCode#NOTFOUND
-     * @see LanguageCode#UNKNOWN
-     */
-    ISO_639_3_Code UND = ISO_639_3_Code.UND;
-
 
     /**
      * A stream with all known {@link LanguageCode language codes}.

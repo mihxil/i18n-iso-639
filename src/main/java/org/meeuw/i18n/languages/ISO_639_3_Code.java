@@ -25,13 +25,12 @@ public class ISO_639_3_Code implements LanguageCode {
 
 
     static final Map<String, ISO_639_3_Code> KNOWN;
-    static final ISO_639_3_Code UND;
+    public static final ISO_639_3_Code UND;
 
 
     static final Map<LanguageCode, List<LanguageCode>> INDIVIDUAL_LANGUAGES;
 
     static final Map<LanguageCode, List<LanguageCode>> MACRO;
-
 
 
     static final String DIR = "/iso-639-3_Code_Tables/";
@@ -60,6 +59,7 @@ public class ISO_639_3_Code implements LanguageCode {
             while (line != null) {
                 String[] split = line.split("\t");
                 List<NameRecord> names = namesMap.get(split[0]);
+
                 ISO_639_3_Code found = new ISO_639_3_Code(
                     split[0],
                     !split[1].isEmpty() ? split[1] : null,
@@ -71,6 +71,7 @@ public class ISO_639_3_Code implements LanguageCode {
                     split.length == 8 ? split[7] : null,
                     names
                 );
+
                 temp.put(found.part3().toLowerCase(), found);
                 line = inputStreamReader.readLine();
             }
@@ -125,13 +126,12 @@ public class ISO_639_3_Code implements LanguageCode {
             .sorted(Comparator.comparing(ISO_639_3_Code::code));
     }
 
-    private static final Map<String, String> RETIRED = new HashMap<>();
-    static {
-        RETIRED.put("jw", "jv"); // 'Javanese is rendered as "jw" in table 1, while it is correctly given as "jv" in the other tables
-        RETIRED.put("iw", "he"); // The identifier for Hebrew was changed from "iw" to "he".
-        RETIRED.put("in", "id"); // The identifier for Indonesian was changed from "in" to "id".
-        RETIRED.put("ji", "yi"); // The identifier for Yiddish was changed from "ji" to "yi".
-    }
+    private static final Map<String, String> RETIRED = Map.of(
+        "jw", "jv", // 'Javanese is rendered as "jw" in table 1, while it is correctly given as "jv" in the other tables
+        "iw", "he",    // The identifier for Hebrew was changed from "iw" to "he".
+        "in", "id",    // The identifier for Indonesian was changed from "in" to "id".
+        "ji", "yi"         // The identifier for Yiddish was changed from "ji" to "yi".
+    );
 
     static Optional<ISO_639_3_Code> getByPart1(String code) {
         if (code == null) {
@@ -193,7 +193,7 @@ public class ISO_639_3_Code implements LanguageCode {
 
     private transient  final List<NameRecord> names;
 
-    private ISO_639_3_Code(
+    ISO_639_3_Code(
         String part3,
         String part2B,
         String part2T,
