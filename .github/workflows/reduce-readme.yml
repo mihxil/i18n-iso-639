@@ -1,5 +1,7 @@
 ---
 name: Reduce README
+run-name: Reduce README files
+
 on:
   push:
     branches: ['main']
