@@ -40,7 +40,7 @@
     <junit.version>6.0.2</junit.version>
     <groovy.version>4.0.16</groovy.version>
     <codemodel.version>4.0.6</codemodel.version>
-    <java.version>8</java.version>
+    <java.version>17</java.version>
     <assertj.version>3.27.6</assertj.version>
     <checker.version>3.53.0</checker.version>
     <jackson3.version>3.0.3</jackson3.version>
@@ -57,6 +57,18 @@
     <url>https://github.com/mihxil/i18n-iso-639</url>
     <tag>HEAD</tag>
   </scm>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>tools.jackson</groupId>
+        <artifactId>jackson-bom</artifactId>
+        <type>pom</type>
+        <scope>import</scope>
+        <version>${jackson3.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -123,32 +135,21 @@
       <scope>test</scope>
     </dependency>
     <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-annotations</artifactId>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
       <groupId>tools.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>${jackson3.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>tools.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-      <version>${jackson3.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.fasterxml.jackson.core</groupId>
-      <artifactId>jackson-core</artifactId>
-      <version>${jackson.version}</version>
+      <optional>true</optional>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
       <version>${jackson.version}</version>
+      <optional>true</optional>
     </dependency>
-    <dependency>
-      <groupId>ch.randelshofer</groupId>
-      <artifactId>fastdoubleparser</artifactId>
-      <version>2.0.1</version>
-    </dependency>
-
     <dependency>
       <groupId>org.glassfish.jaxb</groupId>
       <artifactId>codemodel</artifactId>
@@ -164,7 +165,8 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.14.1</version>
         <configuration>
-          <release>17</release>
+          <source>${java.version}</source>
+          <release>${java.version}</release>
           <encoding>UTF-8</encoding>
         </configuration>
       </plugin>
