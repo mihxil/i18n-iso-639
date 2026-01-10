@@ -52,12 +52,9 @@ public class SerializationTest {
             assertThat(a.languageCode).isEqualTo(NOTFOUND);
         }
 
-        try {
-            ISO_639.registerFallback("zz", UND);
+        try(var aut = ISO_639.registerFallback("zz", UND)) {
             A a = JAXB.unmarshal(new StringReader("<a languageCode='zz' />"), A.class);
             assertThat(a.languageCode).isEqualTo(UND);
-        } finally {
-            ISO_639.resetFallBacks();
         }
     }
 
@@ -97,12 +94,9 @@ public class SerializationTest {
             A a = objectMapper.readValue("{\"languageCode\": \"" + code + "\"}", A.class);
             assertThat(a.languageCode).isEqualTo(NOTFOUND);
         }
-        try {
-            ISO_639.registerFallback("zz", UND);
+        try (var clear = ISO_639.registerFallback("zz", UND)) {
             A a = objectMapper.readValue("{\"languageCode\": \"" + code + "\"}", A.class);
             assertThat(a.languageCode).isEqualTo(UND);
-        } finally {
-            ISO_639.resetFallBacks();
         }
     }
 

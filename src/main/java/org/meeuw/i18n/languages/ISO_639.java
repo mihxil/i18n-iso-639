@@ -196,8 +196,9 @@ public class ISO_639 {
      * @see LanguageCode#registerFallback(String, LanguageCode)
      * @since 3.2
        */
-    public static void registerFallback(String code, ISO_639_Code exemption) {
+    public static ResetFallBacks registerFallback(String code, ISO_639_Code exemption) {
         FALLBACKS.get().put(code, exemption);
+        return ResetFallBacks.INSTANCE;
     }
 
 
@@ -208,8 +209,9 @@ public class ISO_639 {
      * @see #resetFallBacks()
      * @since 3.2
      */
-    static void setFallbacks(Map<String, ISO_639_Code> exemptions) {
+    static ResetFallBacks setFallbacks(Map<String, ISO_639_Code> exemptions) {
         FALLBACKS.set(exemptions);
+        return ResetFallBacks.INSTANCE;
     }
 
     /**
@@ -316,6 +318,20 @@ public class ISO_639 {
         @Override
         public void close() {
             removeIgnoreNotFound();
+        }
+    }
+
+    /**
+     * @since 4.2
+     */
+    public static class ResetFallBacks implements AutoCloseable {
+        public static final ResetFallBacks INSTANCE = new ResetFallBacks();
+        private ResetFallBacks() {
+
+        }
+        @Override
+        public void close() {
+            resetFallBacks();
         }
     }
 
