@@ -16,8 +16,8 @@ import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.meeuw.i18n.languages.ISO_639.iso639;
+import static org.meeuw.i18n.languages.ISO_639_3_Code.UND;
 import static org.meeuw.i18n.languages.LanguageCode.NOTFOUND;
-import static org.meeuw.i18n.languages.LanguageCode.UNKNOWN;
 
 
 public class SerializationTest {
@@ -47,15 +47,15 @@ public class SerializationTest {
 
             assertThat(a.languageCode).isNull();
         }
-        try (var clear = ISO_639.setIgnoreNotFound();) {
+        try (var clear = ISO_639.setIgnoreNotFound()) {
              A a = JAXB.unmarshal(new StringReader("<a languageCode='zz' />"), A.class);
             assertThat(a.languageCode).isEqualTo(NOTFOUND);
         }
 
         try {
-            ISO_639.registerFallback("zz", UNKNOWN);
+            ISO_639.registerFallback("zz", UND);
             A a = JAXB.unmarshal(new StringReader("<a languageCode='zz' />"), A.class);
-            assertThat(a.languageCode).isEqualTo(UNKNOWN);
+            assertThat(a.languageCode).isEqualTo(UND);
         } finally {
             ISO_639.resetFallBacks();
         }
@@ -98,9 +98,9 @@ public class SerializationTest {
             assertThat(a.languageCode).isEqualTo(NOTFOUND);
         }
         try {
-            ISO_639.registerFallback("zz", UNKNOWN);
+            ISO_639.registerFallback("zz", UND);
             A a = objectMapper.readValue("{\"languageCode\": \"" + code + "\"}", A.class);
-            assertThat(a.languageCode).isEqualTo(UNKNOWN);
+            assertThat(a.languageCode).isEqualTo(UND);
         } finally {
             ISO_639.resetFallBacks();
         }
