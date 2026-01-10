@@ -23,12 +23,41 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Implementations are immutable and can be used as a key in maps.
  */
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
+
 public interface LanguageCode extends ISO_639_Code {
+
+
+    /**
+     * Gets the default language code, based on the default {@link Locale#getDefault() locale} of the JVM.
+     * or the explicitly set default language code using {@link #setDefault(LanguageCode)}.
+     * @since 4.2
+     */
+    static LanguageCode getDefault() {
+        if (ISO_639.defaultLanguage == null) {
+            Locale defaultLocale = Locale.getDefault();
+            String language = defaultLocale.getLanguage();
+            if (language.isEmpty()) {
+                return ISO_639_1_Code.en;
+            }
+            return ISO_639.get(language, LanguageCode.class).orElse(ISO_639_1_Code.en);
+        } else {
+            return ISO_639.defaultLanguage;
+        }
+    }
+
+
+    /**
+     * @see #getDefault()
+     * @since 4.2
+     */
+    static void setDefault(LanguageCode languageCode) {
+        ISO_639.defaultLanguage = languageCode;
+    }
 
     /**
      * @since 3.4
-     * @deprecated This seems to be the same thing as {@link #UND}?
-     */
+     * @deprecated This seems to be the same thing as {@link ISO_639_3_Code#UND}
+     *      */
     @Deprecated
     UserDefinedLanguage UNKNOWN = new UserDefinedLanguage("UNKNOWN", Type.S, "unknown language", "the language for some reason is unknown or unrecognized");
 

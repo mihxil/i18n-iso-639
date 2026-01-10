@@ -251,6 +251,17 @@ class LanguageCodeTest {
         );
     }
 
+    @Test
+    public void defaults() {
+        LanguageCode defaultLang = LanguageCode.getDefault();
+        assertThat(defaultLang).isNotNull();
+        System.out.println("Default language: " + defaultLang);
+        LanguageCode.setDefault(ISO_639_1_Code.nl);
+
+        assertThat(LanguageCode.getDefault()).isEqualTo(ISO_639_1_Code.nl);
+        System.out.println("Default language: " + LanguageCode.getDefault());
+    }
+
 
     // TODO
     @Disabled
@@ -258,4 +269,6 @@ class LanguageCodeTest {
     public void hashCodeStable() {
         assertThat(ISO_639.iso639("NL").hashCode()).isEqualTo(320304382);
     }
+
+
 }
