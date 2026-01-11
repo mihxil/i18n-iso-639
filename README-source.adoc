@@ -169,6 +169,10 @@ include::src/test/java/org/meeuw/i18n/languages/test/ExamplesTest.java[tag=dse, 
 | 2026-01
 |
 
+| 4.2
+| LanguageCode#getDefault, some cleaning in dependencies
+| 2026-01
+|
 
 |===
 
