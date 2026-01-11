@@ -23,10 +23,9 @@ window.setup = async function setup() {
                 })
 
                 const version = "4.2-SNAPSHOT";
-                const pref = document.location.pathname.startsWith("/118n-iso-639/") ?
+                const prefix = document.location.pathname.startsWith("/118n-iso-639/") ?
                     "/app/i18n-iso-639/resources/" :
                     "/app/resources/";
-                const prefix = "/app/";
                 const classpath = `${prefix}i18n-iso-639-${version}.jar`;
                 console.log("Classpath:", classpath);
                 const cj = await cheerpjRunLibrary(classpath);
