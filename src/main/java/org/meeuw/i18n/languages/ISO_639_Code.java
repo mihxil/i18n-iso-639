@@ -27,7 +27,6 @@ public interface ISO_639_Code extends Serializable {
     @JsonValue
     String code();
 
-
     @Override
     String toString();
 
@@ -56,9 +55,28 @@ public interface ISO_639_Code extends Serializable {
         return ISO_639.iso639(code);
     }
 
+    /**
+     * @since 4.2
+     * @param languageCode
+     * @return
+     */
+    default String getDisplayName(LanguageCode languageCode) {
+        return getDisplayName(languageCode.toLocale());
+    }
+
     default String getDisplayName(Locale locale) {
+        if (locale == null) {
+            locale = Locale.getDefault();
+        }
         ResourceBundle bundle =  ResourceBundle.getBundle("org.meeuw.i18n.languages.DisplayNames", locale);
         return bundle.getString(code());
+    }
+    /**
+     * @since 4.2
+     * @return
+     */
+    default String getDisplayName() {
+        return getDisplayName(Locale.getDefault());
     }
 
 }
