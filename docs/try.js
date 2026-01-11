@@ -39,14 +39,33 @@ window.setup = async function setup() {
     return setupPromise;
 }
 window.setup();
-
-document.getElementById("text_input").addEventListener("keyup", async (event) => {
+document.addEventListener("DOMContentLoaded", async function() {
     const iso = await window.setup();
-    const value = event.target.value;
-    const lang = await (await iso.get(value)).orElse(null);
-    if (lang) {
-        document.getElementById("output").textContent = lang ? await lang.toString() : "Not found";
-    } else {
-        document.getElementById("output").textContent = "Not found";
+    const examples = document.getElementById("input-examples")
+    const iterator = await (await iso.stream()).iterator();
+    while (await iterator.hasNext()) {
+        const lang = await iterator.next();
+        const option = document.createElement("option");
+        option.value = await lang.code();
+        option.textContent = await lang.toString();
+        examples.appendChild(option);
     }
-});
+    }
+);
+
+document.getElementById("text_input")
+    .addEventListener("keyup",
+        async (event) => {
+            const iso = await window.setup();
+            const value = event.target.value;
+            const lang = await (await iso.get(value)).orElse(null);
+            if (lang) {
+                let result = await lang.toString();
+                result += `\ncode: ${await lang.code()}`;
+                result += `\npart1: ${await lang.part1()}`;
+                document.getElementById("output").textContent = result;
+            } else {
+                document.getElementById("output").textContent = "Not found: " + value;
+            }
+        }
+    );
