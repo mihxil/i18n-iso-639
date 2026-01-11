@@ -2,7 +2,7 @@ console.log("Starting...");
 const properties=  [
 	`user.timezone=${Intl.DateTimeFormat().resolvedOptions().timeZone}`
 ]
-console.log("Properties:", properties);
+console.log("Properties:s", properties);
 let setupPromise = null;
 
 window.setup = async function setup() {
@@ -22,8 +22,12 @@ window.setup = async function setup() {
                     preloadProgress: showPreloadProgress
                 })
 
+                const version = "4.2-SNAPSHOT";
+                const pref = document.location.pathname.startsWith("/118n-iso-639/") ?
+                    "/app/i18n-iso-639/resources/" :
+                    "/app/resources/";
                 const prefix = "/app/";
-                const classpath = `${prefix}i18n-iso-639-4.2-SNAPSHOT.jar`;
+                const classpath = `${prefix}i18n-iso-639-${version}.jar`;
                 console.log("Classpath:", classpath);
                 const cj = await cheerpjRunLibrary(classpath);
                 const clazz = await cj.org.meeuw.i18n.languages.ISO_639;
