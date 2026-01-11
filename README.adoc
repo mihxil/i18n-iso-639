@@ -470,5 +470,9 @@ assertThat(LanguageCode.languageCode("dse").getDisplayName(new Locale("nl"))).is
 | 2026-01
 |
 
+| 4.2
+| LanguageCode#getDefault, some cleaning in dependencies
+| 2026-01
+|
 
 |===
