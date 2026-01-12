@@ -18,7 +18,7 @@ public class ISO_639Test {
                 Comparator.comparing(ISO_639_Code::scope)
                 .thenComparing(ISO_639_Code::code))
             .forEach(lc -> {
-                System.out.println(lc + " ->  " + lc.languageType() + " " + lc.scope() + " ref name:" + lc.refName() + " " + " display" + lc.getDisplayName());
+                System.out.println(lc + " ->  " + lc.languageType() + " " + lc.scope() + " ref name:" + lc.refName() + " " + " display: " + lc.getDisplayName());
                 assertThat(code.add(lc.code())).isTrue();
 
         });

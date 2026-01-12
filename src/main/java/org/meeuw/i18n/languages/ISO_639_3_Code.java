@@ -277,6 +277,9 @@ public class ISO_639_3_Code implements LanguageCode {
         return part1;
     }
 
+    /**
+     * The 'scope' of the language as defined in ISO-639-3.
+     */
     @Override
     public Scope scope() {
         return scope;

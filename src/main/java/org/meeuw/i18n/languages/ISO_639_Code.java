@@ -1,8 +1,7 @@
 package org.meeuw.i18n.languages;
 
 import java.io.Serializable;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -68,8 +67,12 @@ public interface ISO_639_Code extends Serializable {
         if (locale == null) {
             locale = Locale.getDefault();
         }
-        ResourceBundle bundle =  ResourceBundle.getBundle("org.meeuw.i18n.languages.DisplayNames", locale);
-        return bundle.getString(code());
+        try {
+            ResourceBundle bundle = ResourceBundle.getBundle("org.meeuw.i18n.languages.DisplayNames", locale);
+            return bundle.getString(code());
+        } catch (MissingResourceException me) {
+            return refName();
+        }
     }
     /**
      * @since 4.2

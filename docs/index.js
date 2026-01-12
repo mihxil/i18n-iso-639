@@ -66,7 +66,7 @@ async function setText(id, supplier) {
         let val=  await supplier();
         el.innerHTML = val == null ? '-' : val;
     } catch (e) {
-        console.log(id, e);
+        //console.log(id, e);
         el.textContent = "-";
     }
 }
@@ -119,7 +119,7 @@ document.getElementById("text_input")
                         const artifact = "i18n-iso-639";
                         const path = clazzName.replace(/\./g, '/');
                         const url = `https://www.javadoc.io/doc/${group}/${artifact}/${version}/${pakcage}/${path}.html`;
-                        return `<a href="${url}" target="_blank" rel="noopener noreferrer">${clazzName}</a>`;
+                        return `<a href="${url}" target="javadoc">${clazzName}</a>`;
                      });
 
 
@@ -149,6 +149,11 @@ document.getElementById("text_input")
                             names.push(link);
                         }
                         return names.length ? names.join(', ') : null;
+                    });
+
+                    await setText("uri", async () => {
+                        const uri = await (await lang.uri()).toString();
+                            return `<a href="${uri}">${uri}</a>`;
                     });
                     const url = new URL(window.location.href);
                     url.searchParams.set('lang', value);
