@@ -152,8 +152,17 @@ document.getElementById("text_input")
                     });
 
                     await setText("uri", async () => {
-                        const uri = await (await lang.uri()).toString();
-                            return `<a href="${uri}">${uri}</a>`;
+                        const uris = [];
+                        try {
+                            const uri = await (await lang.uri()).toString();
+                            uris.push(`<a target="ext" href="${uri}">${uri}</a>`)
+                        } catch (e) { }
+                        try {
+                            const part3 = await lang.part3();
+                            const uri = `https://www.ethnologue.com/language/${part3}`;
+                            uris.push(`<a target="ext" href="${uri}">Ethnologue</a>`)
+                        } catch (e) { }
+                        return uris.length ? uris.join(', ') : null;
                     });
                     const url = new URL(window.location.href);
                     url.searchParams.set('lang', value);
