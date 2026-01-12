@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="index.css"/>
 		<script src="https://cjrtnc.leaningtech.com/20251012_2759/loader.js" type="text/javascript"></script>
 
-		<script src="try.js" type="module"> </script>
+		<script src="index.js" type="module"> </script>
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-QEMVC2XSD8"></script>
 		<script>
 			window.dataLayer = window.dataLayer || [];
@@ -43,11 +43,52 @@
 
 				</datalist>
 			</div>
-			<img src="images/loading.gif" alt="loading..." id="loading" style="display:none"/>
+			<img src="https://raw.githubusercontent.com/mihxil/svg-objects/refs/heads/main/spinner.svg" alt="loading..." id="loading" />
 
-			<textarea id="output" readonly="readonly" rows="20" cols="80">
+			<table id="output_table" style="display:none;">
+				<thead>
+					<tr>
+						<th colspan="2" id="toString"></th>
+					</tr>
+				</thead>
+				<tbody id="output_table_body">
+					<tr>
+						<th>code</th><td id="code">-</td>
+					</tr>
+					<tr>
+						<th>type</th><td id="type">-</td>
+					</tr>
+					<tr>
+						<th>scope</th><td id="scope">-</td>
+					</tr>
+					<tr>
+						<th>part1</th><td id="part1">-</td>
+					</tr>
+					<tr>
+						<th>part2T</th><td id="part2t">-</td>
+					</tr>
+					<tr>
+						<th>part2B</th><td id="part2b">-</td>
+					</tr>
+					<tr>
+						<th>part3</th><td id="part3">-</td>
+					</tr>
+					<tr>
+						<th>names</th><td id="names">-</td>
+					</tr>
+					<tr>
+						<th>macro</th><td id="macro">-</td>
+					</tr>
+					<tr>
+						<th>individual</th><td id="individual">-</td>
+					</tr>
+					<tr>
+						<th>class</th><td id="clazz">-</td>
+					</tr>
+				</tbody>
+			</table>
 
-			</textarea>
+
 		</div>
 	</body>
 </html>
