@@ -105,6 +105,10 @@ include::src/test/java/org/meeuw/i18n/languages/test/ExamplesTest.java[tag=dse, 
 
 ----
 
+== Live demo
+
+A live demo can be found at link:https://mihxil.github.io/i18n-iso-639[github pages]. Using cheerpj to run java in the browser.
+
 == Versions
 
 [cols="1,1,1,1"]
