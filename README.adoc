@@ -406,6 +406,10 @@ assertThat(LanguageCode.languageCode("dse").getDisplayName(new Locale("nl"))).is
 
 ----
 
+== Live demo
+
+A live demo can be found at link:https://mihxil.github.io/i18n-iso-639[github pages]. Using cheerpj to run java in the browser.
+
 == Versions
 
 [cols="1,1,1,1"]
