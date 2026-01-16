@@ -120,7 +120,7 @@ async function fillTable() {
                 const nr = await it.next();
                 const code = await nr.code();
                 const string = await nr.toString();
-                const link = `<a href="?lang=${code}">${string}</a>`;
+                const link = `<a class="self" href="?lang=${code}">${string}</a>`;
                 names.push(link);
             }
             return names.length ? names.join(', ') : null;
@@ -134,7 +134,7 @@ async function fillTable() {
                 const nr = await it.next();
                 const code = await nr.code();
                 const string = await nr.toString();
-                const link = `<a href="?lang=${code}">${string}</a>`;
+                const link = `<a class="self" href="?lang=${code}">${string}</a>`;
                 names.push(link);
             }
             return names.length ? names.join(', ') : null;
@@ -155,9 +155,6 @@ async function fillTable() {
             }
             return uris.length ? uris.join(', ') : null;
         });
-        const url = new URL(window.location.href);
-        url.searchParams.set('lang', value);
-        history.pushState(null, '', url.toString());
     } else {
         // clear table cells using setText with plain values
         // loop over all table cells that have an id and clear them
@@ -171,6 +168,9 @@ async function fillTable() {
             td.textContent = "-";
         }
     }
+    const url = new URL(window.location.href);
+    url.searchParams.set('lang', value);
+    history.pushState(null, '', url.toString());
 }
 
 // helper to set DOM text safely. Accepts a supplier function.
@@ -194,7 +194,20 @@ async function setText(id, supplier) {
         const input = document.getElementById('text_input');
         input.value = q;
     }
-    document.getElementById("text_input").addEventListener("keyup", (e) => {
+    document.getElementById("text_input").addEventListener("keyup", () => {
+        fillTable();
+    });
+
+    // Delegate clicks on anchors with class 'self' (works for dynamically added links)
+    document.addEventListener('click', (e) => {
+        const a = e.target.closest && e.target.closest('a.self');
+        if (!a) return; // not a click on a.self
+        e.preventDefault();
+        // Extract 'lang' param from the anchor's href
+        const url = new URL(a.href, window.location.href);
+        const lang = url.searchParams.get('lang');
+        const input = document.getElementById('text_input');
+        input.value = lang;
         fillTable();
     });
 })();
