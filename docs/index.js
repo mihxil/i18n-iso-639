@@ -43,7 +43,7 @@ window.setup = async function setup() {
                     preloadProgress: showPreloadProgress
                 })
 
-                const version = "4.2-SNAPSHOT";
+                const version = "4.3-SNAPSHOT";
                 const prefix = document.location.pathname.startsWith("/i18n-iso-639/") ?
                     "/app/i18n-iso-639/resources/" :
                     "/app/resources/";
