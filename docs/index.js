@@ -9,8 +9,13 @@ document.addEventListener("cheerpj-ready", async function() {
     const iso = await window.iso639;
     const examples = document.getElementById("input-examples")
     const iterator = await (await iso.stream()).iterator();
-    document.getElementById("text_input").disabled = false;
-    if (document.getElementById("text_input").value.trim().length > 0) {
+    const input = document.getElementById("text_input");
+    input.disabled = false;
+    input.addEventListener("keyup", () => {
+        fillTable();
+    });
+
+    if (input.value.trim().length > 0) {
         await fillTable();
     }
     while (await iterator.hasNext()) {
@@ -29,9 +34,20 @@ window.setup = async function setup() {
     if (setupPromise === null) {
         setupPromise = (async () => {
             if (window.iso639 === undefined) {
+                const input = document.getElementById('text_input');
                 function showPreloadProgress(preloadDone, preloadTotal) {
                     const percentage = Math.round((preloadDone * 100) / preloadTotal);
-                    console.log(percentage + "%");
+                    if (percentage < 100) {
+                        input.value = percentage + "%";
+                    } else {
+                        const params = new URLSearchParams(window.location.search || '');
+                        const q = params.get('lang');
+                        if (q) {
+                            input.value = q;
+                        } else {
+                            input.value = "";
+                        }
+                    }
                 }
 
                 await cheerpjInit({
@@ -39,11 +55,11 @@ window.setup = async function setup() {
                     version: 17,
                     javaProperties: properties,
                     // cjGetRuntimeResources();
-                    //preloadResources:{"/lt/17/lib/modules":[0,131072,1179648,2097152,2228224,3801088,3932160,4063232,4194304,4587520,4849664,5111808,5636096,5898240,6029312,6291456,6815744,7077888,7864320,7995392,9961472,10092544,37486592,37617664,38010880,38141952],"/lt/etc/users":[0,131072],"/lt/etc/localtime":[],"/lt/17/jre/lib/cheerpj-handlers.jar":[0,131072],"/lt/17/jre/lib/cheerpj-awt.jar":[0,131072],"/lt/17/jre/lib/cheerpj-jsobject.jar":[0,131072]},
+                    preloadResources:{"/lt/17/lib/modules":[0,131072,1179648,3801088,3932160,4718592,4849664,5111808,5242880,5898240,6029312,6291456,6684672,7077888,7864320,7995392,9568256,9699328,9961472,10092544,37486592,37617664,38010880,38141952],"/lt/etc/users":[0,131072],"/lt/etc/localtime":[],"/lt/17/jre/lib/cheerpj-handlers.jar":[0,131072],"/lt/17/jre/lib/cheerpj-awt.jar":[0,131072],"/lt/17/jre/lib/cheerpj-jsobject.jar":[0,131072],"/lt/17/conf/security/java.security":[0,131072],"/lt/17/conf/logging.properties":[0,131072]},
                     preloadProgress: showPreloadProgress
                 })
 
-                const version = "4.3-SNAPSHOT";
+                const version = "4.3";
                 const prefix = document.location.pathname.startsWith("/i18n-iso-639/") ?
                     "/app/i18n-iso-639/resources/" :
                     "/app/resources/";
@@ -69,9 +85,9 @@ async function fillTable() {
     const lang = await (await iso.get(value)).orElse(null);
     if (lang) {
         // simple fields: pass suppliers so setText will handle awaiting and errors
-        await setText("toString", () => lang.toString());
+        await setText("toString", async () => lang.toString());
 
-        await setText("code", () => lang.code());
+        await setText("code", async () => lang.code());
         await setText("type", async () => (await lang.languageType()).toString());
 
         // scope may be null or an enum
@@ -149,8 +165,14 @@ async function fillTable() {
             }
             try {
                 const part3 = await lang.part3();
-                const uri = `https://www.ethnologue.com/language/${part3}`;
-                uris.push(`<a target="ext" href="${uri}">Ethnologue</a>`)
+                const sil = `https://iso639-3.sil.org/code/${part3}`;
+                uris.push(`<a target="ext" href="${sil}">SIL</a>`)
+                const wiki = `https://en.wikipedia.org/wiki/ISO_639:${part3}`;
+                uris.push(`<a target="ext" href="${wiki}">Wikipedia</a>`)
+                const glotto = `https://glottolog.org/glottolog?iso=${part3}`;
+                uris.push(`<a target="ext" href="${glotto}">Glottolog</a>`)
+                const ethno = `https://www.ethnologue.com/language/${part3}`;
+                uris.push(`<a target="ext" href="${ethno}">Ethnologue</a>`)
             } catch (e) {
             }
             return uris.length ? uris.join(', ') : null;
@@ -188,15 +210,7 @@ async function setText(id, supplier) {
 
 
 (async function init() {
-    const params = new URLSearchParams(window.location.search || '');
-    const q = params.get('lang');
-    if (q) {
-        const input = document.getElementById('text_input');
-        input.value = q;
-    }
-    document.getElementById("text_input").addEventListener("keyup", () => {
-        fillTable();
-    });
+
 
     // Delegate clicks on anchors with class 'self' (works for dynamically added links)
     document.addEventListener('click', (e) => {
