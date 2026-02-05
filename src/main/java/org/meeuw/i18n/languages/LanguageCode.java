@@ -75,9 +75,8 @@ public interface LanguageCode extends ISO_639_Code, Supplier<Locale> {
      * @return a stream of all known language codes.
      */
     static Stream<@NonNull LanguageCode> stream() {
-        return Stream.concat(ISO_639_3_Code
-                    .stream()
-                    .map(LanguageCode::updateToEnum),
+        return Stream.concat(
+                ISO_639_3_Code.stream().map(LanguageCode::updateToEnum),
                 UserDefinedLanguage.stream()
             )
             .sorted(Comparator.comparing(l -> l.code().toLowerCase()));
