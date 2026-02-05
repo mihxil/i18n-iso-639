@@ -251,7 +251,7 @@ public class ISO_639 {
         }
         if (clazz.isAssignableFrom(LanguageFamilyCode.class)) {
             try {
-                LanguageFamilyCode lc = LanguageFamilyCode.valueOf(code);
+                LanguageFamilyCode lc = LanguageFamilyCode.valueOf(code.toLowerCase());
                 return Optional.of((L) lc);
             } catch (IllegalArgumentException ignore) {
                 // ignore
