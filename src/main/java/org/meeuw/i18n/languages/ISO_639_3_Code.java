@@ -166,7 +166,8 @@ public class ISO_639_3_Code implements LanguageCode {
         if (code == null) {
             return Optional.empty();
         }
-        ISO_639_3_Code prop = KNOWN.get(code.toLowerCase());
+        code = code.toLowerCase();
+        ISO_639_3_Code prop = KNOWN.get(code);
         if (prop == null && matchRetired) {
             Optional<RetiredLanguageCode> retiredLanguageCode = RetiredLanguageCode.getByCode(code);
             if (retiredLanguageCode.isPresent() && retiredLanguageCode.get().retReason() != RetirementReason.N) {
