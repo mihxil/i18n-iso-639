@@ -58,7 +58,7 @@ public interface LanguageCode extends ISO_639_Code, Supplier<Locale> {
     /**
      * @since 3.4
      * @deprecated This seems to be the same thing as {@link ISO_639_3_Code#UND}
-     *      */
+     */
     @Deprecated
     UserDefinedLanguage UNKNOWN = new UserDefinedLanguage("UNKNOWN", Type.S, "unknown language", "the language for some reason is unknown or unrecognized");
 
