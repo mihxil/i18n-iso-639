@@ -51,7 +51,16 @@ public interface ISO_639_Code extends Serializable {
 
     @JsonCreator
     static ISO_639_Code fromCode(String code) {
-        return ISO_639.iso639(code);
+        Optional<ISO_639_Code> iso639Code = ISO_639.get(code, ISO_639_Code.class);
+        if (iso639Code.isPresent()) {
+            return iso639Code.get();
+        }
+        UserDefinedLanguage ud = UserDefinedLanguage.byCode(code);
+        if (ud != null) {
+            return ud;
+        } else {
+            throw new LanguageNotFoundException(code);
+        }
     }
 
     /**

@@ -5,8 +5,7 @@ import java.util.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.meeuw.i18n.languages.ISO_639;
-import org.meeuw.i18n.languages.ISO_639_Code;
+import org.meeuw.i18n.languages.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,7 +35,12 @@ public class ISO_639Test {
 
     @ParameterizedTest
     @MethodSource("org.meeuw.i18n.languages.ISO_639#stream")
-    public void caseinsensitive(ISO_639_Code code) {
+    public void caseInsensitive(ISO_639_Code code) {
         assertThat(ISO_639_Code.fromCode(code.code().toUpperCase())).isEqualTo(code);
+    }
+
+    @Test
+    public void notFound() {
+        assertThat(ISO_639_Code.fromCode("NOTFOUND")).isNotNull();
     }
 }
