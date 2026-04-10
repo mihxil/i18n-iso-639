@@ -42,5 +42,7 @@ public class ISO_639Test {
     @Test
     public void notFound() {
         assertThat(ISO_639_Code.fromCode("NOTFOUND")).isNotNull();
+        assertThat(ISO_639_Code.fromCode("notfound")).isNotNull();
+
     }
 }
