@@ -1,4 +1,3 @@
-
 package org.meeuw.i18n.languages;
 
 import java.net.URI;
