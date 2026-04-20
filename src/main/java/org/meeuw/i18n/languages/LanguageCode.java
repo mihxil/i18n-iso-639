@@ -1,6 +1,7 @@
 package org.meeuw.i18n.languages;
 
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -24,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
 
-public interface LanguageCode extends ISO_639_Code {
+public interface LanguageCode extends ISO_639_Code, Supplier<Locale> {
 
 
     /**
@@ -57,7 +58,7 @@ public interface LanguageCode extends ISO_639_Code {
     /**
      * @since 3.4
      * @deprecated This seems to be the same thing as {@link ISO_639_3_Code#UND}
-     *      */
+     */
     @Deprecated
     UserDefinedLanguage UNKNOWN = new UserDefinedLanguage("UNKNOWN", Type.S, "unknown language", "the language for some reason is unknown or unrecognized");
 
@@ -74,9 +75,8 @@ public interface LanguageCode extends ISO_639_Code {
      * @return a stream of all known language codes.
      */
     static Stream<@NonNull LanguageCode> stream() {
-        return Stream.concat(ISO_639_3_Code
-                    .stream()
-                    .map(LanguageCode::updateToEnum),
+        return Stream.concat(
+                ISO_639_3_Code.stream().map(LanguageCode::updateToEnum),
                 UserDefinedLanguage.stream()
             )
             .sorted(Comparator.comparing(l -> l.code().toLowerCase()));
@@ -127,11 +127,12 @@ public interface LanguageCode extends ISO_639_Code {
      * Registers a complete map of fallbacks for the current thread
      * <p>
      * This calls wraps {@link ISO_639#setFallbacks(Map)}, but accepts a map of {@link LanguageCode} instead of {@link ISO_639_Code}.
+     *
      * @see #registerFallback(String, LanguageCode)
      * @since 3.2
      */
-    static void setFallbacks(final Map<String, LanguageCode> exemptions) {
-        ISO_639.setFallbacks(new AbstractMap<>() {
+    static ISO_639.ResetFallBacks setFallbacks(final Map<String, LanguageCode> exemptions) {
+        return ISO_639.setFallbacks(new AbstractMap<>() {
             @Override
             @NonNull
             public Set<Entry<String, ISO_639_Code>> entrySet() {
@@ -149,14 +150,14 @@ public interface LanguageCode extends ISO_639_Code {
      * <p>
      * The effect is that {@link #get(String)} (or {@link #get(String, boolean)} will return the registered {@link LanguageCode fallback code} if no real code is found.
      *
-     * @param code The code to (temporary) recognize
+     * @param code      The code to (temporary) recognize
      * @param exemption What it should fall back too
      * @see #setFallbacks(Map) To replace all current fallbacks with a map of these.
      * @see ISO_639#registerFallback(String, ISO_639_Code) For more generic fallbacks (also for language families)
      * @since 3.2
      */
-    static void registerFallback(String code, LanguageCode exemption) {
-        ISO_639.registerFallback(code, exemption);
+    static ISO_639.ResetFallBacks registerFallback(String code, LanguageCode exemption) {
+        return ISO_639.registerFallback(code, exemption);
     }
 
     /**
@@ -426,6 +427,12 @@ public interface LanguageCode extends ISO_639_Code {
      * If this is a {@link Scope#M macro language}, the known individual languages which are part of this macro language.
      */
     List<LanguageCode> individualLanguages();
+
+
+    @Override
+    default Locale get() {
+        return toLocale();
+    }
 
 
 }

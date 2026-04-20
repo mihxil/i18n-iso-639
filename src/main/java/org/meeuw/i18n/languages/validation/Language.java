@@ -69,10 +69,11 @@ public @interface Language {
     boolean forXml() default true;
 
 
-     /**
+    /**
      * Whether the locale may contain a country.
      * <p>
-     * the country itself is not validated. Use {@link @Country} for that.
+     * the country itself is not validated. Use {@code @org.meeuw.i18n.countries.validation.ValidCountry} for that, which is available in
+     * <a href="https://www.javadoc.io/static/org.meeuw.i18n/i18n-regions-countries/3.0.0/org.meeuw.i18n.countries/org/meeuw/i18n/countries/validation/ValidCountry.html">org.meeuw.i18n:i18n-regions-countries</a>.
      */
     boolean mayContainCountry() default true;
 

@@ -58,6 +58,9 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
             }
             return valid;
         }
+        if (language instanceof ISO_639_Code) {
+            return isValidCode(annotation, (ISO_639_Code) language);
+        }
         return false;
     }
     public static boolean isValid(LanguageValidationInfo annotation, @Nullable CharSequence language) {
@@ -91,19 +94,21 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
         Optional<? extends ISO_639_Code> languageCode = getLanguage(annotation, value);
         if (languageCode.isPresent()) {
             ISO_639_Code lc = languageCode.get();
-            if (annotation.scope().length > 0 && !Arrays.asList(annotation.scope()).contains(lc.scope())) {
-                return false;
-            }
-            if (annotation.type().length > 0 && !Arrays.asList(annotation.type()).contains(lc.languageType())) {
-                return false;
-            }
-
-            return true;
+            return isValidCode(annotation, lc);
         } else {
             return false;
         }
+    }
 
+    protected static boolean isValidCode(LanguageValidationInfo annotation, ISO_639_Code lc) {
+        if (annotation.scope().length > 0 && !Arrays.asList(annotation.scope()).contains(lc.scope())) {
+            return false;
+        }
+        if (annotation.type().length > 0 && !Arrays.asList(annotation.type()).contains(lc.languageType())) {
+            return false;
+        }
 
+        return true;
     }
 
     private static Optional<? extends ISO_639_Code> getLanguage(LanguageValidationInfo annotation, String value) {

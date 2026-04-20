@@ -14,6 +14,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  */
 public class UserDefinedLanguage implements LanguageCode {
 
+    // Keys are stored lower-cased (Locale.ROOT) so lookups can be done case-insensitively
     static final Map<String, UserDefinedLanguage> KNOWN = new ConcurrentHashMap<>();
 
 
@@ -30,13 +31,14 @@ public class UserDefinedLanguage implements LanguageCode {
      * @param refName
      * @param comment
      */
-    public UserDefinedLanguage(String code, @NonNull Type type, Scope scope, String refName, @Nullable String comment) {
+    public UserDefinedLanguage(@NonNull String code, @NonNull Type type, Scope scope, String refName, @Nullable String comment) {
         this.code = code;
         this.type = type;
         this.scope = scope;
         this.refName = refName;
         this.comment = comment;
-        KNOWN.put(this.code, this);
+        // normalize key so KNOWN is case-insensitive
+        KNOWN.put(this.code.toLowerCase(Locale.ROOT), this);
     }
 
     public UserDefinedLanguage(String code, @NonNull Type type, String refName, @Nullable String comment) {
@@ -50,6 +52,14 @@ public class UserDefinedLanguage implements LanguageCode {
          */
     public static Stream<UserDefinedLanguage> stream() {
         return KNOWN.values().stream();
+    }
+
+    /**
+     * Case-insensitive lookup by code. Returns null if not found or if code is null.
+     */
+    public static UserDefinedLanguage byCode(String code) {
+        if (code == null) return null;
+        return KNOWN.get(code.toLowerCase(Locale.ROOT));
     }
 
     @Override
