@@ -28,6 +28,9 @@ window.setup = async function setup() {
                 function showPreloadProgress(preloadDone, preloadTotal) {
                     const percentage = Math.round((preloadDone * 100) / preloadTotal);
                     console.log(percentage + "%");
+                    if (preloadDone) {
+                        this.document.getElementById("text_input").enabled = true;
+                    }
                 }
 
                 await cheerpjInit({
