@@ -18,7 +18,7 @@ jobs:
     permissions:
       checks: write # to publish test results?
     env:
-      MAVEN_ARGS: '--no-transfer-progress'
+      MAVEN_ARGS: '--no-transfer-progress --color always'
     steps:
       - uses: actions/checkout@v7
       - name: Set up JDK 17
