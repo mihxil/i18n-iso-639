@@ -648,7 +648,7 @@ public enum ISO_639_1_Code
     hz,
 
     /**
-     * {@link ISO_639_3_Code iso 639 3 code}: ina Interlingua (International Auxiliary Language Association)
+     * {@link ISO_639_3_Code iso 639 3 code}: ina Interlingua (IALA), Interlingua (International Auxiliary Language Association)
      * <p>
      * scope: individual
      * <p>
