@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
  *<p>
  * Annotated with {@link XmlJavaTypeAdapter}, so it will automatically be marshalled and unmarshalled in XMLs.
  * <p>
- * Also annotated with jackson annotation, to be marshalled and unmarshalled in JSON as the code.
+ * Also annotated with jackson annotation, to be marshaled and unmarshalled in JSON as the code.
  * <p>
  * Implementations are immutable and can be used as a key in maps.
  */

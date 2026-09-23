@@ -29,6 +29,7 @@ public class ISO_639_3_Code implements LanguageCode {
      */
     public static final ISO_639_3_Code UND;
 
+    @SuppressWarnings("LoggerInitializedWithForeignClass")
     final static Logger LOGGER = Logger.getLogger(LanguageCode.class.getName());
 
 
