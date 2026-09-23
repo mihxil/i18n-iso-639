@@ -42,7 +42,7 @@
     <codemodel.version>4.0.9</codemodel.version>
     <java.version>17</java.version>
     <assertj.version>3.27.7</assertj.version>
-    <checker.version>4.2.2</checker.version>
+    <jspecify.version>1.0.0</jspecify.version>
     <jackson3.version>3.2.2</jackson3.version>
     <jackson.version>2.22.2</jackson.version>
 
@@ -104,10 +104,9 @@
     </dependency>
 
     <dependency>
-      <groupId>org.checkerframework</groupId>
-      <artifactId>checker-qual</artifactId>
-      <version>${checker.version}</version>
-      <optional>true</optional>
+      <groupId>org.jspecify</groupId>
+      <artifactId>jspecify</artifactId>
+      <version>${jspecify.version}</version>
     </dependency>
 
     <dependency>

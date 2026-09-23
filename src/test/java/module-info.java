@@ -16,4 +16,5 @@ open module org.meeuw.i18n.languages.test {
     requires com.sun.codemodel;
     requires java.compiler;
     requires tools.jackson.databind;
+    requires java.logging;
 }

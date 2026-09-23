@@ -6,7 +6,8 @@ import java.util.logging.Logger;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-import org.checkerframework.checker.nullness.qual.*;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.meeuw.i18n.languages.*;
 import org.meeuw.i18n.languages.validation.Language;
 import org.meeuw.i18n.languages.validation.LanguageValidationInfo;
@@ -23,22 +24,18 @@ public class LanguageValidator implements ConstraintValidator<Language, Object> 
     public static final String[] LEGACY = {"jw"}; // javanese?
 
 
-    @MonotonicNonNull
     Language annotation;
 
     @Override
-    @EnsuresNonNull("annotation")
     public void initialize(@NonNull Language constraintAnnotation) {
         this.annotation = constraintAnnotation;
     }
 
     @Override
-    @RequiresNonNull("annotation")
     public boolean isValid(@Nullable Object value, @Nullable ConstraintValidatorContext context) {
         return isValid(LanguageValidationInfo.of(annotation), value);
     }
 
-    @RequiresNonNull("annotation")
     public static boolean isValid(LanguageValidationInfo annotation, @Nullable Object language) {
         if (language == null) {
             return true;

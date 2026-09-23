@@ -13,7 +13,7 @@ module org.meeuw.i18n.languages {
     requires static jakarta.validation;
 
     requires static java.logging;
-    requires static org.checkerframework.checker.qual;
+    requires static org.jspecify;
 
     // 'Generated' annotation
     requires static java.compiler;

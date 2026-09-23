@@ -8,7 +8,8 @@ import java.util.stream.Stream;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.checkerframework.checker.nullness.qual.*;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -255,7 +256,7 @@ public interface LanguageCode extends ISO_639_Code, Supplier<Locale> {
      * @since 3.3
      */
     @JsonCreator
-    static @PolyNull LanguageCode lenientLanguageCode(@PolyNull String code) {
+    static @Nullable LanguageCode lenientLanguageCode(@Nullable String code) {
         if (code == null || code.isEmpty()) {
             return null;
         }

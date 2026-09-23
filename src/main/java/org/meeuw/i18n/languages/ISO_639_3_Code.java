@@ -140,6 +140,7 @@ public class ISO_639_3_Code implements LanguageCode {
         "ji", "yi"         // The identifier for Yiddish was changed from "ji" to "yi".
     );
 
+
     static Optional<ISO_639_3_Code> getByPart1(String code) {
         if (code == null) {
             return Optional.empty();
@@ -158,7 +159,7 @@ public class ISO_639_3_Code implements LanguageCode {
      * <p>
      * If the given code is a {@link RetiredLanguageCode retired code}, the replacement code is returned if possible. If a retired code is matched, but no single replacement is found, an empty optional is returned, and a warning is logged (using {@link java.util.logging JUL})
      *
-     * @param code A 3 letter language code
+     * @param code A 3-letter language code
      * @return An optional containing the {@link ISO_639_3_Code} if found.
      * @since 2.2
      */

@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 import jakarta.validation.constraints.Size;
 
-import org.checkerframework.checker.nullness.qual.PolyNull;
+import org.jspecify.annotations.Nullable;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 
@@ -302,7 +302,7 @@ public class ISO_639 {
      * @since 3.3
      */
     @JsonCreator
-    public static @PolyNull ISO_639_Code lenientIso639(@PolyNull String code) {
+    public static @Nullable ISO_639_Code lenientIso639(@Nullable String code) {
         if (code == null || code.isEmpty()) {
             return null;
         }
