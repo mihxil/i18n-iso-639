@@ -1,6 +1,7 @@
 package org.meeuw.i18n.languages;
 
 import java.io.Serializable;
+import java.lang.constant.*;
 import java.util.*;
 
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -10,13 +11,29 @@ import org.meeuw.i18n.languages.jaxb.LanguageCodeAdapter;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
+import static java.lang.constant.ConstantDescs.*;
+
 /**
  * A code in the ISO-639 standard for {@link LanguageCode languages} and {@link LanguageFamilyCode language families}.
  */
 @XmlJavaTypeAdapter(LanguageCodeAdapter.class)
-public interface ISO_639_Code extends Serializable {
+public interface ISO_639_Code extends Serializable, Constable {
 
-
+    /**
+     * @since 4.3
+     */
+    @Override
+    default Optional<? extends ConstantDesc> describeConstable() {
+        ClassDesc iso639Code =  ClassDesc.of(ISO_639_Code.class.getName());
+        MethodHandleDesc fromCode = MethodHandleDesc.ofMethod(
+            DirectMethodHandleDesc.Kind.INTERFACE_STATIC,
+            iso639Code,
+            "fromCode",
+            MethodTypeDesc.of(iso639Code, CD_String)
+        );
+        return Optional.of(DynamicConstantDesc.ofNamed(
+            BSM_INVOKE, DEFAULT_NAME, iso639Code, fromCode, code()));
+    }
     /**
      * The code associated with this language or language family.
      *

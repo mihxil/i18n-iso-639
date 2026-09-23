@@ -1,12 +1,16 @@
 package org.meeuw.i18n.languages.test;
 
 import java.io.*;
+import java.lang.constant.ConstantDesc;
+import java.lang.invoke.MethodHandles;
+import java.util.Optional;
 
 import jakarta.xml.bind.JAXB;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.meeuw.i18n.languages.*;
 
@@ -120,5 +124,19 @@ public class SerializationTest {
         assertThat(deserialized.isoCode).isSameAs(looked);
     }
 
+    /**
+     * Test that every {@link LanguageCode} has a constable descriptor that resolves to itself.
+     */
+    @ParameterizedTest
+    @MethodSource({
+        "org.meeuw.i18n.languages.LanguageCode#stream",
+        "org.meeuw.i18n.languages.ISO_639_3_Code#stream"
+    })
+    public void constable(LanguageCode languageCode) throws ReflectiveOperationException {
+        Optional<? extends ConstantDesc> constDesc = languageCode.describeConstable();
+        assertThat(constDesc).isPresent();
+        ISO_639_Code resolved = (ISO_639_Code) constDesc.get().resolveConstantDesc(MethodHandles.lookup());
+        assertThat(resolved).isSameAs(languageCode);
+    }
 
 }
