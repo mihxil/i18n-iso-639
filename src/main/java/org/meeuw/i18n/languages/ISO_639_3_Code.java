@@ -1,6 +1,7 @@
 package org.meeuw.i18n.languages;
 
 import java.io.*;
+import java.lang.constant.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Level;
@@ -11,6 +12,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+
+import static java.lang.constant.ConstantDescs.*;
 
 /**
  * Implementation of {@link LanguageCode} that {@link ISO_639#stream() produces} all ISO-639-3 codes.
@@ -134,6 +137,19 @@ public class ISO_639_3_Code implements LanguageCode {
             .sorted(Comparator.comparing(ISO_639_3_Code::code));
     }
 
+    /**
+     * Returns the canonical ISO-639-3 code for its three-letter identifier.
+     *
+     * @param part3 a three-letter ISO-639-3 identifier
+     * @return the canonical ISO-639-3 code
+     * @throws LanguageNotFoundException if the identifier is not known
+     * @since 4.3
+     */
+    public static ISO_639_3_Code fromPart3(String part3) {
+        return getByPart3(part3, false, Level.WARNING)
+            .orElseThrow(() -> new LanguageNotFoundException(part3));
+    }
+
     private static final Map<String, String> RETIRED = Map.of(
         "jw", "jv", // 'Javanese is rendered as "jw" in table 1, while it is correctly given as "jv" in the other tables
         "iw", "he",    // The identifier for Hebrew was changed from "iw" to "he".
@@ -236,6 +252,19 @@ public class ISO_639_3_Code implements LanguageCode {
     @JsonValue
     public String code() {
         return part1 != null ? part1 : part3;
+    }
+
+    @Override
+    public Optional<? extends ConstantDesc> describeConstable() {
+        ClassDesc iso6393Code = ClassDesc.of(ISO_639_3_Code.class.getName());
+        MethodHandleDesc fromPart3 = MethodHandleDesc.ofMethod(
+            DirectMethodHandleDesc.Kind.STATIC,
+            iso6393Code,
+            "fromPart3",
+            MethodTypeDesc.of(iso6393Code, CD_String)
+        );
+        return Optional.of(DynamicConstantDesc.ofNamed(
+            BSM_INVOKE, DEFAULT_NAME, iso6393Code, fromPart3, part3));
     }
 
 
