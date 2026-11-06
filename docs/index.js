@@ -1,5 +1,6 @@
 console.log("Starting...");
 const locale = Intl.DateTimeFormat().resolvedOptions().locale.split("-")
+const version = "4.7";
 const properties=  [
     `user.country=${locale[0]}`,
     `user.language=${locale[1] || ''}`
@@ -59,7 +60,6 @@ window.setup = async function setup() {
                     preloadProgress: showPreloadProgress
                 })
 
-                const version = "4.5";
                 const prefix = document.location.pathname.startsWith("/i18n-iso-639/") ?
                     "/app/i18n-iso-639/resources/" :
                     "/app/resources/";
@@ -119,7 +119,6 @@ async function fillTable() {
             const clazz = await lang.getClass();
             const pakcage = await (await clazz.getPackage()).getName();
             const clazzName = await clazz.getName();
-            const version = "latest";
             const group = "org.meeuw.i18n";
             const artifact = "i18n-iso-639";
             const path = clazzName.replace(/\./g, '/');
