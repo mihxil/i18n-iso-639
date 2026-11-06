@@ -738,7 +738,7 @@ public enum ISO_639_1_Code
     it,
 
     /**
-     * {@link ISO_639_3_Code iso 639 3 code}: iku Inuktitut
+     * {@link ISO_639_3_Code iso 639 3 code}: iku Canadian Inuktut, Inuktitut
      * <p>
      * scope: macrolanguage
      * <p>

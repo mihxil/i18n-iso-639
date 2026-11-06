@@ -76,4 +76,11 @@ public class ExamplesTest {
         // end::dse[]
 
     }
+
+    @Test
+    void cuk() {
+        LanguageCode cuk = LanguageCode.languageCode("cuk");
+        assertThat(cuk.nameRecords()).hasSize(2);
+
+    }
 }
